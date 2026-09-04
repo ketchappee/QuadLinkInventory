@@ -574,7 +574,7 @@
             <img class="nav-brand-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         </div>
     </div>
-    <div id="syncBadge" class="sync-badge">● Auto-Saved & Synced</div>
+    <div id="syncBadge" class="sync-badge">● Initializing GitHub Sync...</div>
 </nav>
 
 <!-- HOME PAGE -->
@@ -598,7 +598,7 @@
         <div class="action-btns">
             <button onclick="navigateTo('home')" class="btn">🏠 Home</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
-            <button onclick="loadFromGitHub()" class="btn load-github-btn">🌐 Load from GitHub</button>
+            <button onclick="loadFromGitHub(false)" class="btn load-github-btn">🌐 Load from GitHub</button>
             <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
         </div>
     </header>
@@ -635,7 +635,7 @@
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
-            <button onclick="loadFromGitHub()" class="btn load-github-btn">🌐 Load from GitHub</button>
+            <button onclick="loadFromGitHub(false)" class="btn load-github-btn">🌐 Load from GitHub</button>
             <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
             <label class="btn-label json-btn">📂 Load<input type="file" id="deliveriesJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
@@ -777,7 +777,7 @@
         <h2>🔍 Search & Overview</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
-            <button onclick="loadFromGitHub()" class="btn load-github-btn">🌐 Load from GitHub</button>
+            <button onclick="loadFromGitHub(false)" class="btn load-github-btn">🌐 Load from GitHub</button>
             <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
             <label class="btn-label json-btn">📂 Load<input type="file" id="masterJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
@@ -867,7 +867,7 @@
         <h2 id="currentTitle">☕ Café Inventory</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
-            <button onclick="loadFromGitHub()" class="btn load-github-btn">🌐 Load from GitHub</button>
+            <button onclick="loadFromGitHub(false)" class="btn load-github-btn">🌐 Load from GitHub</button>
             <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
             <label class="btn-label json-btn">📂 Load<input type="file" id="inventoryJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
@@ -946,6 +946,10 @@
 
 <script>
     let currentDeliveryFilter = 'ALL';
+
+    const GITHUB_OWNER = "ketchappee";
+    const GITHUB_REPO = "QuadLinkInventory";
+    const GITHUB_FILE_PATH = "inventory_data.json";
 
     let defaultSubcategories = {
         'Café': ['Beans', 'Milk', 'Syrups & Flavorings', 'Cups & Packaging', 'Consumables & Others'],
@@ -1276,7 +1280,7 @@
         autoSaveData();
     }
 
-    // AUTOMATIC LOCAL SAVE AND GITHUB REPOSITORY PUSH
+    // UNIFIED SAVE & GITHUB SYNC
     async function autoSaveData() {
         localStorage.setItem('cafe_inventory_data', JSON.stringify(appData));
         renderTable();
@@ -1287,7 +1291,7 @@
 
         let token = localStorage.getItem('github_pat');
         if (!token) {
-            token = prompt("Enter your GitHub Personal Access Token (PAT) with 'repo' scope to enable automated repository sync:");
+            token = prompt("Enter your GitHub Personal Access Token (PAT) with 'repo' scope to activate live cloud syncing:");
             if (token && token.trim() !== '') {
                 token = token.trim();
                 localStorage.setItem('github_pat', token);
@@ -1313,15 +1317,11 @@
 
     async function pushToGitHub(token, showAlert = true) {
         const badge = document.getElementById('syncBadge');
-        badge.innerText = "⏳ Syncing to GitHub...";
+        badge.innerText = "⏳ Syncing to GitHub Repository...";
         badge.className = "sync-badge syncing";
 
-        const owner = "ketchappee";
-        const repo = "QuadLinkInventory";
-        const path = "inventory_data.json";
         const message = `Auto-sync repository updates: ${getFormattedTimestamp()}`;
         
-        // Utf8 safe encoding for base64 string push
         const jsonString = JSON.stringify(appData, null, 2);
         const encoder = new TextEncoder();
         const data = encoder.encode(jsonString);
@@ -1331,7 +1331,7 @@
         }
         const contentBase64 = btoa(binary);
 
-        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+        const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
 
         try {
             let sha = null;
@@ -1357,12 +1357,12 @@
             });
 
             if (putRes.ok) {
-                badge.innerText = "● Auto-Saved & GitHub Synced";
+                badge.innerText = "● Live Synced to GitHub File";
                 badge.className = "sync-badge";
-                if (showAlert) alert("Successfully synced and pushed updates to ketchappee/QuadLinkInventory repository!");
+                if (showAlert) alert(`Successfully saved and auto-synced live to ${GITHUB_OWNER}/${GITHUB_REPO} repository!`);
             } else {
                 const err = await putRes.json();
-                badge.innerText = "✖ Sync Error";
+                badge.innerText = "✖ Sync Failed";
                 badge.className = "sync-badge error";
                 if (showAlert) alert("GitHub Sync Error: " + err.message);
                 if (putRes.status === 401) localStorage.removeItem('github_pat');
@@ -1374,11 +1374,15 @@
         }
     }
 
-    async function loadFromGitHub() {
-        const owner = "ketchappee";
-        const repo = "QuadLinkInventory";
-        const path = "inventory_data.json";
-        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?t=` + new Date().getTime();
+    // UNIFIED LOAD FROM EXACT REPOSITORY FILE
+    async function loadFromGitHub(isInitialLoad = false) {
+        const badge = document.getElementById('syncBadge');
+        if (badge) {
+            badge.innerText = "⏳ Loading live repo data...";
+            badge.className = "sync-badge syncing";
+        }
+
+        const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${GITHUB_FILE_PATH}?t=` + new Date().getTime();
 
         try {
             const res = await fetch(rawUrl);
@@ -1391,15 +1395,29 @@
                     renderMasterTables();
                     renderDeliveriesTable();
                     renderLogs();
-                    alert("Successfully synced and loaded latest repository data from GitHub!");
+
+                    if (badge) {
+                        badge.innerText = "● Loaded & Live Synced";
+                        badge.className = "sync-badge";
+                    }
+
+                    if (!isInitialLoad) alert(`Successfully loaded live inventory file directly from ${GITHUB_OWNER}/${GITHUB_REPO}!`);
                 } else {
-                    alert("The remote GitHub data file format is invalid.");
+                    if (!isInitialLoad) alert("The remote GitHub data file format is invalid.");
                 }
             } else {
-                alert("Could not find a saved inventory file on GitHub yet. Make sure someone has synced data first.");
+                if (badge) {
+                    badge.innerText = "● Saved Locally (No Remote File)";
+                    badge.className = "sync-badge";
+                }
+                if (!isInitialLoad) alert("Could not find a saved inventory file on GitHub yet. Make sure someone has synced data first.");
             }
         } catch (e) {
-            alert("Network error while trying to fetch data from GitHub.");
+            if (badge) {
+                badge.innerText = "● Saved Locally (Offline)";
+                badge.className = "sync-badge";
+            }
+            if (!isInitialLoad) alert("Network error while trying to fetch data from GitHub.");
         }
     }
 
@@ -1880,7 +1898,7 @@
         });
     }
 
-    // Initialize layout state
+    // INITIALIZATION STATE & AUTO-FETCH ON LAUNCH
     navigateTo('home');
     switchCategory('Café');
     updateDeliverySubcategoryDropdown('Café');
@@ -1889,6 +1907,9 @@
     renderMasterTables();
     renderDeliveriesTable();
     renderLogs();
+
+    // Auto-fetch newest live GitHub data file on page load
+    loadFromGitHub(true);
 </script>
 
 </body>
