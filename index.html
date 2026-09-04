@@ -562,7 +562,7 @@
             <img class="nav-brand-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         </div>
     </div>
-    <div id="syncBadge" class="sync-badge">● Auto-Saved & Synced</div>
+    <div id="syncBadge" class="sync-badge">● Auto-Saved</div>
 </nav>
 
 <!-- HOME PAGE -->
@@ -570,7 +570,7 @@
     <div class="home-hero">
         <img class="home-hero-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         <h1>QuadLink Inventory</h1>
-        <p>Aesthetic minimalist stock management with automated GitHub cloud sync & Google Sheets integration.</p>
+        <p>Aesthetic minimalist stock management with auto-integrated deliveries and sliding subcategory tabs.</p>
         <div class="hero-action-group">
             <button class="btn-proceed" onclick="navigateTo('menu')">📂 Menu Inventory</button>
             <button class="btn-proceed secondary" onclick="navigateTo('deliveries')">🚚 Deliveries Inventory</button>
@@ -1196,6 +1196,7 @@
             if (!del) return;
             if (targetName === 'DELIVERIES') return;
 
+            // Automatically mark any existing items in the target category/subcategory as "In-House" before adding the new delivery arrival
             appData.inventory.forEach(invItem => {
                 if (invItem.category === targetName) {
                     invItem.sourceNote = "In-House";
@@ -1208,7 +1209,7 @@
             if (existingItem) {
                 existingItem.qty += del.qty;
                 existingItem.lastChanged = nowStamp;
-                existingItem.sourceNote = "Delivery";
+                existingItem.sourceNote = "Delivery"; // Newly arrived delivery stock
             } else {
                 appData.inventory.push({
                     id: Date.now() + Math.random(),
@@ -1266,14 +1267,13 @@
 
     async function autoSaveData() {
         localStorage.setItem('cafe_inventory_data', JSON.stringify(appData));
-        document.getElementById('syncBadge').innerText = "● Auto-Saved & Synced";
+        document.getElementById('syncBadge').innerText = "● Auto-Saved";
         renderTable();
         renderMasterTables();
         renderDeliveriesTable();
         renderLogs();
         updateBatchBarVisibility();
 
-        // Automatic GitHub Cloud Sync
         const token = localStorage.getItem('github_pat');
         if (token) {
             pushToGitHub(token, false);
@@ -1323,7 +1323,7 @@
             });
 
             if (putRes.ok) {
-                if (showAlert) alert("Successfully synced and pushed to ketchappee/QuadLinkInventory GitHub repository!");
+                if (showAlert) alert("Successfully synced and pushed to ketchappee/QuadLinkInventory!");
             } else {
                 const err = await putRes.json();
                 if (showAlert) alert("GitHub Sync Error: " + err.message);
@@ -1558,17 +1558,20 @@
             }
             cancelDeliveryEdit();
         } else {
-            // AUTOMATIC IN-HOUSE CONVERSION & INVENTORY SYNC:
-            // When a new delivery item is input, prior items in that category automatically mark as "In-House"
-            // and the new delivery item immediately auto-syncs into the main Inventory page.
+            // AUTOMATIC IN-HOUSE CONVERSION RULE:
+            // When a new delivery item is scheduled/input, any existing items currently in that same category 
+            // are automatically marked as "In-House", and the new incoming delivery is instantly synced 
+            // directly into the main Inventory page!
             appData.inventory.forEach(invItem => {
                 if (invItem.category === category) {
                     invItem.sourceNote = "In-House";
                 }
             });
 
+            // Push directly to deliveries dashboard queue
             appData.deliveries.unshift({ id: Date.now(), name, category, subcategory, supplier, qty, unit, deliveryDate });
 
+            // Automatically push / show the item on the main Inventory page immediately tagged as a new Delivery arrival
             const existingItem = appData.inventory.find(i => i.category === category && i.name.toLowerCase().trim() === name.toLowerCase().trim());
             if (existingItem) {
                 existingItem.qty += qty;
