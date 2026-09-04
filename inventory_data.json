@@ -447,22 +447,22 @@
       "sourceNote": "Delivery"
     },
     {
-      "id": 1788512069884,
-      "name": "EMBORG",
+      "id": 1788512111992,
+      "name": "OAT",
       "category": "Café",
       "subcategory": "MILK",
       "qty": 15,
-      "unit": "Pcs",
+      "unit": "Box",
       "addedDate": "2026-09-04",
-      "lastChanged": "2026-09-04 16:54",
+      "lastChanged": "2026-09-04 16:55",
       "sourceNote": "In-House"
     }
   ],
   "logs": [
     {
-      "id": "log_1788512069884",
-      "timestamp": "2026-09-04 16:54",
-      "details": "Added item \"EMBORG\" (15 Pcs)"
+      "id": "log_1788512111992",
+      "timestamp": "2026-09-04 16:55",
+      "details": "Added item \"OAT\" (15 Box)"
     },
     {
       "id": "log_1788509346574",
