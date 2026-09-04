@@ -684,7 +684,10 @@
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
-            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON File</button>
+            <label class="btn-label json-btn">
+                📂 Load File
+                <input type="file" id="deliveriesJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
+            </label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
     </header>
@@ -827,7 +830,10 @@
         <h2>🔍 Search & Overview</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
-            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON File</button>
+            <label class="btn-label json-btn">
+                📂 Load File
+                <input type="file" id="masterJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
+            </label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
     </header>
@@ -918,7 +924,10 @@
         <h2 id="currentTitle">☕ Café Inventory</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
-            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON File</button>
+            <label class="btn-label json-btn">
+                📂 Load File
+                <input type="file" id="inventoryJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
+            </label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
             <button onclick="exportToGoogleSheets()" class="btn gsheets-btn">📊 Export Sheets Template</button>
         </div>
@@ -1033,7 +1042,6 @@
 </section>
 
 <script>
-    let fileHandle = null;
     let currentDeliveryFilter = 'ALL';
 
     let defaultSubcategories = {
@@ -1609,38 +1617,9 @@
         }
     }
 
-    async function enableJSONAutoSync() {
-        if ('showSaveFilePicker' in window) {
-            try {
-                fileHandle = await window.showSaveFilePicker({
-                    suggestedName: `inventory_${new Date().toISOString().split('T')[0]}.json`,
-                    types: [{ description: 'JSON File', accept: { 'application/json': ['.json'] } }]
-                });
-                updateSyncBadge("● JSON Live File Sync Active", true);
-                autoSaveData();
-            } catch (err) {
-                console.log('JSON file picking canceled.');
-            }
-        } else {
-            alert('File System Access API is not supported in this browser. Changes will auto-save to browser local storage.');
-        }
-    }
-
     async function autoSaveData() {
         localStorage.setItem('cafe_inventory_data', JSON.stringify(appData));
-
-        if (fileHandle) {
-            try {
-                const writable = await fileHandle.createWritable();
-                await writable.write(JSON.stringify(appData, null, 2));
-                await writable.close();
-                updateSyncBadge("● JSON File Synced", true);
-            } catch (err) {
-                updateSyncBadge("● Cached Auto-Save", false);
-            }
-        } else {
-            updateSyncBadge("● Cached Auto-Save", false);
-        }
+        updateSyncBadge("● Auto-Saved", false);
 
         renderTable();
         renderMasterTables();
@@ -1661,6 +1640,53 @@
         downloadAnchor.click();
         downloadAnchor.remove();
         URL.revokeObjectURL(url);
+    }
+
+    function loadFromJSONFile(event) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const loadedData = JSON.parse(e.target.result);
+                if (loadedData.inventory && Array.isArray(loadedData.inventory)) {
+                    appData = loadedData;
+                } else if (Array.isArray(loadedData)) {
+                    appData.inventory = loadedData;
+                }
+                
+                if (!appData.categories) {
+                    appData.categories = JSON.parse(JSON.stringify(defaultSubcategories));
+                }
+                if (!appData.suppliers) {
+                    appData.suppliers = ['JAMBI', 'YARDSTICK', 'NIMO', 'KUKIDO', 'MMB', 'LALAMOVE'];
+                }
+                if (!appData.deliveries) {
+                    appData.deliveries = [];
+                }
+
+                appData.inventory.forEach(item => {
+                    if (!item.subcategory) item.subcategory = "General";
+                    if (!item.unit) item.unit = "Pcs";
+                    if (!item.sourceNote) item.sourceNote = "In-House";
+                });
+
+                if (appData.logs && Array.isArray(appData.logs)) {
+                    appData.logs.forEach((log, index) => {
+                        if (!log.id) log.id = 'log_' + Date.now() + '_' + index;
+                    });
+                }
+
+                autoSaveData();
+                updateSubcategoryDropdown(currentCategory);
+                updateDeliverySubcategoryDropdown(document.getElementById('delCategory').value);
+                updateSupplierDropdown();
+                alert('Current save file loaded and synced successfully!');
+            } catch (err) {
+                alert('Error reading the JSON file.');
+            }
+        };
+        if (event.target.files[0]) {
+            reader.readAsText(event.target.files[0]);
+        }
     }
 
     function exportToGoogleSheets() {
