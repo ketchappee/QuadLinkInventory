@@ -300,6 +300,8 @@
         
         button.json-btn { color: #2C4254; }
         button.gsheets-btn { color: #264A35; }
+        button.edit-btn { color: var(--warning); background: rgba(217, 160, 107, 0.15); border-color: rgba(217, 160, 107, 0.3); }
+        button.edit-btn:hover { background: rgba(217, 160, 107, 0.3); }
 
         /* DASHBOARD MENU STYLING */
         .dashboard-nav-grid {
@@ -345,34 +347,6 @@
             box-shadow: var(--glass-shadow);
             padding: 24px;
             margin-bottom: 24px;
-        }
-
-        .batch-action-bar {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--clear-border);
-            border-radius: 16px;
-            padding: 12px 20px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-        }
-
-        .batch-info {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .batch-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
         }
 
         .search-bar-container {
@@ -464,26 +438,6 @@
             align-items: center;
             gap: 6px;
             flex-wrap: nowrap;
-        }
-
-        .select-move-to {
-            padding: 8px 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid var(--clear-border);
-            color: var(--text-main);
-            cursor: pointer;
-            max-width: 140px;
-            text-overflow: ellipsis;
-        }
-
-        .row-checkbox {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-            accent-color: var(--brand-color);
         }
 
         .table-container { 
@@ -620,7 +574,7 @@
             <img class="nav-brand-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         </div>
     </div>
-    <div id="syncBadge" class="sync-badge">● Cached Auto-Save</div>
+    <div id="syncBadge" class="sync-badge">● Auto-Saved</div>
 </nav>
 
 <section id="view-home" class="page-view active">
@@ -724,6 +678,7 @@
 
     <div class="glass-card">
         <form id="deliveryForm" onsubmit="addDelivery(event)">
+            <input type="hidden" id="editingDeliveryId" value="">
             <div class="form-grid">
                 <div class="input-group">
                     <label>Target Category</label>
@@ -778,39 +733,17 @@
                     <input type="date" id="delDate" required>
                 </div>
             </div>
-            <button type="submit" class="btn primary">+ Schedule / Add Delivery</button>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <button type="submit" id="delSubmitBtn" class="btn primary">+ Schedule / Add Delivery</button>
+                <button type="button" id="delCancelEditBtn" class="btn" style="display: none;" onclick="cancelDeliveryEdit()">Cancel Edit</button>
+            </div>
         </form>
-    </div>
-
-    <!-- BATCH ACTION BAR FOR DELIVERIES -->
-    <div id="delBatchBar" class="batch-action-bar" style="display: none;">
-        <span class="batch-info" id="delBatchCount">0 item(s) selected</span>
-        <div class="batch-controls">
-            <select id="delBatchTarget" class="select-move-to">
-                <option value="">Action Selected...</option>
-                <optgroup label="Move To">
-                    <option value="MOVE_Café">☕ Move to Café</option>
-                    <option value="MOVE_Community">🤝 Move to Community</option>
-                    <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
-                </optgroup>
-                <optgroup label="Copy To">
-                    <option value="COPY_Café">☕ Copy to Café</option>
-                    <option value="COPY_Community">🤝 Copy to Community</option>
-                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                </optgroup>
-                <optgroup label="Delete">
-                    <option value="DELETE">🗑️ Delete Selected</option>
-                </optgroup>
-            </select>
-            <button class="btn primary" onclick="executeBatchAction('DELIVERY')">Apply Action</button>
-        </div>
     </div>
 
     <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th style="width: 40px; text-align: center;"><input type="checkbox" id="delSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.del-row-cb')"></th>
                     <th>Item Name</th>
                     <th>Category / Subcategory</th>
                     <th>Supplier</th>
@@ -935,6 +868,7 @@
 
     <div class="glass-card">
         <form id="itemForm" onsubmit="addItem(event)">
+            <input type="hidden" id="editingItemId" value="">
             <div class="form-grid">
                 <div class="input-group">
                     <label>Subcategory</label>
@@ -974,45 +908,17 @@
                     <input type="date" id="itemAddedDate" required>
                 </div>
             </div>
-            <button type="submit" class="btn primary">+ Add Item to Inventory</button>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <button type="submit" id="itemSubmitBtn" class="btn primary">+ Add Item to Inventory</button>
+                <button type="button" id="itemCancelEditBtn" class="btn" style="display: none;" onclick="cancelItemEdit()">Cancel Edit</button>
+            </div>
         </form>
-    </div>
-
-    <!-- BATCH ACTION BAR FOR ACTIVE INVENTORY PAGE -->
-    <div id="invBatchBar" class="batch-action-bar" style="display: none;">
-        <span class="batch-info" id="invBatchCount">0 item(s) selected</span>
-        <div class="batch-controls">
-            <select id="invBatchTarget" class="select-move-to">
-                <option value="">Action Selected...</option>
-                <optgroup label="Move To">
-                    <option value="MOVE_Café">☕ Move to Café</option>
-                    <option value="MOVE_Community">🤝 Move to Community</option>
-                    <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
-                    <option value="MOVE_DELIVERIES">🚚 Move to Deliveries</option>
-                </optgroup>
-                <optgroup label="Copy To">
-                    <option value="COPY_Café">☕ Copy to Café</option>
-                    <option value="COPY_Community">🤝 Copy to Community</option>
-                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                    <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
-                </optgroup>
-                <optgroup label="Mark Source Note As">
-                    <option value="MARK_In-House">🟢 Mark as In-House</option>
-                    <option value="MARK_Delivery">📦 Mark as Delivery</option>
-                </optgroup>
-                <optgroup label="Delete">
-                    <option value="DELETE">🗑️ Delete Selected</option>
-                </optgroup>
-            </select>
-            <button class="btn primary" onclick="executeBatchAction('INVENTORY')">Apply Action</button>
-        </div>
     </div>
 
     <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th style="width: 40px; text-align: center;"><input type="checkbox" id="invSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.inv-row-cb')"></th>
                     <th>Item Name</th>
                     <th>Category</th>
                     <th>Quantity & Unit</th>
@@ -1350,236 +1256,6 @@
         updateDeliverySubcategoryDropdown(selectedCat);
     }
 
-    function toggleSelectAllPage(masterCb, childSelector) {
-        const checkboxes = document.querySelectorAll(childSelector);
-        checkboxes.forEach(cb => cb.checked = masterCb.checked);
-        updateBatchBarVisibility();
-    }
-
-    function updateBatchBarVisibility() {
-        const invCbs = document.querySelectorAll('.inv-row-cb:checked');
-        const invBar = document.getElementById('invBatchBar');
-        const invCount = document.getElementById('invBatchCount');
-
-        if (invCbs.length > 0) {
-            invBar.style.display = 'flex';
-            invCount.innerText = `${invCbs.length} item(s) selected`;
-        } else {
-            invBar.style.display = 'none';
-            const invSelectAll = document.getElementById('invSelectAll');
-            if (invSelectAll) invSelectAll.checked = false;
-        }
-
-        const delCbs = document.querySelectorAll('.del-row-cb:checked');
-        const delBar = document.getElementById('delBatchBar');
-        const delCount = document.getElementById('delBatchCount');
-
-        if (delCbs.length > 0) {
-            delBar.style.display = 'flex';
-            delCount.innerText = `${delCbs.length} item(s) selected`;
-        } else {
-            delBar.style.display = 'none';
-            const delSelectAll = document.getElementById('delSelectAll');
-            if (delSelectAll) delSelectAll.checked = false;
-        }
-    }
-
-    function executeBatchAction(sourceType) {
-        let actionVal = '';
-        let checkedBoxes = [];
-
-        if (sourceType === 'INVENTORY') {
-            actionVal = document.getElementById('invBatchTarget').value;
-            checkedBoxes = document.querySelectorAll('.inv-row-cb:checked');
-        } else {
-            actionVal = document.getElementById('delBatchTarget').value;
-            checkedBoxes = document.querySelectorAll('.del-row-cb:checked');
-        }
-
-        if (!actionVal) {
-            alert("Please select an action/destination from the dropdown.");
-            return;
-        }
-
-        if (checkedBoxes.length === 0) {
-            alert("No items selected.");
-            return;
-        }
-
-        const itemIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
-
-        if (actionVal === 'DELETE') {
-            if (confirm(`Are you sure you want to delete ${itemIds.length} selected item(s)?`)) {
-                if (sourceType === 'INVENTORY') {
-                    itemIds.forEach(id => {
-                        const item = appData.inventory.find(i => i.id === id);
-                        if (item) recordLog(`Deleted item "${item.name}"`);
-                    });
-                    appData.inventory = appData.inventory.filter(i => !itemIds.includes(i.id));
-                } else {
-                    itemIds.forEach(id => {
-                        const del = appData.deliveries.find(d => d.id === id);
-                        if (del) recordLog(`Deleted delivery record for "${del.name}"`);
-                    });
-                    appData.deliveries = appData.deliveries.filter(d => !itemIds.includes(d.id));
-                }
-                autoSaveData();
-            }
-            return;
-        }
-
-        if (actionVal.startsWith('MARK_')) {
-            const newNote = actionVal.replace('MARK_', '');
-            itemIds.forEach(id => {
-                const item = appData.inventory.find(i => i.id === id);
-                if (item) {
-                    item.sourceNote = newNote;
-                    item.lastChanged = getFormattedTimestamp();
-                    recordLog(`Marked item "${item.name}" as [${newNote}]`);
-                }
-            });
-            document.getElementById('invBatchTarget').value = '';
-            autoSaveData();
-            return;
-        }
-
-        let defaultSupplier = "JAMBI";
-        if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
-            defaultSupplier = prompt(`Enter Supplier Name for copying/moving ${checkedBoxes.length} item(s) to Deliveries:`, "JAMBI") || "JAMBI";
-        }
-
-        itemIds.forEach(id => {
-            processItemAction(id, actionVal, sourceType, defaultSupplier);
-        });
-
-        if (sourceType === 'INVENTORY') document.getElementById('invBatchTarget').value = '';
-        else document.getElementById('delBatchTarget').value = '';
-
-        autoSaveData();
-    }
-
-    function handleRowDropdownAction(itemId, actionVal, sourceType) {
-        if (!actionVal) return;
-
-        if (actionVal === 'DELETE') {
-            if (sourceType === 'INVENTORY') {
-                deleteItem(itemId);
-            } else {
-                deleteDelivery(itemId);
-            }
-            return;
-        }
-
-        if (actionVal.startsWith('MARK_')) {
-            const newNote = actionVal.replace('MARK_', '');
-            const item = appData.inventory.find(i => i.id === itemId);
-            if (item) {
-                item.sourceNote = newNote;
-                item.lastChanged = getFormattedTimestamp();
-                recordLog(`Marked item "${item.name}" as [${newNote}]`);
-                autoSaveData();
-            }
-            return;
-        }
-
-        let defaultSupplier = "JAMBI";
-        if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
-            const item = appData.inventory.find(i => i.id === itemId);
-            defaultSupplier = prompt(`Enter Supplier Name for copying/moving "${item?.name || 'Item'}" to Deliveries:`, "JAMBI") || "JAMBI";
-        }
-        processItemAction(itemId, actionVal, sourceType, defaultSupplier);
-        autoSaveData();
-    }
-
-    function processItemAction(itemId, actionVal, currentSourceType, supplierName = "JAMBI") {
-        const isCopy = actionVal.startsWith('COPY_');
-        const targetName = actionVal.replace('MOVE_', '').replace('COPY_', '');
-        const nowStamp = getFormattedTimestamp();
-
-        if (currentSourceType === 'DELIVERY') {
-            const del = appData.deliveries.find(d => d.id === itemId);
-            if (!del) return;
-
-            if (targetName === 'DELIVERIES') return;
-
-            const targetSubcategory = (appData.categories[targetName] && appData.categories[targetName].length > 0) ? appData.categories[targetName][0] : 'General';
-
-            const existingItem = appData.inventory.find(i => i.category === targetName && i.name.toLowerCase().trim() === del.name.toLowerCase().trim());
-
-            if (existingItem) {
-                existingItem.qty += del.qty;
-                existingItem.unit = del.unit;
-                existingItem.lastChanged = nowStamp;
-                existingItem.sourceNote = "Delivery";
-            } else {
-                appData.inventory.push({
-                    id: Date.now() + Math.floor(Math.random() * 1000),
-                    name: del.name,
-                    category: targetName,
-                    subcategory: del.subcategory || targetSubcategory,
-                    qty: del.qty,
-                    unit: del.unit,
-                    addedDate: del.deliveryDate || new Date().toISOString().split('T')[0],
-                    lastChanged: nowStamp,
-                    sourceNote: "Delivery"
-                });
-            }
-
-            if (!isCopy) {
-                appData.deliveries = appData.deliveries.filter(d => d.id !== itemId);
-                recordLog(`Moved delivery item "${del.name}" to ${targetName} inventory`);
-            } else {
-                recordLog(`Copied delivery item "${del.name}" to ${targetName} inventory`);
-            }
-        } else {
-            const item = appData.inventory.find(i => i.id === itemId);
-            if (!item) return;
-
-            if (targetName === 'DELIVERIES') {
-                appData.deliveries.unshift({
-                    id: Date.now() + Math.floor(Math.random() * 1000),
-                    name: item.name,
-                    category: item.category,
-                    subcategory: item.subcategory || 'General',
-                    supplier: supplierName,
-                    qty: item.qty,
-                    unit: item.unit || 'Pcs',
-                    deliveryDate: item.addedDate || new Date().toISOString().split('T')[0]
-                });
-
-                if (!isCopy) {
-                    appData.inventory = appData.inventory.filter(i => i.id !== itemId);
-                    recordLog(`Moved inventory item "${item.name}" from ${item.category} into Deliveries`);
-                } else {
-                    recordLog(`Copied inventory item "${item.name}" into Deliveries`);
-                }
-            } else {
-                const targetSubcategory = (appData.categories[targetName] && appData.categories[targetName].length > 0) ? appData.categories[targetName][0] : 'General';
-
-                if (isCopy) {
-                    appData.inventory.push({
-                        id: Date.now() + Math.floor(Math.random() * 1000),
-                        name: item.name,
-                        category: targetName,
-                        subcategory: targetSubcategory,
-                        qty: item.qty,
-                        unit: item.unit || 'Pcs',
-                        addedDate: new Date().toISOString().split('T')[0],
-                        lastChanged: nowStamp,
-                        sourceNote: item.sourceNote || "In-House"
-                    });
-                    recordLog(`Copied item "${item.name}" into ${targetName} inventory`);
-                } else {
-                    if (item.category === targetName) return;
-                    item.category = targetName;
-                    item.subcategory = targetSubcategory;
-                    item.lastChanged = nowStamp;
-                    recordLog(`Moved item "${item.name}" into ${targetName} inventory`);
-                }
-            }
-        }
-    }
-
     function getFormattedTimestamp() {
         const now = new Date();
         const dateStr = now.toISOString().split('T')[0];
@@ -1625,7 +1301,6 @@
         renderMasterTables();
         renderDeliveriesTable();
         renderLogs();
-        updateBatchBarVisibility();
     }
 
     function saveJSONFileManually() {
@@ -1804,39 +1479,127 @@
         renderTable();
     }
 
+    // EDIT INVENTORY ITEM FUNCTIONS
+    function editInventoryItem(id) {
+        const item = appData.inventory.find(i => i.id === id);
+        if (!item) return;
+
+        if (item.category !== currentCategory) {
+            switchCategory(item.category);
+        }
+
+        document.getElementById('editingItemId').value = item.id;
+        document.getElementById('itemName').value = item.name;
+        document.getElementById('itemSubcategory').value = item.subcategory || 'General';
+        document.getElementById('itemSourceNote').value = item.sourceNote || 'In-House';
+        document.getElementById('itemQty').value = item.qty;
+        document.getElementById('itemUnit').value = item.unit || 'Pcs';
+        document.getElementById('itemAddedDate').value = item.addedDate || new Date().toISOString().split('T')[0];
+
+        document.getElementById('itemSubmitBtn').innerText = '💾 Save Changes';
+        document.getElementById('itemCancelEditBtn').style.display = 'inline-flex';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cancelItemEdit() {
+        document.getElementById('editingItemId').value = '';
+        document.getElementById('itemName').value = '';
+        document.getElementById('itemQty').value = '';
+        document.getElementById('itemSourceNote').value = 'In-House';
+        document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('itemSubmitBtn').innerText = '+ Add Item to Inventory';
+        document.getElementById('itemCancelEditBtn').style.display = 'none';
+        updateSubcategoryDropdown(currentCategory);
+    }
+
+    // EDIT DELIVERY RECORD FUNCTIONS
+    function editDeliveryRecord(id) {
+        const del = appData.deliveries.find(d => d.id === id);
+        if (!del) return;
+
+        if (currentDeliveryFilter !== 'ALL' && currentDeliveryFilter !== del.category) {
+            filterDeliveryDashboard('ALL');
+        }
+
+        document.getElementById('editingDeliveryId').value = del.id;
+        document.getElementById('delCategory').value = del.category;
+        updateDeliverySubcategoryDropdown(del.category);
+        document.getElementById('delSubcategory').value = del.subcategory || '';
+        document.getElementById('delItemName').value = del.name;
+        document.getElementById('delSupplier').value = del.supplier || 'JAMBI';
+        document.getElementById('delQty').value = del.qty;
+        document.getElementById('delUnit').value = del.unit || 'Pcs';
+        document.getElementById('delDate').value = del.deliveryDate || new Date().toISOString().split('T')[0];
+
+        document.getElementById('delSubmitBtn').innerText = '💾 Save Delivery Changes';
+        document.getElementById('delCancelEditBtn').style.display = 'inline-flex';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cancelDeliveryEdit() {
+        document.getElementById('editingDeliveryId').value = '';
+        document.getElementById('delItemName').value = '';
+        document.getElementById('delQty').value = '';
+        document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('delSubmitBtn').innerText = '+ Schedule / Add Delivery';
+        document.getElementById('delCancelEditBtn').style.display = 'none';
+        updateDeliverySubcategoryDropdown(document.getElementById('delCategory').value);
+    }
+
     function addItem(e) {
         e.preventDefault();
         const nowStamp = getFormattedTimestamp();
+        const editingId = document.getElementById('editingItemId').value;
         const itemName = document.getElementById('itemName').value;
         const subcategory = document.getElementById('itemSubcategory').value;
         const sourceNote = document.getElementById('itemSourceNote').value;
         const qtyVal = parseInt(document.getElementById('itemQty').value);
         const unitVal = document.getElementById('itemUnit').value;
+        const addedDateVal = document.getElementById('itemAddedDate').value;
 
-        const newItem = {
-            id: Date.now(),
-            name: itemName,
-            category: currentCategory,
-            subcategory: subcategory,
-            qty: qtyVal,
-            unit: unitVal,
-            addedDate: document.getElementById('itemAddedDate').value,
-            lastChanged: nowStamp,
-            sourceNote: sourceNote
-        };
+        if (editingId) {
+            const item = appData.inventory.find(i => i.id === parseInt(editingId));
+            if (item) {
+                item.name = itemName;
+                item.category = currentCategory;
+                item.subcategory = subcategory;
+                item.qty = qtyVal;
+                item.unit = unitVal;
+                item.addedDate = addedDateVal;
+                item.sourceNote = sourceNote;
+                item.lastChanged = nowStamp;
+                recordLog(`Re-edited / updated item "${itemName}" in ${currentCategory}`);
+            }
+            cancelItemEdit();
+        } else {
+            const newItem = {
+                id: Date.now(),
+                name: itemName,
+                category: currentCategory,
+                subcategory: subcategory,
+                qty: qtyVal,
+                unit: unitVal,
+                addedDate: addedDateVal,
+                lastChanged: nowStamp,
+                sourceNote: sourceNote
+            };
+            appData.inventory.push(newItem);
+            recordLog(`Added "${itemName}" under [${subcategory}] as [${sourceNote}] with qty ${newItem.qty} ${newItem.unit}`);
+            
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemQty').value = '';
+            document.getElementById('itemSourceNote').value = 'In-House';
+            document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
+        }
 
-        appData.inventory.push(newItem);
-        recordLog(`Added "${itemName}" under [${subcategory}] as [${sourceNote}] with qty ${newItem.qty} ${newItem.unit}`);
         autoSaveData();
-
-        document.getElementById('itemName').value = '';
-        document.getElementById('itemQty').value = '';
-        document.getElementById('itemSourceNote').value = 'In-House';
-        document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
     }
 
     function addDelivery(e) {
         e.preventDefault();
+        const editingId = document.getElementById('editingDeliveryId').value;
         const category = document.getElementById('delCategory').value;
         const subcategory = document.getElementById('delSubcategory').value;
         const itemName = document.getElementById('delItemName').value;
@@ -1846,67 +1609,72 @@
         const deliveryDate = document.getElementById('delDate').value;
         const nowStamp = getFormattedTimestamp();
 
-        const newDelivery = {
-            id: Date.now(),
-            name: itemName,
-            category: category,
-            subcategory: subcategory,
-            supplier: supplier,
-            qty: qty,
-            unit: unit,
-            deliveryDate: deliveryDate
-        };
-
-        appData.deliveries.unshift(newDelivery);
-
-        const existingItem = appData.inventory.find(i => 
-            i.category === category && 
-            i.subcategory === subcategory && 
-            i.name.toLowerCase().trim() === itemName.toLowerCase().trim()
-        );
-
-        if (existingItem) {
-            existingItem.qty += qty;
-            existingItem.unit = unit;
-            existingItem.lastChanged = nowStamp;
-            existingItem.sourceNote = "Delivery";
-            recordLog(`Delivery input updated stock for "${itemName}" (+${qty} ${unit}) from [${supplier}] in ${category}`);
-        } else {
-            if (!appData.categories[category]) appData.categories[category] = [];
-            if (!appData.categories[category].includes(subcategory)) {
-                appData.categories[category].push(subcategory);
+        if (editingId) {
+            const del = appData.deliveries.find(d => d.id === parseInt(editingId));
+            if (del) {
+                del.name = itemName;
+                del.category = category;
+                del.subcategory = subcategory;
+                del.supplier = supplier;
+                del.qty = qty;
+                del.unit = unit;
+                del.deliveryDate = deliveryDate;
+                recordLog(`Re-edited / updated delivery record for "${itemName}" from [${supplier}]`);
             }
-
-            appData.inventory.push({
-                id: Date.now() + Math.floor(Math.random() * 1000),
+            cancelDeliveryEdit();
+            autoSaveData();
+        } else {
+            const newDelivery = {
+                id: Date.now(),
                 name: itemName,
                 category: category,
                 subcategory: subcategory,
+                supplier: supplier,
                 qty: qty,
                 unit: unit,
-                addedDate: deliveryDate,
-                lastChanged: nowStamp,
-                sourceNote: "Delivery"
-            });
-            recordLog(`Delivery input automatically added "${itemName}" (${qty} ${unit}) from [${supplier}] into ${category}`);
-        }
+                deliveryDate: deliveryDate
+            };
 
-        autoSaveData();
+            appData.deliveries.unshift(newDelivery);
 
-        document.getElementById('delItemName').value = '';
-        document.getElementById('delQty').value = '';
-        document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
-        updateSupplierDropdown();
-    }
+            const existingItem = appData.inventory.find(i => 
+                i.category === category && 
+                i.subcategory === subcategory && 
+                i.name.toLowerCase().trim() === itemName.toLowerCase().trim()
+            );
 
-    function deleteDelivery(id) {
-        const del = appData.deliveries.find(d => d.id === id);
-        if (del) {
-            if (confirm(`Delete delivery record for "${del.name}"?`)) {
-                recordLog(`Deleted delivery record for "${del.name}"`);
-                appData.deliveries = appData.deliveries.filter(d => d.id !== id);
-                autoSaveData();
+            if (existingItem) {
+                existingItem.qty += qty;
+                existingItem.unit = unit;
+                existingItem.lastChanged = nowStamp;
+                existingItem.sourceNote = "Delivery";
+                recordLog(`Delivery input updated stock for "${itemName}" (+${qty} ${unit}) from [${supplier}] in ${category}`);
+            } else {
+                if (!appData.categories[category]) appData.categories[category] = [];
+                if (!appData.categories[category].includes(subcategory)) {
+                    appData.categories[category].push(subcategory);
+                }
+
+                appData.inventory.push({
+                    id: Date.now() + Math.floor(Math.random() * 1000),
+                    name: itemName,
+                    category: category,
+                    subcategory: subcategory,
+                    qty: qty,
+                    unit: unit,
+                    addedDate: deliveryDate,
+                    lastChanged: nowStamp,
+                    sourceNote: "Delivery"
+                });
+                recordLog(`Delivery input automatically added "${itemName}" (${qty} ${unit}) from [${supplier}] into ${category}`);
             }
+
+            autoSaveData();
+
+            document.getElementById('delItemName').value = '';
+            document.getElementById('delQty').value = '';
+            document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
+            updateSupplierDropdown();
         }
     }
 
@@ -1952,7 +1720,7 @@
         }
 
         if (filteredDeliveries.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No matching delivery records found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">No matching delivery records found.</td></tr>`;
             return;
         }
 
@@ -1960,7 +1728,6 @@
             const row = document.createElement('tr');
 
             row.innerHTML = `
-                <td style="text-align: center;"><input type="checkbox" class="row-checkbox del-row-cb" value="${del.id}" onchange="updateBatchBarVisibility()"></td>
                 <td><strong>• ${del.name}</strong></td>
                 <td><span style="font-weight: 600;">${del.category}</span> <span style="font-size:0.75rem; color:var(--text-muted);">(${del.subcategory})</span></td>
                 <td><span class="delivery-note-tag">${del.supplier}</span></td>
@@ -1968,22 +1735,7 @@
                 <td>${del.deliveryDate || del.expectedDate || ''}</td>
                 <td>
                     <div class="action-cell-wrapper">
-                        <select class="select-move-to" onchange="handleRowDropdownAction(${del.id}, this.value, 'DELIVERY')">
-                            <option value="">Action...</option>
-                            <optgroup label="Move To">
-                                <option value="MOVE_Café">☕ Move to Café</option>
-                                <option value="MOVE_Community">🤝 Move to Community</option>
-                                <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
-                            </optgroup>
-                            <optgroup label="Copy To">
-                                <option value="COPY_Café">☕ Copy to Café</option>
-                                <option value="COPY_Community">🤝 Copy to Community</option>
-                                <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                            </optgroup>
-                            <optgroup label="Delete">
-                                <option value="DELETE">🗑️ Delete</option>
-                            </optgroup>
-                        </select>
+                        <button class="btn edit-btn" onclick="editDeliveryRecord(${del.id})" style="padding: 6px 12px; font-size: 0.78rem;">✏️ Re-Edit</button>
                     </div>
                 </td>
             `;
@@ -2045,7 +1797,7 @@
                         <td><span style="font-size: 0.78rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
                         <td>
                             <div class="action-cell-wrapper">
-                                <button class="btn-danger" onclick="deleteItem(${item.id})">Delete</button>
+                                <button class="btn edit-btn" onclick="navigateTo('inventory', '${item.category}'); setTimeout(() => editInventoryItem(${item.id}), 100);" style="padding: 6px 12px; font-size: 0.78rem;">✏️ Re-Edit</button>
                             </div>
                         </td>
                     `;
@@ -2072,7 +1824,7 @@
         const filteredItems = appData.inventory.filter(item => item.category === currentCategory);
 
         if (filteredItems.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No items registered.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">No items registered.</td></tr>`;
             return;
         }
 
@@ -2086,7 +1838,7 @@
         Object.keys(grouped).forEach(subGroup => {
             const headerRow = document.createElement('tr');
             headerRow.className = 'group-header-row';
-            headerRow.innerHTML = `<td colspan="7">📂 Group: ${subGroup.toUpperCase()}</td>`;
+            headerRow.innerHTML = `<td colspan="6">📂 Group: ${subGroup.toUpperCase()}</td>`;
             tbody.appendChild(headerRow);
 
             grouped[subGroup].forEach(item => {
@@ -2096,7 +1848,6 @@
                     : `<span class="inhouse-note-tag">In-House</span>`;
 
                 row.innerHTML = `
-                    <td style="text-align: center;"><input type="checkbox" class="row-checkbox inv-row-cb" value="${item.id}" onchange="updateBatchBarVisibility()"></td>
                     <td style="padding-left: 12px;">• ${item.name} ${noteTag}</td>
                     <td>${item.category}</td>
                     <td>
@@ -2111,28 +1862,7 @@
                     <td><span style="font-size: 0.78rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
                     <td>
                         <div class="action-cell-wrapper">
-                            <select class="select-move-to" onchange="handleRowDropdownAction(${item.id}, this.value, 'INVENTORY')">
-                                <option value="">Action...</option>
-                                <optgroup label="Move To">
-                                    ${item.category !== 'Café' ? '<option value="MOVE_Café">☕ Move to Café</option>' : ''}
-                                    ${item.category !== 'Community' ? '<option value="MOVE_Community">🤝 Move to Community</option>' : ''}
-                                    ${item.category !== 'Housekeeping' ? '<option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>' : ''}
-                                    <option value="MOVE_DELIVERIES">🚚 Move to Deliveries</option>
-                                </optgroup>
-                                <optgroup label="Copy To">
-                                    <option value="COPY_Café">☕ Copy to Café</option>
-                                    <option value="COPY_Community">🤝 Copy to Community</option>
-                                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                                    <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
-                                </optgroup>
-                                <optgroup label="Mark Source Note As">
-                                    <option value="MARK_In-House">🟢 Mark as In-House</option>
-                                    <option value="MARK_Delivery">📦 Mark as Delivery</option>
-                                </optgroup>
-                                <optgroup label="Delete">
-                                    <option value="DELETE">🗑️ Delete</option>
-                                </optgroup>
-                            </select>
+                            <button class="btn edit-btn" onclick="editInventoryItem(${item.id})" style="padding: 6px 12px; font-size: 0.78rem;">✏️ Re-Edit</button>
                         </div>
                     </td>
                 `;
