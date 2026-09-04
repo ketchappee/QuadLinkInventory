@@ -105,6 +105,25 @@
         }
         .menu-trigger-btn:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
 
+        .back-nav-btn {
+            padding: 0 16px;
+            height: 38px;
+            border-radius: 19px;
+            background: var(--clear-trans-medium);
+            border: 1px solid var(--clear-border);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-main);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        .back-nav-btn:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
+
         .logo-badge {
             background: rgba(255, 255, 255, 0.9);
             padding: 6px 12px;
@@ -172,6 +191,103 @@
             background: var(--clear-trans-medium);
             color: var(--text-main);
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* NETFLIX-STYLE SELECTION CAROUSEL / ROW */
+        .netflix-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding: 10px 0;
+        }
+
+        .netflix-row-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+        }
+
+        .netflix-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .netflix-card {
+            background: var(--clear-trans-medium);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--clear-border);
+            border-radius: 24px;
+            padding: 30px 24px;
+            cursor: pointer;
+            box-shadow: var(--glass-shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .netflix-card:hover {
+            transform: scale(1.04) translateY(-4px);
+            background: var(--clear-trans-hover);
+            border-color: var(--brand-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .netflix-card-icon {
+            font-size: 2.8rem;
+            background: rgba(255, 255, 255, 0.7);
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--clear-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .netflix-card:hover .netflix-card-icon {
+            background: var(--brand-color);
+            color: #fff;
+            border-color: var(--brand-color);
+        }
+
+        .netflix-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .netflix-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .netflix-badge-tag {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(140, 123, 107, 0.15);
+            color: var(--brand-color);
+            border: 1px solid rgba(140, 123, 107, 0.3);
         }
 
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; }
@@ -537,8 +653,10 @@
 <body>
 
 <nav class="navbar">
-    <div class="nav-left">
-        <button class="menu-trigger-btn" onclick="toggleMenu()">☰</button>
+    <div class="nav-left" id="navLeftContainer">
+        <!-- Dynamically shown/hidden based on active page -->
+        <button class="menu-trigger-btn" onclick="toggleMenu()" id="hamburgerBtn">☰</button>
+        <button class="back-nav-btn" onclick="navigateTo('menu')" id="backBtn" style="display: none;">← Back</button>
         <div class="logo-badge" onclick="navigateTo('home')">
             <img class="nav-brand-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         </div>
@@ -552,8 +670,8 @@
         <h1>QuadLink Inventory</h1>
         <p>Aesthetic minimalist stock management with automated subcategory sorting and intelligent update tracking.</p>
         <div class="hero-action-group">
-            <button class="btn-proceed" onclick="navigateTo('inventory', 'Café')">
-                ☕ Proceed to Café Inventory
+            <button class="btn-proceed" onclick="navigateTo('menu')">
+                📂 Proceed to Menu Inventory
             </button>
             <button class="btn-proceed secondary" onclick="navigateTo('deliveries')">
                 🚚 Deliveries Inventory
@@ -565,12 +683,48 @@
     </div>
 </section>
 
+<!-- NETFLIX SELECTION PAGE FOR MENU INVENTORY -->
+<section id="view-menu" class="page-view">
+    <header>
+        <h2>📂 Menu Inventory</h2>
+        <div class="action-btns">
+            <button onclick="navigateTo('home')" class="btn">🏠 Home</button>
+            <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
+        </div>
+    </header>
+
+    <div class="netflix-container">
+        <div class="netflix-row-title">✨ Select Category</div>
+        <div class="netflix-cards-grid">
+            <div class="netflix-card" onclick="navigateTo('inventory', 'Café')">
+                <div class="netflix-card-icon">☕</div>
+                <div class="netflix-badge-tag">Inventory Hub</div>
+                <h3>Café</h3>
+                <p>Manage espresso beans, milks, syrups, cups, and daily consumables.</p>
+            </div>
+            <div class="netflix-card" onclick="navigateTo('inventory', 'Community')">
+                <div class="netflix-card-icon">🤝</div>
+                <div class="netflix-badge-tag">Inventory Hub</div>
+                <h3>Community</h3>
+                <p>Track entertainment sets, furniture, seating, and electronics.</p>
+            </div>
+            <div class="netflix-card" onclick="navigateTo('inventory', 'Housekeeping')">
+                <div class="netflix-card-icon">🧹</div>
+                <div class="netflix-badge-tag">Inventory Hub</div>
+                <h3>Housekeeping</h3>
+                <p>Monitor cleaning chemicals, linens, equipment, and supplies.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- DELIVERIES INVENTORY PAGE WITH DASHBOARD MENU -->
 <section id="view-deliveries" class="page-view">
     <header>
         <h2>🚚 Deliveries Dashboard</h2>
         <div class="action-btns">
-            <button onclick="navigateTo('master')" class="btn">🔍 Open Master Search</button>
+            <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
+            <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
             <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON Sync</button>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
@@ -702,6 +856,7 @@
     <header>
         <h2>🔍 Search & Overview</h2>
         <div class="action-btns">
+            <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON Sync</button>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
@@ -792,6 +947,7 @@
     <header>
         <h2 id="currentTitle">☕ Café Inventory</h2>
         <div class="action-btns">
+            <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON Sync</button>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
             <label class="btn-label">
@@ -910,6 +1066,10 @@
             <button class="menu-item-btn active" id="nav-home" onclick="navigateTo('home')">
                 <div class="icon-box">🏠</div>
                 <div><strong>Home Page</strong></div>
+            </button>
+            <button class="menu-item-btn" id="nav-menu" onclick="navigateTo('menu')">
+                <div class="icon-box">📂</div>
+                <div><strong>Menu Inventory</strong></div>
             </button>
             <button class="menu-item-btn" id="nav-deliveries" onclick="navigateTo('deliveries')">
                 <div class="icon-box">🚚</div>
@@ -1534,9 +1694,26 @@
         const activePage = document.querySelector('.page-view.active');
         const targetElement = document.getElementById(`view-${targetPage}`);
 
+        // Update navigation header button display:
+        // - 'home', 'menu', 'deliveries', and 'master' have NO hamburger and NO back button (or use header buttons).
+        // - 'inventory' (Café, Community, Housekeeping categories) has the '← Back' button leading back to the menu selection page.
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const backBtn = document.getElementById('backBtn');
+
+        if (targetPage === 'inventory') {
+            hamburgerBtn.style.display = 'none';
+            backBtn.style.display = 'inline-flex';
+            backBtn.setAttribute('onclick', "navigateTo('menu')");
+        } else {
+            hamburgerBtn.style.display = 'none';
+            backBtn.style.display = 'none';
+        }
+
         document.querySelectorAll('.menu-item-btn').forEach(btn => btn.classList.remove('active'));
         if (targetPage === 'home') {
             document.getElementById('nav-home').classList.add('active');
+        } else if (targetPage === 'menu') {
+            document.getElementById('nav-menu').classList.add('active');
         } else if (targetPage === 'deliveries') {
             document.getElementById('nav-deliveries').classList.add('active');
         } else if (targetPage === 'master') {
@@ -1926,6 +2103,8 @@
         });
     }
 
+    // Initial load state setup
+    navigateTo('home');
     switchCategory('Café');
     updateDeliverySubcategoryDropdown('Café');
     renderTable();
