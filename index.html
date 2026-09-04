@@ -289,6 +289,71 @@
             margin-bottom: 20px;
         }
 
+        /* SUBCATEGORY ACCORDION TABS WITH SLIDE ANIMATION */
+        .sub-accordion-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .sub-accordion-card {
+            background: var(--clear-trans-medium);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid var(--clear-border);
+            box-shadow: var(--glass-shadow);
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+        .sub-accordion-card:hover { border-color: var(--brand-color); }
+
+        .sub-accordion-header {
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.4);
+            transition: background 0.2s ease;
+        }
+        .sub-accordion-header:hover { background: rgba(255, 255, 255, 0.65); }
+        
+        .sub-accordion-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(140, 123, 107, 0.15);
+            color: var(--brand-color);
+            padding: 3px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(140, 123, 107, 0.25);
+        }
+
+        .sub-accordion-arrow {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .sub-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease;
+            padding: 0 16px;
+        }
+
+        .sub-accordion-content.open {
+            max-height: 1200px;
+            padding: 12px 16px 18px 16px;
+        }
+
+        .sub-accordion-card.active .sub-accordion-arrow {
+            transform: rotate(180deg);
+        }
+
         .batch-action-bar {
             background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(15px);
@@ -396,13 +461,6 @@
         table { width: 100%; border-collapse: collapse; text-align: left; min-width: 820px; }
         th, td { padding: 12px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.35); font-size: 0.8rem; white-space: nowrap; }
         th { background: rgba(255, 255, 255, 0.3); color: var(--text-muted); font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.6px; }
-        
-        .group-header-row {
-            background: rgba(255, 255, 255, 0.55) !important;
-            font-weight: 700;
-            color: var(--text-main);
-            font-size: 0.75rem;
-        }
 
         .qty-control { display: flex; align-items: center; gap: 5px; }
         .btn-qty { width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--clear-border); background: rgba(255, 255, 255, 0.6); cursor: pointer; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -504,7 +562,7 @@
             <img class="nav-brand-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         </div>
     </div>
-    <div id="syncBadge" class="sync-badge">● Auto-Saved</div>
+    <div id="syncBadge" class="sync-badge">● Auto-Saved & Synced</div>
 </nav>
 
 <!-- HOME PAGE -->
@@ -512,7 +570,7 @@
     <div class="home-hero">
         <img class="home-hero-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         <h1>QuadLink Inventory</h1>
-        <p>Aesthetic minimalist stock management with shared GitHub syncing for all users.</p>
+        <p>Aesthetic minimalist stock management with automated GitHub cloud sync & Google Sheets integration.</p>
         <div class="hero-action-group">
             <button class="btn-proceed" onclick="navigateTo('menu')">📂 Menu Inventory</button>
             <button class="btn-proceed secondary" onclick="navigateTo('deliveries')">🚚 Deliveries Inventory</button>
@@ -655,7 +713,7 @@
                 </div>
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
-                <button type="submit" id="delSubmitBtn" class="btn primary">+ Schedule Delivery</button>
+                <button type="submit" id="delSubmitBtn" class="btn primary">+ Schedule Delivery (Auto-Syncs to Inventory)</button>
                 <button type="button" id="delCancelEditBtn" class="btn" style="display: none;" onclick="cancelDeliveryEdit()">Cancel Edit</button>
             </div>
         </form>
@@ -853,45 +911,9 @@
         </form>
     </div>
 
-    <!-- BATCH ACTION BAR FOR INVENTORY -->
-    <div id="invBatchBar" class="batch-action-bar" style="display: none;">
-        <span class="batch-info" id="invBatchCount">0 selected</span>
-        <div class="batch-controls">
-            <select id="invBatchTarget" class="select-transfer" style="max-width: 170px;">
-                <option value="">Transfer / Copy...</option>
-                <optgroup label="Move To">
-                    <option value="MOVE_Café">☕ Move to Café</option>
-                    <option value="MOVE_Community">🤝 Move to Community</option>
-                    <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
-                    <option value="MOVE_DELIVERIES">🚚 Move to Deliveries</option>
-                </optgroup>
-                <optgroup label="Copy To">
-                    <option value="COPY_Café">☕ Copy to Café</option>
-                    <option value="COPY_Community">🤝 Copy to Community</option>
-                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                    <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
-                </optgroup>
-            </select>
-            <button class="btn primary" onclick="executeBatchAction('INVENTORY')" style="padding: 6px 12px; font-size: 0.75rem;">Apply</button>
-            <button class="btn-clear-selected" onclick="deleteSelectedInventoryItems()">🗑️ Delete Selected</button>
-        </div>
-    </div>
-
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 36px; text-align: center;"><input type="checkbox" id="invSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.inv-row-cb')"></th>
-                    <th>Item Name</th>
-                    <th>Category</th>
-                    <th>Qty & Unit</th>
-                    <th>Date Added</th>
-                    <th>Last Changed</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="inventoryTable"></tbody>
-        </table>
+    <!-- SUBCATEGORY ACCORDION TABS CONTAINER WITH SLIDE ANIMATION -->
+    <div id="subAccordionContainer" class="sub-accordion-container">
+        <!-- Rendered dynamically via renderTable() -->
     </div>
 
     <div class="glass-card">
@@ -1110,26 +1132,25 @@
         updateDeliverySubcategoryDropdown(selectedCat);
     }
 
+    function toggleAccordion(headerEl) {
+        const card = headerEl.parentElement;
+        const content = card.querySelector('.sub-accordion-content');
+        const isOpen = card.classList.contains('active');
+
+        card.classList.toggle('active', !isOpen);
+        if (!isOpen) {
+            content.classList.add('open');
+        } else {
+            content.classList.remove('open');
+        }
+    }
+
     function toggleSelectAllPage(masterCb, childSelector) {
         document.querySelectorAll(childSelector).forEach(cb => cb.checked = masterCb.checked);
         updateBatchBarVisibility();
     }
 
     function updateBatchBarVisibility() {
-        const invCbs = document.querySelectorAll('.inv-row-cb:checked');
-        const invBar = document.getElementById('invBatchBar');
-        const invCount = document.getElementById('invBatchCount');
-        if (invBar) {
-            if (invCbs.length > 0) {
-                invBar.style.display = 'flex';
-                invCount.innerText = `${invCbs.length} selected`;
-            } else {
-                invBar.style.display = 'none';
-                const sa = document.getElementById('invSelectAll');
-                if (sa) sa.checked = false;
-            }
-        }
-
         const delCbs = document.querySelectorAll('.del-row-cb:checked');
         const delBar = document.getElementById('delBatchBar');
         const delCount = document.getElementById('delBatchCount');
@@ -1146,8 +1167,8 @@
     }
 
     function executeBatchAction(sourceType) {
-        let actionVal = sourceType === 'INVENTORY' ? document.getElementById('invBatchTarget').value : document.getElementById('delBatchTarget').value;
-        let checkedBoxes = document.querySelectorAll(sourceType === 'INVENTORY' ? '.inv-row-cb:checked' : '.del-row-cb:checked');
+        let actionVal = document.getElementById('delBatchTarget').value;
+        let checkedBoxes = document.querySelectorAll('.del-row-cb:checked');
 
         if (!actionVal || checkedBoxes.length === 0) {
             alert("Please select a transfer destination and at least one item.");
@@ -1175,12 +1196,19 @@
             if (!del) return;
             if (targetName === 'DELIVERIES') return;
 
+            appData.inventory.forEach(invItem => {
+                if (invItem.category === targetName) {
+                    invItem.sourceNote = "In-House";
+                }
+            });
+
             const targetSubcategory = (appData.categories[targetName] && appData.categories[targetName].length > 0) ? appData.categories[targetName][0] : 'General';
             const existingItem = appData.inventory.find(i => i.category === targetName && i.name.toLowerCase().trim() === del.name.toLowerCase().trim());
 
             if (existingItem) {
                 existingItem.qty += del.qty;
                 existingItem.lastChanged = nowStamp;
+                existingItem.sourceNote = "Delivery";
             } else {
                 appData.inventory.push({
                     id: Date.now() + Math.random(),
@@ -1197,65 +1225,11 @@
 
             if (!isCopy) {
                 appData.deliveries = appData.deliveries.filter(d => d.id !== itemId);
-                recordLog(`Moved delivery "${del.name}" to ${targetName}`);
+                recordLog(`Processed delivery "${del.name}" into ${targetName} (marked previous items as In-House)`);
             } else {
                 recordLog(`Copied delivery "${del.name}" to ${targetName}`);
             }
-        } else {
-            const item = appData.inventory.find(i => i.id === itemId);
-            if (!item) return;
-
-            if (targetName === 'DELIVERIES') {
-                appData.deliveries.unshift({
-                    id: Date.now() + Math.random(),
-                    name: item.name,
-                    category: item.category,
-                    subcategory: item.subcategory || 'General',
-                    supplier: 'JAMBI',
-                    qty: item.qty,
-                    unit: item.unit || 'Pcs',
-                    deliveryDate: item.addedDate || new Date().toISOString().split('T')[0]
-                });
-                if (!isCopy) {
-                    appData.inventory = appData.inventory.filter(i => i.id !== itemId);
-                    recordLog(`Moved "${item.name}" to Deliveries`);
-                } else {
-                    recordLog(`Copied "${item.name}" to Deliveries`);
-                }
-            } else {
-                const targetSubcategory = (appData.categories[targetName] && appData.categories[targetName].length > 0) ? appData.categories[targetName][0] : 'General';
-                if (isCopy) {
-                    appData.inventory.push({
-                        id: Date.now() + Math.random(),
-                        name: item.name,
-                        category: targetName,
-                        subcategory: targetSubcategory,
-                        qty: item.qty,
-                        unit: item.unit || 'Pcs',
-                        addedDate: new Date().toISOString().split('T')[0],
-                        lastChanged: nowStamp,
-                        sourceNote: item.sourceNote
-                    });
-                    recordLog(`Copied "${item.name}" to ${targetName}`);
-                } else {
-                    if (item.category === targetName) return;
-                    item.category = targetName;
-                    item.subcategory = targetSubcategory;
-                    item.lastChanged = nowStamp;
-                    recordLog(`Moved "${item.name}" to ${targetName}`);
-                }
-            }
         }
-    }
-
-    function deleteSelectedInventoryItems() {
-        const checked = document.querySelectorAll('.inv-row-cb:checked');
-        if (checked.length === 0) return;
-        if (!confirm(`Delete ${checked.length} selected item(s)?`)) return;
-        const ids = Array.from(checked).map(cb => parseInt(cb.value));
-        appData.inventory = appData.inventory.filter(i => !ids.includes(i.id));
-        recordLog(`Deleted ${ids.length} inventory item(s)`);
-        autoSaveData();
     }
 
     function deleteSelectedDeliveries() {
@@ -1292,14 +1266,14 @@
 
     async function autoSaveData() {
         localStorage.setItem('cafe_inventory_data', JSON.stringify(appData));
-        document.getElementById('syncBadge').innerText = "● Auto-Saved";
+        document.getElementById('syncBadge').innerText = "● Auto-Saved & Synced";
         renderTable();
         renderMasterTables();
         renderDeliveriesTable();
         renderLogs();
         updateBatchBarVisibility();
 
-        // Background GitHub Sync if token exists
+        // Automatic GitHub Cloud Sync
         const token = localStorage.getItem('github_pat');
         if (token) {
             pushToGitHub(token, false);
@@ -1349,7 +1323,7 @@
             });
 
             if (putRes.ok) {
-                if (showAlert) alert("Successfully synced and pushed to ketchappee/QuadLinkInventory!");
+                if (showAlert) alert("Successfully synced and pushed to ketchappee/QuadLinkInventory GitHub repository!");
             } else {
                 const err = await putRes.json();
                 if (showAlert) alert("GitHub Sync Error: " + err.message);
@@ -1360,7 +1334,6 @@
         }
     }
 
-    // NEW FUNCTION: Allows any user to fetch and load the latest shared data from GitHub
     async function loadFromGitHub() {
         const owner = "ketchappee";
         const repo = "QuadLinkInventory";
@@ -1585,8 +1558,37 @@
             }
             cancelDeliveryEdit();
         } else {
+            // AUTOMATIC IN-HOUSE CONVERSION & INVENTORY SYNC:
+            // When a new delivery item is input, prior items in that category automatically mark as "In-House"
+            // and the new delivery item immediately auto-syncs into the main Inventory page.
+            appData.inventory.forEach(invItem => {
+                if (invItem.category === category) {
+                    invItem.sourceNote = "In-House";
+                }
+            });
+
             appData.deliveries.unshift({ id: Date.now(), name, category, subcategory, supplier, qty, unit, deliveryDate });
-            recordLog(`Scheduled delivery "${name}" (${qty} ${unit}) from ${supplier}`);
+
+            const existingItem = appData.inventory.find(i => i.category === category && i.name.toLowerCase().trim() === name.toLowerCase().trim());
+            if (existingItem) {
+                existingItem.qty += qty;
+                existingItem.lastChanged = stamp;
+                existingItem.sourceNote = "Delivery";
+            } else {
+                appData.inventory.push({
+                    id: Date.now() + Math.random() + 1,
+                    name: name,
+                    category: category,
+                    subcategory: subcategory || 'General',
+                    qty: qty,
+                    unit: unit,
+                    addedDate: deliveryDate,
+                    lastChanged: stamp,
+                    sourceNote: "Delivery"
+                });
+            }
+
+            recordLog(`Scheduled delivery "${name}" & auto-synced to ${category} inventory (prior items marked In-House)`);
             document.getElementById('delItemName').value = '';
             document.getElementById('delQty').value = '';
         }
@@ -1641,7 +1643,7 @@
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" class="row-checkbox del-row-cb" value="${del.id}" onchange="updateBatchBarVisibility()"></td>
                 <td><strong>• ${del.name}</strong></td>
-                <td>${del.category} <span style="font-size:0.7rem; color:var(--text-muted);">(${del.subcategory})</span></td>
+                <td>${del.category} <span style="font-size:0.7rem; color: var(--text-muted);">(${del.subcategory})</span></td>
                 <td><span class="delivery-note-tag">${del.supplier}</span></td>
                 <td><strong>${del.qty}</strong> <span class="unit-label">${del.unit}</span></td>
                 <td>${del.deliveryDate}</td>
@@ -1650,12 +1652,12 @@
                         <button class="btn edit-btn" onclick="editDeliveryRecord(${del.id})" style="padding: 5px 8px; font-size: 0.72rem;">✏️ Re-Edit</button>
                         <select class="select-transfer" onchange="handleRowDropdownAction(${del.id}, this.value, 'DELIVERY')">
                             <option value="">Move/Copy...</option>
-                            <optgroup label="Move To">
+                            <optgroup label="Move To (Marks In-House)">
                                 <option value="MOVE_Café">☕ Café</option>
                                 <option value="MOVE_Community">🤝 Community</option>
                                 <option value="MOVE_Housekeeping">🧹 Housekeeping</option>
                             </optgroup>
-                            <optgroup label="Copy To">
+                            <optgroup label="Copy To (Marks In-House)">
                                 <option value="COPY_Café">☕ Café</option>
                                 <option value="COPY_Community">🤝 Community</option>
                                 <option value="COPY_Housekeeping">🧹 Housekeeping</option>
@@ -1696,7 +1698,7 @@
                 total += items.length;
                 items.forEach(item => {
                     const tr = document.createElement('tr');
-                    const noteTag = item.sourceNote === 'Delivery' ? `<span class="delivery-note-tag">Del</span>` : `<span class="inhouse-note-tag">In</span>`;
+                    const noteTag = item.sourceNote === 'Delivery' ? `<span class="delivery-note-tag">Del</span>` : `<span class="inhouse-note-tag">In-House</span>`;
                     tr.innerHTML = `
                         <td>• ${item.name} ${noteTag}</td>
                         <td>${item.subcategory}</td>
@@ -1726,71 +1728,97 @@
         if (noRes) noRes.style.display = (total === 0) ? 'block' : 'none';
     }
 
+    // Render Subcategory Accordion Tabs to maximize space with smooth slide up/down animation
     function renderTable() {
-        const tbody = document.getElementById('inventoryTable');
-        if (!tbody) return;
-        tbody.innerHTML = '';
+        const container = document.getElementById('subAccordionContainer');
+        if (!container) return;
+        container.innerHTML = '';
 
         const items = appData.inventory.filter(i => i.category === currentCategory);
-        if (items.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 20px;">No items registered.</td></tr>`;
+        const subcategories = appData.categories[currentCategory] || [];
+
+        if (subcategories.length === 0 && items.length === 0) {
+            container.innerHTML = `<div class="glass-card" style="text-align: center; color: var(--text-muted); padding: 20px;">No subcategories or items registered for ${currentCategory}.</div>`;
             return;
         }
 
         const grouped = {};
+        subcategories.forEach(sub => grouped[sub] = []);
         items.forEach(i => {
             const sub = i.subcategory || 'General';
             if (!grouped[sub]) grouped[sub] = [];
             grouped[sub].push(i);
         });
 
-        Object.keys(grouped).forEach(subGroup => {
-            const hr = document.createElement('tr');
-            hr.className = 'group-header-row';
-            hr.innerHTML = `<td colspan="7">📂 Subcategory: ${subGroup.toUpperCase()}</td>`;
-            tbody.appendChild(hr);
+        Object.keys(grouped).forEach((subGroup, index) => {
+            const subItems = grouped[subGroup];
+            const card = document.createElement('div');
+            card.className = index === 0 ? 'sub-accordion-card active' : 'sub-accordion-card';
 
-            grouped[subGroup].forEach(item => {
-                const tr = document.createElement('tr');
-                const noteTag = item.sourceNote === 'Delivery' ? `<span class="delivery-note-tag">Del</span>` : `<span class="inhouse-note-tag">In</span>`;
-                tr.innerHTML = `
-                    <td style="text-align: center;"><input type="checkbox" class="row-checkbox inv-row-cb" value="${item.id}" onchange="updateBatchBarVisibility()"></td>
-                    <td>• ${item.name} ${noteTag}</td>
-                    <td>${item.category}</td>
-                    <td>
-                        <div class="qty-control">
-                            <button class="btn-qty" onclick="updateQty(${item.id}, -1)">-</button>
-                            <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.qty}</span>
-                            <button class="btn-qty" onclick="updateQty(${item.id}, 1)">+</button>
-                            <span class="unit-label">${item.unit}</span>
-                        </div>
-                    </td>
-                    <td>${item.addedDate}</td>
-                    <td><span style="font-size: 0.72rem; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
-                    <td>
-                        <div class="action-cell-wrapper">
-                            <button class="btn edit-btn" onclick="editInventoryItem(${item.id})" style="padding: 5px 8px; font-size: 0.72rem;">✏️ Re-Edit</button>
-                            <select class="select-transfer" onchange="handleRowDropdownAction(${item.id}, this.value, 'INVENTORY')">
-                                <option value="">Move/Copy...</option>
-                                <optgroup label="Move To">
-                                    ${currentCategory !== 'Café' ? '<option value="MOVE_Café">☕ Café</option>' : ''}
-                                    ${currentCategory !== 'Community' ? '<option value="MOVE_Community">🤝 Community</option>' : ''}
-                                    ${currentCategory !== 'Housekeeping' ? '<option value="MOVE_Housekeeping">🧹 Housekeeping</option>' : ''}
-                                    <option value="MOVE_DELIVERIES">🚚 Deliveries</option>
-                                </optgroup>
-                                <optgroup label="Copy To">
-                                    <option value="COPY_Café">☕ Café</option>
-                                    <option value="COPY_Community">🤝 Community</option>
-                                    <option value="COPY_Housekeeping">🧹 Housekeeping</option>
-                                    <option value="COPY_DELIVERIES">🚚 Deliveries</option>
-                                </optgroup>
-                            </select>
-                            <button class="btn-delete-x" onclick="deleteItem(${item.id})" title="Delete">✕</button>
-                        </div>
-                    </td>
+            const header = document.createElement('div');
+            header.className = 'sub-accordion-header';
+            header.setAttribute('onclick', 'toggleAccordion(this)');
+            header.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span>📂 ${subGroup}</span>
+                    <span class="sub-accordion-badge">${subItems.length} items</span>
+                </div>
+                <span class="sub-accordion-arrow">▼</span>
+            `;
+
+            const content = document.createElement('div');
+            content.className = index === 0 ? 'sub-accordion-content open' : 'sub-accordion-content';
+
+            if (subItems.length === 0) {
+                content.innerHTML = `<p style="padding: 10px 4px; font-size: 0.78rem; color: var(--text-muted);">No items in this subcategory.</p>`;
+            } else {
+                let tableHtml = `
+                    <div class="table-container" style="margin-bottom: 0; box-shadow: none; border: none; background: transparent;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Qty & Unit</th>
+                                    <th>Date Added</th>
+                                    <th>Last Changed</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                 `;
-                tbody.appendChild(tr);
-            });
+
+                subItems.forEach(item => {
+                    const noteTag = item.sourceNote === 'Delivery' ? `<span class="delivery-note-tag">Del</span>` : `<span class="inhouse-note-tag">In-House</span>`;
+                    tableHtml += `
+                        <tr>
+                            <td>• ${item.name} ${noteTag}</td>
+                            <td>
+                                <div class="qty-control">
+                                    <button class="btn-qty" onclick="updateQty(${item.id}, -1)">-</button>
+                                    <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.qty}</span>
+                                    <button class="btn-qty" onclick="updateQty(${item.id}, 1)">+</button>
+                                    <span class="unit-label">${item.unit}</span>
+                                </div>
+                            </td>
+                            <td>${item.addedDate}</td>
+                            <td><span style="font-size: 0.72rem; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
+                            <td>
+                                <div class="action-cell-wrapper">
+                                    <button class="btn edit-btn" onclick="editInventoryItem(${item.id})" style="padding: 5px 8px; font-size: 0.72rem;">✏️ Re-Edit</button>
+                                    <button class="btn-delete-x" onclick="deleteItem(${item.id})" title="Delete">✕</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                tableHtml += `</tbody></table></div>`;
+                content.innerHTML = tableHtml;
+            }
+
+            card.appendChild(header);
+            card.appendChild(content);
+            container.appendChild(card);
         });
     }
 
