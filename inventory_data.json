@@ -451,10 +451,10 @@
       "name": "OAT",
       "category": "Café",
       "subcategory": "MILK",
-      "qty": 1,
+      "qty": 0,
       "unit": "Pcs",
       "addedDate": "2026-09-04",
-      "lastChanged": "2026-09-04 17:06",
+      "lastChanged": "2026-09-04 17:14",
       "sourceNote": "In-House"
     },
     {
@@ -470,6 +470,11 @@
     }
   ],
   "logs": [
+    {
+      "id": "log_1788513275149",
+      "timestamp": "2026-09-04 17:14",
+      "details": "Updated qty for \"OAT\" to 0"
+    },
     {
       "id": "log_1788513034592",
       "timestamp": "2026-09-04 17:10",
@@ -714,11 +719,6 @@
       "id": "log_1785984029086_jzz6t",
       "timestamp": "2026-08-06 10:40",
       "details": "Delivery input automatically added \"JERSEY CONDENSED\" (1 Case) into Café"
-    },
-    {
-      "id": "log_1785983691956_6god3",
-      "timestamp": "2026-08-06 10:34",
-      "details": "Delivery input automatically added \"MOLINERA WHITE TRUFFLE IN OLIVE OIL\" (1 Pcs) into Café"
     }
   ],
   "deliveries": [
