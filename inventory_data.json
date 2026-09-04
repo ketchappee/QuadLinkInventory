@@ -1,0 +1,100 @@
+{
+  "categories": {
+    "Café": [
+      "Beans",
+      "Milk",
+      "Syrups & Flavorings",
+      "Cups & Packaging",
+      "Consumables & Others"
+    ],
+    "Community": [
+      "Entertainment & Games",
+      "Furniture & Seating",
+      "Electronics & AV",
+      "General Supplies"
+    ],
+    "Housekeeping": [
+      "Cleaning Supplies",
+      "Linens & Towels",
+      "Tools & Equipment",
+      "Restroom Supplies"
+    ]
+  },
+  "suppliers": [
+    "JAMBI",
+    "YARDSTICK",
+    "NIMO",
+    "KUKIDO",
+    "MMB",
+    "LALAMOVE"
+  ],
+  "inventory": [
+    {
+      "id": 1,
+      "name": "Espresso Beans",
+      "category": "Café",
+      "subcategory": "Beans",
+      "qty": 12,
+      "unit": "Kg",
+      "addedDate": "2026-09-01",
+      "lastChanged": "2026-09-03 10:00",
+      "sourceNote": "In-House"
+    },
+    {
+      "id": 2,
+      "name": "Oat Milk",
+      "category": "Café",
+      "subcategory": "Milk",
+      "qty": 2,
+      "unit": "Case",
+      "addedDate": "2026-08-25",
+      "lastChanged": "2026-09-02 14:15",
+      "sourceNote": "Delivery"
+    },
+    {
+      "id": 3,
+      "name": "Board Games Set",
+      "category": "Community",
+      "subcategory": "Entertainment & Games",
+      "qty": 15,
+      "unit": "Pcs",
+      "addedDate": "2026-01-10",
+      "lastChanged": "2026-01-10 09:00",
+      "sourceNote": "In-House"
+    },
+    {
+      "id": 4,
+      "name": "Disinfectant Spray",
+      "category": "Housekeeping",
+      "subcategory": "Cleaning Supplies",
+      "qty": 8,
+      "unit": "Box",
+      "addedDate": "2026-08-01",
+      "lastChanged": "2026-08-15 11:30",
+      "sourceNote": "Delivery"
+    }
+  ],
+  "deliveries": [
+    {
+      "id": 101,
+      "name": "Specialty Espresso Batch",
+      "category": "Café",
+      "subcategory": "Beans",
+      "supplier": "YARDSTICK",
+      "qty": 10,
+      "unit": "Kg",
+      "deliveryDate": "2026-09-10"
+    },
+    {
+      "id": 102,
+      "name": "Microfiber Towels Pack",
+      "category": "Housekeeping",
+      "subcategory": "Linens & Towels",
+      "supplier": "JAMBI",
+      "qty": 5,
+      "unit": "Box",
+      "deliveryDate": "2026-09-12"
+    }
+  ],
+  "logs": []
+}
