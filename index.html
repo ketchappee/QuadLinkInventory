@@ -203,6 +203,41 @@
         button.json-btn { color: #2C4254; }
         button.gsheets-btn { color: #264A35; }
 
+        /* DASHBOARD MENU STYLING */
+        .dashboard-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .dash-card-btn {
+            background: var(--clear-trans-medium);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--clear-border);
+            border-radius: 16px;
+            padding: 14px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dash-card-btn:hover { background: var(--clear-trans-hover); transform: translateY(-2px); }
+        .dash-card-btn.active {
+            background: var(--brand-color);
+            color: #fff;
+            border-color: var(--brand-color);
+            box-shadow: 0 6px 16px rgba(140, 123, 107, 0.3);
+        }
+
+        .dash-card-icon { font-size: 1.2rem; }
+        .dash-card-title { font-size: 0.82rem; font-weight: 700; }
+
         .glass-card {
             background: var(--clear-trans-medium);
             backdrop-filter: blur(20px);
@@ -520,15 +555,46 @@
     </div>
 </section>
 
-<!-- DELIVERIES INVENTORY PAGE -->
+<!-- DELIVERIES INVENTORY PAGE WITH DASHBOARD MENU -->
 <section id="view-deliveries" class="page-view">
     <header>
-        <h2>🚚 Deliveries Inventory</h2>
+        <h2>🚚 Deliveries Dashboard</h2>
         <div class="action-btns">
+            <button onclick="navigateTo('master')" class="btn">🔍 Open Master Search</button>
             <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON Sync</button>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
     </header>
+
+    <!-- CATEGORY DASHBOARD SELECTOR -->
+    <div class="dashboard-nav-grid">
+        <div class="dash-card-btn active" id="dashNav-ALL" onclick="filterDeliveryDashboard('ALL')">
+            <div class="dash-card-icon">📦</div>
+            <div class="dash-card-title">All Categories</div>
+        </div>
+        <div class="dash-card-btn" id="dashNav-Café" onclick="filterDeliveryDashboard('Café')">
+            <div class="dash-card-icon">☕</div>
+            <div class="dash-card-title">Café</div>
+        </div>
+        <div class="dash-card-btn" id="dashNav-Community" onclick="filterDeliveryDashboard('Community')">
+            <div class="dash-card-icon">🤝</div>
+            <div class="dash-card-title">Community</div>
+        </div>
+        <div class="dash-card-btn" id="dashNav-Housekeeping" onclick="filterDeliveryDashboard('Housekeeping')">
+            <div class="dash-card-icon">🧹</div>
+            <div class="dash-card-title">Housekeeping</div>
+        </div>
+    </div>
+
+    <!-- SEARCH BAR FOR DELIVERIES LIST -->
+    <div class="glass-card" style="padding: 16px 20px;">
+        <div class="search-bar-container">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="deliverySearchInput" placeholder="Search delivery items or suppliers..." oninput="renderDeliveriesTable()">
+            </div>
+        </div>
+    </div>
 
     <div class="glass-card">
         <form id="deliveryForm" onsubmit="addDelivery(event)">
@@ -840,6 +906,7 @@
 
 <script>
     let fileHandle = null;
+    let currentDeliveryFilter = 'ALL';
 
     let defaultSubcategories = {
         'Café': ['Beans', 'Milk', 'Syrups & Flavorings', 'Cups & Packaging', 'Consumables & Others'],
@@ -884,6 +951,19 @@
     let currentCategory = 'Café';
     document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
     document.getElementById('delExpectedDate').value = new Date().toISOString().split('T')[0];
+
+    function filterDeliveryDashboard(cat) {
+        currentDeliveryFilter = cat;
+        document.querySelectorAll('.dash-card-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`dashNav-${cat}`).classList.add('active');
+
+        if (cat !== 'ALL') {
+            document.getElementById('delCategory').value = cat;
+            updateDeliverySubcategoryDropdown(cat);
+        }
+
+        renderDeliveriesTable();
+    }
 
     function updateSubcategoryDropdown(cat) {
         const select = document.getElementById('itemSubcategory');
@@ -1507,12 +1587,28 @@
         const tbody = document.getElementById('deliveriesTable');
         tbody.innerHTML = '';
 
-        if (!appData.deliveries || appData.deliveries.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No upcoming or logged deliveries.</td></tr>`;
+        const searchQuery = (document.getElementById('deliverySearchInput')?.value || '').toLowerCase().trim();
+
+        let filteredDeliveries = appData.deliveries || [];
+
+        if (currentDeliveryFilter !== 'ALL') {
+            filteredDeliveries = filteredDeliveries.filter(d => d.category === currentDeliveryFilter);
+        }
+
+        if (searchQuery !== '') {
+            filteredDeliveries = filteredDeliveries.filter(d => 
+                d.name.toLowerCase().includes(searchQuery) ||
+                d.supplier.toLowerCase().includes(searchQuery) ||
+                (d.subcategory && d.subcategory.toLowerCase().includes(searchQuery))
+            );
+        }
+
+        if (filteredDeliveries.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No matching delivery records found.</td></tr>`;
             return;
         }
 
-        appData.deliveries.forEach(del => {
+        filteredDeliveries.forEach(del => {
             const row = document.createElement('tr');
 
             row.innerHTML = `
