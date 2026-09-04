@@ -684,7 +684,7 @@
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
-            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON Sync</button>
+            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON File</button>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
     </header>
@@ -743,7 +743,17 @@
                 </div>
                 <div class="input-group">
                     <label>Supplier / Vendor</label>
-                    <input type="text" id="delSupplier" placeholder="e.g. Beans Co." required>
+                    <div class="subcategory-input-wrapper">
+                        <select id="delSupplier" required onchange="handleSupplierChange(this)">
+                            <option value="JAMBI">JAMBI</option>
+                            <option value="YARDSTICK">YARDSTICK</option>
+                            <option value="NIMO">NIMO</option>
+                            <option value="KUKIDO">KUKIDO</option>
+                            <option value="MMB">MMB</option>
+                            <option value="LALAMOVE">LALAMOVE</option>
+                            <option value="CUSTOM">+ Add Custom Supplier...</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="input-group">
                     <label>Quantity & Unit</label>
@@ -817,7 +827,7 @@
         <h2>🔍 Search & Overview</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
-            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON Sync</button>
+            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON File</button>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
     </header>
@@ -908,12 +918,8 @@
         <h2 id="currentTitle">☕ Café Inventory</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
-            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON Sync</button>
+            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON File</button>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
-            <label class="btn-label">
-                📂 Load JSON
-                <input type="file" id="jsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
-            </label>
             <button onclick="exportToGoogleSheets()" class="btn gsheets-btn">📊 Export Sheets Template</button>
         </div>
     </header>
@@ -1038,6 +1044,7 @@
 
     let appData = JSON.parse(localStorage.getItem('cafe_inventory_data')) || {
         categories: defaultSubcategories,
+        suppliers: ['JAMBI', 'YARDSTICK', 'NIMO', 'KUKIDO', 'MMB', 'LALAMOVE'],
         inventory: [
             { id: 1, name: "Espresso Beans", category: "Café", subcategory: "Beans", qty: 12, unit: "Kg", addedDate: "2026-09-01", lastChanged: "2026-09-03 10:00", sourceNote: "In-House" },
             { id: 2, name: "Oat Milk", category: "Café", subcategory: "Milk", qty: 2, unit: "Case", addedDate: "2026-08-25", lastChanged: "2026-09-02 14:15", sourceNote: "Delivery" },
@@ -1045,14 +1052,18 @@
             { id: 4, name: "Disinfectant Spray", category: "Housekeeping", subcategory: "Cleaning Supplies", qty: 8, unit: "Box", addedDate: "2026-08-01", lastChanged: "2026-08-15 11:30", sourceNote: "Delivery" }
         ],
         deliveries: [
-            { id: 101, name: "Specialty Espresso Batch", category: "Café", subcategory: "Beans", supplier: "Roastery Co.", qty: 10, unit: "Kg", deliveryDate: "2026-09-10" },
-            { id: 102, name: "Microfiber Towels Pack", category: "Housekeeping", subcategory: "Linens & Towels", supplier: "CleanDirect", qty: 5, unit: "Box", deliveryDate: "2026-09-12" }
+            { id: 101, name: "Specialty Espresso Batch", category: "Café", subcategory: "Beans", supplier: "YARDSTICK", qty: 10, unit: "Kg", deliveryDate: "2026-09-10" },
+            { id: 102, name: "Microfiber Towels Pack", category: "Housekeeping", subcategory: "Linens & Towels", supplier: "JAMBI", qty: 5, unit: "Box", deliveryDate: "2026-09-12" }
         ],
         logs: []
     };
 
     if (!appData.categories) {
         appData.categories = JSON.parse(JSON.stringify(defaultSubcategories));
+    }
+
+    if (!appData.suppliers) {
+        appData.suppliers = ['JAMBI', 'YARDSTICK', 'NIMO', 'KUKIDO', 'MMB', 'LALAMOVE'];
     }
 
     if (!appData.deliveries) {
@@ -1082,6 +1093,51 @@
     document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
     document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
 
+    function updateSupplierDropdown() {
+        const select = document.getElementById('delSupplier');
+        if (!select) return;
+        const currentVal = select.value;
+        select.innerHTML = '';
+
+        if (!appData.suppliers) {
+            appData.suppliers = ['JAMBI', 'YARDSTICK', 'NIMO', 'KUKIDO', 'MMB', 'LALAMOVE'];
+        }
+
+        appData.suppliers.forEach(supp => {
+            const opt = document.createElement('option');
+            opt.value = supp;
+            opt.innerText = supp;
+            select.appendChild(opt);
+        });
+
+        const customOpt = document.createElement('option');
+        customOpt.value = 'CUSTOM';
+        customOpt.innerText = '+ Add Custom Supplier...';
+        select.appendChild(customOpt);
+
+        if (currentVal && (appData.suppliers.includes(currentVal) || currentVal === 'CUSTOM')) {
+            select.value = currentVal;
+        }
+    }
+
+    function handleSupplierChange(selectEl) {
+        if (selectEl.value === 'CUSTOM') {
+            const customVal = prompt("Enter custom supplier name:");
+            if (customVal && customVal.trim() !== '') {
+                const suppName = customVal.trim().toUpperCase();
+                if (!appData.suppliers.includes(suppName)) {
+                    appData.suppliers.push(suppName);
+                }
+                autoSaveData();
+                updateSupplierDropdown();
+                selectEl.value = suppName;
+            } else {
+                updateSupplierDropdown();
+                selectEl.value = appData.suppliers[0];
+            }
+        }
+    }
+
     function filterDeliveryDashboard(cat) {
         currentDeliveryFilter = cat;
         document.querySelectorAll('.dash-card-btn').forEach(btn => btn.classList.remove('active'));
@@ -1097,6 +1153,8 @@
 
     function updateSubcategoryDropdown(cat) {
         const select = document.getElementById('itemSubcategory');
+        if (!select) return;
+        const currentVal = select.value;
         select.innerHTML = '';
         
         if (!appData.categories[cat]) {
@@ -1116,6 +1174,12 @@
         customOpt.value = 'CUSTOM';
         customOpt.innerText = '+ Add Custom Subcategory...';
         select.appendChild(customOpt);
+
+        if (currentVal && (subs.includes(currentVal) || currentVal === 'CUSTOM')) {
+            select.value = currentVal;
+        } else if (subs.length > 0) {
+            select.value = subs[0];
+        }
 
         if (subs.length === 0) {
             setTimeout(() => {
@@ -1126,6 +1190,8 @@
 
     function updateDeliverySubcategoryDropdown(cat) {
         const select = document.getElementById('delSubcategory');
+        if (!select) return;
+        const currentVal = select.value;
         select.innerHTML = '';
         
         if (!appData.categories[cat]) {
@@ -1145,6 +1211,12 @@
         customOpt.value = 'CUSTOM';
         customOpt.innerText = '+ Add Custom Subcategory...';
         select.appendChild(customOpt);
+
+        if (currentVal && (subs.includes(currentVal) || currentVal === 'CUSTOM')) {
+            select.value = currentVal;
+        } else if (subs.length > 0) {
+            select.value = subs[0];
+        }
 
         if (subs.length === 0) {
             setTimeout(() => {
@@ -1363,9 +1435,9 @@
             return;
         }
 
-        let defaultSupplier = "";
+        let defaultSupplier = "JAMBI";
         if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
-            defaultSupplier = prompt(`Enter Supplier Name for copying/moving ${checkedBoxes.length} item(s) to Deliveries:`, "General Supplier") || "General Supplier";
+            defaultSupplier = prompt(`Enter Supplier Name for copying/moving ${checkedBoxes.length} item(s) to Deliveries:`, "JAMBI") || "JAMBI";
         }
 
         itemIds.forEach(id => {
@@ -1402,16 +1474,16 @@
             return;
         }
 
-        let defaultSupplier = "";
+        let defaultSupplier = "JAMBI";
         if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
             const item = appData.inventory.find(i => i.id === itemId);
-            defaultSupplier = prompt(`Enter Supplier Name for copying/moving "${item?.name || 'Item'}" to Deliveries:`, "General Supplier") || "General Supplier";
+            defaultSupplier = prompt(`Enter Supplier Name for copying/moving "${item?.name || 'Item'}" to Deliveries:`, "JAMBI") || "JAMBI";
         }
         processItemAction(itemId, actionVal, sourceType, defaultSupplier);
         autoSaveData();
     }
 
-    function processItemAction(itemId, actionVal, currentSourceType, supplierName = "General Supplier") {
+    function processItemAction(itemId, actionVal, currentSourceType, supplierName = "JAMBI") {
         const isCopy = actionVal.startsWith('COPY_');
         const targetName = actionVal.replace('MOVE_', '').replace('COPY_', '');
         const nowStamp = getFormattedTimestamp();
@@ -1544,13 +1616,13 @@
                     suggestedName: `inventory_${new Date().toISOString().split('T')[0]}.json`,
                     types: [{ description: 'JSON File', accept: { 'application/json': ['.json'] } }]
                 });
-                updateSyncBadge("● Auto-Saving to JSON", true);
+                updateSyncBadge("● JSON Live File Sync Active", true);
                 autoSaveData();
             } catch (err) {
-                console.log('JSON auto-sync canceled.');
+                console.log('JSON file picking canceled.');
             }
         } else {
-            alert('Automatic file writing is supported on Desktop Chrome, Edge, and Brave browsers.');
+            alert('File System Access API is not supported in this browser. Changes will auto-save to browser local storage.');
         }
     }
 
@@ -1562,7 +1634,7 @@
                 const writable = await fileHandle.createWritable();
                 await writable.write(JSON.stringify(appData, null, 2));
                 await writable.close();
-                updateSyncBadge("● JSON Live Sync Active", true);
+                updateSyncBadge("● JSON File Synced", true);
             } catch (err) {
                 updateSyncBadge("● Cached Auto-Save", false);
             }
@@ -1589,49 +1661,6 @@
         downloadAnchor.click();
         downloadAnchor.remove();
         URL.revokeObjectURL(url);
-    }
-
-    function loadFromJSONFile(event) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const loadedData = JSON.parse(e.target.result);
-                if (loadedData.inventory && Array.isArray(loadedData.inventory)) {
-                    appData = loadedData;
-                } else if (Array.isArray(loadedData)) {
-                    appData.inventory = loadedData;
-                }
-                
-                if (!appData.categories) {
-                    appData.categories = JSON.parse(JSON.stringify(defaultSubcategories));
-                }
-                if (!appData.deliveries) {
-                    appData.deliveries = [];
-                }
-
-                appData.inventory.forEach(item => {
-                    if (!item.subcategory) item.subcategory = "General";
-                    if (!item.unit) item.unit = "Pcs";
-                    if (!item.sourceNote) item.sourceNote = "In-House";
-                });
-
-                if (appData.logs && Array.isArray(appData.logs)) {
-                    appData.logs.forEach((log, index) => {
-                        if (!log.id) log.id = 'log_' + Date.now() + '_' + index;
-                    });
-                }
-
-                autoSaveData();
-                updateSubcategoryDropdown(currentCategory);
-                updateDeliverySubcategoryDropdown(document.getElementById('delCategory').value);
-                alert('Inventory loaded and synced successfully!');
-            } catch (err) {
-                alert('Error reading the JSON file.');
-            }
-        };
-        if (event.target.files[0]) {
-            reader.readAsText(event.target.files[0]);
-        }
     }
 
     function exportToGoogleSheets() {
@@ -1679,6 +1708,7 @@
 
     function updateSyncBadge(text, isLinked) {
         const badge = document.getElementById('syncBadge');
+        if (!badge) return;
         badge.innerText = text;
         if (isLinked) {
             badge.classList.add('linked');
@@ -1705,7 +1735,10 @@
         if (activePage === targetElement) {
             if (category) switchCategory(category);
             if (targetPage === 'master') renderMasterTables();
-            if (targetPage === 'deliveries') renderDeliveriesTable();
+            if (targetPage === 'deliveries') {
+                updateSupplierDropdown();
+                renderDeliveriesTable();
+            }
             return;
         }
 
@@ -1725,7 +1758,10 @@
     function openTargetPage(targetElement, category, targetPage) {
         if (category) switchCategory(category);
         if (targetPage === 'master') renderMasterTables();
-        if (targetPage === 'deliveries') renderDeliveriesTable();
+        if (targetPage === 'deliveries') {
+            updateSupplierDropdown();
+            renderDeliveriesTable();
+        }
         targetElement.classList.add('active');
         setTimeout(() => {
             targetElement.style.opacity = '1';
@@ -1808,7 +1844,7 @@
             existingItem.unit = unit;
             existingItem.lastChanged = nowStamp;
             existingItem.sourceNote = "Delivery";
-            recordLog(`Delivery input updated stock for "${itemName}" (+${qty} ${unit}) in ${category}`);
+            recordLog(`Delivery input updated stock for "${itemName}" (+${qty} ${unit}) from [${supplier}] in ${category}`);
         } else {
             if (!appData.categories[category]) appData.categories[category] = [];
             if (!appData.categories[category].includes(subcategory)) {
@@ -1826,15 +1862,15 @@
                 lastChanged: nowStamp,
                 sourceNote: "Delivery"
             });
-            recordLog(`Delivery input automatically added "${itemName}" (${qty} ${unit}) into ${category}`);
+            recordLog(`Delivery input automatically added "${itemName}" (${qty} ${unit}) from [${supplier}] into ${category}`);
         }
 
         autoSaveData();
 
         document.getElementById('delItemName').value = '';
-        document.getElementById('delSupplier').value = '';
         document.getElementById('delQty').value = '';
         document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
+        updateSupplierDropdown();
     }
 
     function deleteDelivery(id) {
@@ -1870,6 +1906,7 @@
 
     function renderDeliveriesTable() {
         const tbody = document.getElementById('deliveriesTable');
+        if (!tbody) return;
         tbody.innerHTML = '';
 
         const searchQuery = (document.getElementById('deliverySearchInput')?.value || '').toLowerCase().trim();
@@ -1900,7 +1937,7 @@
                 <td style="text-align: center;"><input type="checkbox" class="row-checkbox del-row-cb" value="${del.id}" onchange="updateBatchBarVisibility()"></td>
                 <td><strong>• ${del.name}</strong></td>
                 <td><span style="font-weight: 600;">${del.category}</span> <span style="font-size:0.75rem; color:var(--text-muted);">(${del.subcategory})</span></td>
-                <td>${del.supplier}</td>
+                <td><span class="delivery-note-tag">${del.supplier}</span></td>
                 <td><strong>${del.qty}</strong> <span class="unit-label">${del.unit}</span></td>
                 <td>${del.deliveryDate || del.expectedDate || ''}</td>
                 <td>
@@ -1938,6 +1975,7 @@
         categories.forEach(cat => {
             const secElem = document.getElementById(`sec-${cat}`);
             const tbody = document.getElementById(`tbody-${cat}`);
+            if (!secElem || !tbody) return;
             tbody.innerHTML = '';
 
             if (categoryFilter !== 'ALL' && categoryFilter !== cat) {
@@ -1991,15 +2029,18 @@
         });
 
         const noResultsMsg = document.getElementById('noResultsMsg');
-        if (totalVisibleItems === 0) {
-            noResultsMsg.style.display = 'block';
-        } else {
-            noResultsMsg.style.display = 'none';
+        if (noResultsMsg) {
+            if (totalVisibleItems === 0) {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
         }
     }
 
     function renderTable() {
         const tbody = document.getElementById('inventoryTable');
+        if (!tbody) return;
         tbody.innerHTML = '';
 
         const filteredItems = appData.inventory.filter(item => item.category === currentCategory);
@@ -2076,6 +2117,7 @@
 
     function renderLogs() {
         const logList = document.getElementById('auditLogList');
+        if (!logList) return;
         logList.innerHTML = '';
 
         if (!appData.logs || appData.logs.length === 0) {
@@ -2101,6 +2143,7 @@
     navigateTo('home');
     switchCategory('Café');
     updateDeliverySubcategoryDropdown('Café');
+    updateSupplierDropdown();
     renderTable();
     renderMasterTables();
     renderDeliveriesTable();
