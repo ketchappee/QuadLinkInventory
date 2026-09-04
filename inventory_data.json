@@ -458,21 +458,21 @@
       "sourceNote": "In-House"
     },
     {
-      "id": 1788512996949.672,
+      "id": 1788513034593.282,
       "name": "EMBORG",
       "category": "Café",
       "subcategory": "MILK",
-      "qty": 1,
+      "qty": 11,
       "unit": "Box",
       "addedDate": "2026-09-04",
-      "lastChanged": "2026-09-04 17:09",
+      "lastChanged": "2026-09-04 17:10",
       "sourceNote": "Delivery"
     }
   ],
   "logs": [
     {
-      "id": "log_1788512996948",
-      "timestamp": "2026-09-04 17:09",
+      "id": "log_1788513034592",
+      "timestamp": "2026-09-04 17:10",
       "details": "Scheduled delivery \"EMBORG\" & auto-synced to Café inventory (prior items marked In-House)"
     },
     {
@@ -723,12 +723,12 @@
   ],
   "deliveries": [
     {
-      "id": 1788512996948,
+      "id": 1788513034592,
       "name": "EMBORG",
       "category": "Café",
       "subcategory": "MILK",
       "supplier": "JAMBI",
-      "qty": 1,
+      "qty": 11,
       "unit": "Box",
       "deliveryDate": "2026-09-04"
     },
