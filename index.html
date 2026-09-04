@@ -465,10 +465,89 @@
             <button class="btn-proceed" onclick="navigateTo('inventory', 'Café')">
                 ☕ Proceed to Café Inventory
             </button>
+            <button class="btn-proceed secondary" onclick="navigateTo('deliveries')">
+                🚚 Deliveries Inventory
+            </button>
             <button class="btn-proceed secondary" onclick="navigateTo('master')">
                 🔍 Master Search List
             </button>
         </div>
+    </div>
+</section>
+
+<!-- DELIVERIES INVENTORY PAGE -->
+<section id="view-deliveries" class="page-view">
+    <header>
+        <h2>🚚 Deliveries Inventory</h2>
+        <div class="action-btns">
+            <button onclick="enableJSONAutoSync()" class="btn json-btn">⚙️ Link JSON Sync</button>
+            <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
+        </div>
+    </header>
+
+    <div class="glass-card">
+        <form id="deliveryForm" onsubmit="addDelivery(event)">
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>Target Category</label>
+                    <select id="delCategory" required onchange="updateDeliverySubcategoryDropdown(this.value)">
+                        <option value="Café">Café</option>
+                        <option value="Community">Community</option>
+                        <option value="Housekeeping">Housekeeping</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Subcategory</label>
+                    <div class="subcategory-input-wrapper">
+                        <select id="delSubcategory" required></select>
+                        <button type="button" class="btn-del-sub" onclick="deleteDeliverySubcategory()" title="Delete selected subcategory">🗑️</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Item Name</label>
+                    <input type="text" id="delItemName" placeholder="e.g. Arabica Roast Batch" required>
+                </div>
+                <div class="input-group">
+                    <label>Supplier / Vendor</label>
+                    <input type="text" id="delSupplier" placeholder="e.g. Beans Co." required>
+                </div>
+                <div class="input-group">
+                    <label>Quantity & Unit</label>
+                    <div class="qty-input-wrapper">
+                        <input type="number" id="delQty" placeholder="0" min="1" required>
+                        <select id="delUnit" required>
+                            <option value="Pcs">Pcs</option>
+                            <option value="Box">Box</option>
+                            <option value="Case">Case</option>
+                            <option value="Kg">Kg</option>
+                            <option value="L">L</option>
+                            <option value="Pack">Pack</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Expected Delivery Date</label>
+                    <input type="date" id="delExpectedDate" required>
+                </div>
+            </div>
+            <button type="submit" class="btn primary">+ Schedule / Add Delivery</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Category / Subcategory</th>
+                    <th>Supplier</th>
+                    <th>Quantity & Unit</th>
+                    <th>Expected Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="deliveriesTable"></tbody>
+        </table>
     </div>
 </section>
 
@@ -659,6 +738,10 @@
                 <div class="icon-box">🏠</div>
                 <div><strong>Home Page</strong></div>
             </button>
+            <button class="menu-item-btn" id="nav-deliveries" onclick="navigateTo('deliveries')">
+                <div class="icon-box">🚚</div>
+                <div><strong>Deliveries Inventory</strong></div>
+            </button>
             <button class="menu-item-btn" id="nav-master" onclick="navigateTo('master')">
                 <div class="icon-box">🔍</div>
                 <div><strong>Search & All Inventories</strong></div>
@@ -696,11 +779,19 @@
             { id: 3, name: "Board Games Set", category: "Community", subcategory: "Entertainment & Games", qty: 15, unit: "Pcs", addedDate: "2026-01-10", lastChanged: "2026-01-10 09:00" },
             { id: 4, name: "Disinfectant Spray", category: "Housekeeping", subcategory: "Cleaning Supplies", qty: 8, unit: "Box", addedDate: "2026-08-01", lastChanged: "2026-08-15 11:30" }
         ],
+        deliveries: [
+            { id: 101, name: "Specialty Espresso Batch", category: "Café", subcategory: "Beans", supplier: "Roastery Co.", qty: 10, unit: "Kg", expectedDate: "2026-09-10" },
+            { id: 102, name: "Microfiber Towels Pack", category: "Housekeeping", subcategory: "Linens & Towels", supplier: "CleanDirect", qty: 5, unit: "Box", expectedDate: "2026-09-12" }
+        ],
         logs: []
     };
 
     if (!appData.categories) {
         appData.categories = JSON.parse(JSON.stringify(defaultSubcategories));
+    }
+
+    if (!appData.deliveries) {
+        appData.deliveries = [];
     }
 
     appData.inventory.forEach(item => {
@@ -716,6 +807,7 @@
 
     let currentCategory = 'Café';
     document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('delExpectedDate').value = new Date().toISOString().split('T')[0];
 
     function updateSubcategoryDropdown(cat) {
         const select = document.getElementById('itemSubcategory');
@@ -732,6 +824,18 @@
         customOpt.value = 'CUSTOM';
         customOpt.innerText = '+ Add Custom Group...';
         select.appendChild(customOpt);
+    }
+
+    function updateDeliverySubcategoryDropdown(cat) {
+        const select = document.getElementById('delSubcategory');
+        select.innerHTML = '';
+        const subs = appData.categories[cat] || ['General'];
+        subs.forEach(sub => {
+            const opt = document.createElement('option');
+            opt.value = sub;
+            opt.innerText = sub;
+            select.appendChild(opt);
+        });
     }
 
     function handleSubcategoryChange(selectEl) {
@@ -784,6 +888,42 @@
 
         autoSaveData();
         updateSubcategoryDropdown(currentCategory);
+    }
+
+    function deleteDeliverySubcategory() {
+        const catSelect = document.getElementById('delCategory');
+        const subSelect = document.getElementById('delSubcategory');
+        const selectedCat = catSelect.value;
+        const selectedSub = subSelect.value;
+
+        if (!selectedSub) {
+            alert("Please select a valid subcategory to delete.");
+            return;
+        }
+
+        const deliveriesWithSub = appData.deliveries.filter(d => d.category === selectedCat && d.subcategory === selectedSub);
+
+        let deleteDeliveriesToo = false;
+        if (deliveriesWithSub.length > 0) {
+            deleteDeliveriesToo = confirm(`Subcategory "${selectedSub}" contains ${deliveriesWithSub.length} scheduled delivery record(s).\n\nDo you also want to delete all deliveries in this subcategory?\n- Click OK to delete the subcategory AND its delivery records.\n- Click Cancel to abort.`);
+            if (!deleteDeliveriesToo) return;
+        } else {
+            if (!confirm(`Are you sure you want to delete the subcategory "${selectedSub}" from ${selectedCat}?`)) return;
+        }
+
+        if (appData.categories[selectedCat]) {
+            appData.categories[selectedCat] = appData.categories[selectedCat].filter(s => s !== selectedSub);
+        }
+
+        if (deleteDeliveriesToo) {
+            appData.deliveries = appData.deliveries.filter(d => !(d.category === selectedCat && d.subcategory === selectedSub));
+            recordLog(`Deleted delivery subcategory [${selectedSub}] and its associated delivery records from ${selectedCat}`);
+        } else {
+            recordLog(`Deleted delivery subcategory [${selectedSub}] from ${selectedCat}`);
+        }
+
+        autoSaveData();
+        updateDeliverySubcategoryDropdown(selectedCat);
     }
 
     function getFormattedTimestamp() {
@@ -858,6 +998,7 @@
 
         renderTable();
         renderMasterTables();
+        renderDeliveriesTable();
         renderLogs();
     }
 
@@ -889,6 +1030,9 @@
                 if (!appData.categories) {
                     appData.categories = JSON.parse(JSON.stringify(defaultSubcategories));
                 }
+                if (!appData.deliveries) {
+                    appData.deliveries = [];
+                }
 
                 appData.inventory.forEach(item => {
                     if (!item.subcategory) item.subcategory = "General";
@@ -903,6 +1047,7 @@
 
                 autoSaveData();
                 updateSubcategoryDropdown(currentCategory);
+                updateDeliverySubcategoryDropdown(document.getElementById('delCategory').value);
                 alert('Inventory loaded and synced successfully!');
             } catch (err) {
                 alert('Error reading the JSON file.');
@@ -973,6 +1118,8 @@
         document.querySelectorAll('.menu-item-btn').forEach(btn => btn.classList.remove('active'));
         if (targetPage === 'home') {
             document.getElementById('nav-home').classList.add('active');
+        } else if (targetPage === 'deliveries') {
+            document.getElementById('nav-deliveries').classList.add('active');
         } else if (targetPage === 'master') {
             document.getElementById('nav-master').classList.add('active');
         } else if (category && document.getElementById(`nav-${category}`)) {
@@ -985,6 +1132,7 @@
         if (activePage === targetElement) {
             if (category) switchCategory(category);
             if (targetPage === 'master') renderMasterTables();
+            if (targetPage === 'deliveries') renderDeliveriesTable();
             return;
         }
 
@@ -1004,6 +1152,7 @@
     function openTargetPage(targetElement, category, targetPage) {
         if (category) switchCategory(category);
         if (targetPage === 'master') renderMasterTables();
+        if (targetPage === 'deliveries') renderDeliveriesTable();
         targetElement.classList.add('active');
         setTimeout(() => {
             targetElement.style.opacity = '1';
@@ -1051,6 +1200,48 @@
         document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
     }
 
+    function addDelivery(e) {
+        e.preventDefault();
+        const category = document.getElementById('delCategory').value;
+        const subcategory = document.getElementById('delSubcategory').value;
+        const itemName = document.getElementById('delItemName').value;
+        const supplier = document.getElementById('delSupplier').value;
+        const qty = parseInt(document.getElementById('delQty').value);
+        const unit = document.getElementById('delUnit').value;
+        const expectedDate = document.getElementById('delExpectedDate').value;
+
+        const newDelivery = {
+            id: Date.now(),
+            name: itemName,
+            category: category,
+            subcategory: subcategory,
+            supplier: supplier,
+            qty: qty,
+            unit: unit,
+            expectedDate: expectedDate
+        };
+
+        appData.deliveries.unshift(newDelivery);
+        recordLog(`Scheduled delivery for "${itemName}" from [${supplier}] (${qty} ${unit})`);
+        autoSaveData();
+
+        document.getElementById('delItemName').value = '';
+        document.getElementById('delSupplier').value = '';
+        document.getElementById('delQty').value = '';
+        document.getElementById('delExpectedDate').value = new Date().toISOString().split('T')[0];
+    }
+
+    function deleteDelivery(id) {
+        const del = appData.deliveries.find(d => d.id === id);
+        if (del) {
+            if (confirm(`Delete delivery record for "${del.name}"?`)) {
+                recordLog(`Deleted delivery record for "${del.name}"`);
+                appData.deliveries = appData.deliveries.filter(d => d.id !== id);
+                autoSaveData();
+            }
+        }
+    }
+
     function deleteItem(id) {
         const item = appData.inventory.find(i => i.id === id);
         if (item) {
@@ -1069,6 +1260,30 @@
             recordLog(`Updated "${item.name}" qty from ${oldQty} to ${item.qty} ${item.unit || 'Pcs'}`);
             autoSaveData();
         }
+    }
+
+    function renderDeliveriesTable() {
+        const tbody = document.getElementById('deliveriesTable');
+        tbody.innerHTML = '';
+
+        if (!appData.deliveries || appData.deliveries.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">No upcoming or logged deliveries.</td></tr>`;
+            return;
+        }
+
+        appData.deliveries.forEach(del => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td><strong>• ${del.name}</strong></td>
+                <td><span style="font-weight: 600;">${del.category}</span> <span style="font-size:0.75rem; color:var(--text-muted);">(${del.subcategory})</span></td>
+                <td>${del.supplier}</td>
+                <td><strong>${del.qty}</strong> <span class="unit-label">${del.unit}</span></td>
+                <td>${del.expectedDate}</td>
+                <td><button class="btn-danger" onclick="deleteDelivery(${del.id})">Delete</button></td>
+            `;
+            tbody.appendChild(row);
+        });
     }
 
     function renderMasterTables() {
@@ -1205,8 +1420,10 @@
     }
 
     switchCategory('Café');
+    updateDeliverySubcategoryDropdown('Café');
     renderTable();
     renderMasterTables();
+    renderDeliveriesTable();
     renderLogs();
 </script>
 
