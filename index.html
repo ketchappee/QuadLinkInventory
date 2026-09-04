@@ -14,18 +14,19 @@
             --brand-color: #8C7B6B;
             --brand-hover: #756555;
             
-            --clear-trans-ultra: rgba(255, 255, 255, 0.15);
-            --clear-trans-light: rgba(255, 255, 255, 0.45);
-            --clear-trans-medium: rgba(255, 255, 255, 0.70);
-            --clear-trans-hover: rgba(255, 255, 255, 0.88);
-            --clear-border: rgba(255, 255, 255, 0.55);
-            --glass-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.12);
+            --glass-bg-ultra: rgba(255, 255, 255, 0.12);
+            --glass-bg-light: rgba(255, 255, 255, 0.22);
+            --glass-bg-medium: rgba(255, 255, 255, 0.32);
+            --glass-bg-hover: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.45);
+            --glass-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
             
-            --text-main: #2C2A29;
-            --text-muted: #6B6560;
-            --danger: #D96B6B;
-            --success: #6B9B7E;
-            --warning: #D9A06B;
+            --text-main: #FFFFFF;
+            --text-muted: #E2DBD6;
+            --danger: #FF8080;
+            --success: #8CD9A8;
+            --warning: #FFC080;
+            --text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
         }
 
         * { 
@@ -36,12 +37,13 @@
             -webkit-tap-highlight-color: transparent;
             -webkit-user-select: none;
             user-select: none;
+            text-shadow: var(--text-shadow);
         }
 
         input, textarea, select { -webkit-user-select: text; user-select: text; }
         
         body { 
-            background: linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)), 
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.2)), 
                         url('viber_image_2026-09-02_16-18-29-093.jpg') no-repeat center center fixed;
             background-size: cover;
             color: var(--text-main); 
@@ -53,317 +55,341 @@
         }
 
         .sync-badge {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
             padding: 6px 12px;
-            border-radius: 30px;
-            background: rgba(107, 155, 126, 0.25);
-            color: #264A35;
-            border: 1px solid rgba(107, 155, 126, 0.4);
+            border-radius: 20px;
+            background: rgba(107, 155, 126, 0.35);
+            color: #E2F4EC;
+            border: 1px solid rgba(107, 155, 126, 0.55);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            backdrop-filter: blur(10px);
+            gap: 5px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         }
 
-        .sync-badge.linked { background: rgba(107, 133, 155, 0.25); color: #2C4254; border-color: rgba(107, 133, 155, 0.4); }
+        .sync-badge.linked { background: rgba(107, 133, 155, 0.35); color: #E5EFF7; border-color: rgba(107, 133, 155, 0.55); }
 
         .navbar {
-            background: var(--clear-trans-light);
+            background: var(--glass-bg-light);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            height: 70px;
-            padding: 0 24px;
+            height: 64px;
+            padding: 0 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--clear-border);
+            border-bottom: 1px solid var(--glass-border);
             position: sticky;
             top: 0;
             z-index: 90;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 16px; }
+        .nav-left { display: flex; align-items: center; gap: 12px; }
 
         .back-nav-btn {
-            padding: 0 16px;
-            height: 38px;
-            border-radius: 19px;
-            background: var(--clear-trans-medium);
-            border: 1px solid var(--clear-border);
+            padding: 0 14px;
+            height: 34px;
+            border-radius: 14px;
+            background: var(--glass-bg-medium);
+            border: 1px solid var(--glass-border);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.82rem;
+            gap: 5px;
+            font-size: 0.78rem;
             font-weight: 700;
             color: var(--text-main);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .back-nav-btn:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
+        .back-nav-btn:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); transform: translateY(-1px); }
 
         .logo-badge {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 5px 10px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
             cursor: pointer;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.2s ease;
         }
+        .logo-badge:hover { transform: scale(1.02); }
 
-        .nav-brand-logo { height: 22px; width: auto; object-fit: contain; display: block; }
+        .nav-brand-logo { height: 18px; width: auto; object-fit: contain; display: block; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8)); }
 
         .page-view {
             display: none;
             opacity: 0;
-            transform: translateY(15px) scale(0.99);
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(12px) scale(0.99);
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             max-width: 1100px;
-            margin: 30px auto;
-            padding: 0 20px;
+            margin: 24px auto;
+            padding: 0 18px;
+            width: 100%;
         }
 
         .page-view.active { display: block; opacity: 1; transform: translateY(0) scale(1); }
 
         .home-hero {
-            background: var(--clear-trans-medium);
+            background: var(--glass-bg-medium);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--clear-border);
-            border-radius: 32px;
-            padding: 60px 30px;
+            border: 1px solid var(--glass-border);
+            border-radius: 26px;
+            padding: 48px 28px;
             text-align: center;
             box-shadow: var(--glass-shadow);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
+            max-width: 820px;
+            margin: 0 auto;
         }
 
-        .home-hero-logo { height: 64px; width: auto; background: rgba(255,255,255,0.9); padding: 12px 24px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid var(--clear-border); }
-        .home-hero h1 { font-size: 2rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px; }
-        .home-hero p { font-size: 0.95rem; color: var(--text-muted); max-width: 440px; line-height: 1.6; }
+        .home-hero-logo { height: 56px; width: auto; background: rgba(0,0,0,0.35); padding: 10px 20px; border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.2); border: 1px solid var(--glass-border); filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8)); }
+        .home-hero h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.4px; }
+        .home-hero p { font-size: 0.9rem; color: var(--text-muted); max-width: 420px; line-height: 1.5; }
 
-        .hero-action-group { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .hero-action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
 
         .btn-proceed {
-            background: var(--brand-color);
+            background: rgba(140, 123, 107, 0.65);
             color: #ffffff;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             letter-spacing: 0.3px;
-            padding: 14px 28px;
-            border-radius: 16px;
-            border: 1px solid var(--clear-border);
+            padding: 12px 24px;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(140, 123, 107, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
         }
-        .btn-proceed:hover { background: var(--brand-hover); transform: translateY(-2px); }
+        .btn-proceed:hover { background: var(--brand-hover); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3); }
 
         .btn-proceed.secondary {
-            background: var(--clear-trans-medium);
+            background: var(--glass-bg-medium);
             color: var(--text-main);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            border: 1px solid var(--glass-border);
         }
+        .btn-proceed.secondary:hover { background: var(--glass-bg-hover); color: var(--text-main); }
 
         /* NETFLIX-STYLE SELECTION CAROUSEL / ROW */
         .netflix-container {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 24px;
-            padding: 10px 0;
+            gap: 18px;
+            padding: 8px 0;
+            max-width: 960px;
+            margin: 0 auto;
         }
 
         .netflix-row-title {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--text-main);
             letter-spacing: -0.3px;
             display: flex;
             align-items: center;
             gap: 8px;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.4);
         }
 
         .netflix-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
         }
 
         .netflix-card {
-            background: var(--clear-trans-medium);
+            background: var(--glass-bg-medium);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--clear-border);
-            border-radius: 24px;
-            padding: 30px 24px;
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            padding: 26px 20px;
             cursor: pointer;
             box-shadow: var(--glass-shadow);
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 16px;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 14px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
         }
 
         .netflix-card:hover {
-            transform: scale(1.04) translateY(-4px);
-            background: var(--clear-trans-hover);
-            border-color: var(--brand-color);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02) translateY(-4px);
+            background: var(--glass-bg-hover);
+            border-color: rgba(255, 255, 255, 0.75);
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
         }
 
         .netflix-card-icon {
-            font-size: 2.8rem;
-            background: rgba(255, 255, 255, 0.7);
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
+            font-size: 2.2rem;
+            background: rgba(0, 0, 0, 0.25);
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--clear-border);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.25s ease;
         }
 
         .netflix-card:hover .netflix-card-icon {
             background: var(--brand-color);
             color: #fff;
             border-color: var(--brand-color);
+            transform: scale(1.04);
         }
 
         .netflix-card h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: -0.3px;
+            letter-spacing: -0.2px;
         }
 
         .netflix-card p {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
         .netflix-badge-tag {
-            font-size: 0.68rem;
+            font-size: 0.62rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             padding: 4px 10px;
-            border-radius: 20px;
-            background: rgba(140, 123, 107, 0.15);
-            color: var(--brand-color);
-            border: 1px solid rgba(140, 123, 107, 0.3);
+            border-radius: 14px;
+            background: rgba(140, 123, 107, 0.3);
+            color: #FFF;
+            border: 1px solid rgba(140, 123, 107, 0.5);
+            backdrop-filter: blur(8px);
         }
 
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; }
-        header h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px; text-shadow: 0 1px 2px rgba(255,255,255,0.4); }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; width: 100%; }
+        header h2 { font-size: 1.35rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.4px; }
 
         .action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
         
         button.btn, label.btn-label {
-            background: var(--clear-trans-medium);
-            backdrop-filter: blur(12px);
+            background: var(--glass-bg-medium);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             color: var(--text-main);
-            border: 1px solid var(--clear-border);
-            padding: 9px 16px;
+            border: 1px solid var(--glass-border);
+            padding: 8px 14px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            transition: all 0.25s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        button.btn:hover, label.btn-label:hover { background: var(--clear-trans-hover); transform: translateY(-1px); }
-        button.primary { background: var(--brand-color); color: #fff; border-color: var(--clear-border); }
-        button.primary:hover { background: var(--brand-hover); }
+        button.btn:hover, label.btn-label:hover { background: var(--glass-bg-hover); transform: translateY(-1px); box-shadow: 0 5px 14px rgba(0,0,0,0.25); }
+        button.primary { background: rgba(140, 123, 107, 0.65); color: #fff; border-color: var(--glass-border); width: 100%; justify-content: center; padding: 11px; font-size: 0.85rem; margin-top: 4px; border-radius: 14px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); }
+        button.primary:hover { background: var(--brand-hover); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35); }
         
-        button.json-btn { color: #2C4254; }
-        button.gsheets-btn { color: #264A35; }
+        button.json-btn { color: #E5EFF7; }
+        button.gsheets-btn { color: #E2F4EC; }
 
         /* DASHBOARD MENU STYLING */
         .dashboard-nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            width: 100%;
         }
 
         .dash-card-btn {
-            background: var(--clear-trans-medium);
+            background: var(--glass-bg-medium);
             backdrop-filter: blur(16px);
-            border: 1px solid var(--clear-border);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 14px 12px;
+            padding: 12px 10px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 6px;
         }
 
-        .dash-card-btn:hover { background: var(--clear-trans-hover); transform: translateY(-2px); }
+        .dash-card-btn:hover { background: var(--glass-bg-hover); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.25); }
         .dash-card-btn.active {
             background: var(--brand-color);
             color: #fff;
-            border-color: var(--brand-color);
-            box-shadow: 0 6px 16px rgba(140, 123, 107, 0.3);
+            border-color: var(--glass-border);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
-        .dash-card-icon { font-size: 1.2rem; }
-        .dash-card-title { font-size: 0.82rem; font-weight: 700; }
+        .dash-card-icon { font-size: 1.1rem; }
+        .dash-card-title { font-size: 0.78rem; font-weight: 700; }
 
         .glass-card {
-            background: var(--clear-trans-medium);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: var(--glass-bg-medium);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-radius: 24px;
-            border: 1px solid var(--clear-border);
+            border: 1px solid var(--glass-border);
             box-shadow: var(--glass-shadow);
-            padding: 24px;
-            margin-bottom: 24px;
+            padding: 22px;
+            margin-bottom: 20px;
+            width: 100%;
         }
 
         .batch-action-bar {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--clear-border);
+            background: rgba(40, 38, 36, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 12px 20px;
+            padding: 12px 18px;
             margin-bottom: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            width: 100%;
         }
 
         .batch-info {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: var(--text-main);
         }
@@ -371,26 +397,28 @@
         .batch-controls {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .search-bar-container {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
             align-items: center;
+            width: 100%;
         }
 
         .search-input-wrapper {
             position: relative;
             flex: 1;
-            min-width: 240px;
+            min-width: 220px;
         }
 
         .search-input-wrapper input {
             width: 100%;
             padding-left: 38px;
+            border-radius: 14px;
         }
 
         .search-icon {
@@ -398,152 +426,168 @@
             left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             pointer-events: none;
         }
 
         .category-section-header {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--text-main);
-            margin: 28px 0 12px 6px;
+            margin: 24px 0 10px 4px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
-        .input-group { display: flex; flex-direction: column; gap: 6px; }
-        .input-group label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+        .form-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 14px; 
+            margin-bottom: 14px; 
+            width: 100%;
+        }
+        .input-group { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+        .input-group label { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
 
         .subcategory-input-wrapper, .qty-input-wrapper {
             display: flex;
             gap: 6px;
             align-items: center;
+            width: 100%;
         }
 
         .subcategory-input-wrapper select { flex: 1; min-width: 0; }
-        .qty-input-wrapper input { flex: 1; min-width: 0; width: 60%; }
-        .qty-input-wrapper select { width: 40%; min-width: 75px; flex-shrink: 0; }
+        .qty-input-wrapper input { flex: 1; min-width: 0; }
+        .qty-input-wrapper select { width: 85px; flex-shrink: 0; }
 
         .btn-del-sub {
-            background: rgba(217, 107, 107, 0.15);
-            color: var(--danger);
-            border: 1px solid rgba(217, 107, 107, 0.3);
+            background: rgba(217, 107, 107, 0.3);
+            color: #FFCCCC;
+            border: 1px solid rgba(217, 107, 107, 0.5);
             border-radius: 12px;
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: all 0.2s ease;
             flex-shrink: 0;
+            backdrop-filter: blur(8px);
         }
-        .btn-del-sub:hover { background: rgba(217, 107, 107, 0.3); }
+        .btn-del-sub:hover { background: rgba(217, 107, 107, 0.5); transform: scale(1.04); }
 
         input, select {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid var(--clear-border);
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--glass-border);
             color: var(--text-main);
-            padding: 11px 14px;
-            border-radius: 12px;
-            font-size: 0.85rem;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 0.82rem;
             outline: none;
-            backdrop-filter: blur(10px);
-            transition: all 0.2s ease;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
-        input:focus, select:focus { border-color: var(--brand-color); background: rgba(255, 255, 255, 0.9); box-shadow: 0 0 0 3px rgba(140, 123, 107, 0.15); }
+        input:focus, select:focus { border-color: var(--brand-color); background: rgba(0, 0, 0, 0.4); box-shadow: 0 0 0 3px rgba(140, 123, 107, 0.3), inset 0 2px 4px rgba(0,0,0,0.2); }
         
-        select option { background: #fff; color: #111; }
-
-        .action-cell-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: nowrap;
-        }
-
-        .select-move-to {
-            padding: 8px 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid var(--clear-border);
-            color: var(--text-main);
-            cursor: pointer;
-            max-width: 140px;
-            text-overflow: ellipsis;
-        }
+        select option { background: #2C2A29; color: #FFF; text-shadow: none; }
 
         .row-checkbox {
             width: 16px;
             height: 16px;
             cursor: pointer;
             accent-color: var(--brand-color);
+            border-radius: 4px;
         }
 
         .table-container { 
-            background: var(--clear-trans-medium);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: var(--glass-bg-medium);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-radius: 24px; 
-            border: 1px solid var(--clear-border);
+            border: 1px solid var(--glass-border);
             box-shadow: var(--glass-shadow);
             overflow-x: auto;
+            overflow-y: visible;
             -webkit-overflow-scrolling: touch;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            width: 100%;
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 760px; }
-        th, td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.35); font-size: 0.85rem; white-space: nowrap; }
-        th { background: rgba(255, 255, 255, 0.3); color: var(--text-muted); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; min-width: 720px; }
+        th, td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); font-size: 0.82rem; white-space: nowrap; }
+        th { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(12px); color: var(--text-muted); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.8px; z-index: 2; }
         
+        th:first-child { border-top-left-radius: 24px; }
+        th:last-child { border-top-right-radius: 24px; }
+
+        /* Freeze the Item Name column to slide cleanly over other columns */
+        th:nth-child(2), td:nth-child(2) {
+            position: sticky;
+            left: 38px;
+            background: rgba(40, 38, 36, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .group-header-row td {
+            position: sticky;
+            left: 0;
+            z-index: 3;
+            background: rgba(30, 28, 26, 0.65) !important;
+            backdrop-filter: blur(16px);
+        }
+
         .group-header-row {
-            background: rgba(255, 255, 255, 0.5) !important;
+            background: rgba(30, 28, 26, 0.45) !important;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: 0.5px;
-            font-size: 0.8rem;
+            letter-spacing: 0.4px;
+            font-size: 0.78rem;
         }
 
         .qty-control { display: flex; align-items: center; gap: 6px; }
-        .btn-qty { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--clear-border); background: rgba(255, 255, 255, 0.5); cursor: pointer; font-weight: 600; color: var(--text-main); transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .btn-qty:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
+        .btn-qty { width: 26px; height: 26px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.3); cursor: pointer; font-weight: 600; color: var(--text-main); transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; backdrop-filter: blur(8px); }
+        .btn-qty:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); transform: scale(1.04); }
 
-        .unit-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; }
+        .unit-label { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; }
 
         .delivery-note-tag {
             display: inline-block;
-            background: rgba(140, 123, 107, 0.2);
-            color: var(--brand-color);
-            font-size: 0.68rem;
+            background: rgba(140, 123, 107, 0.4);
+            color: #FFF;
+            font-size: 0.65rem;
             font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 8px;
             margin-left: 6px;
-            border: 1px solid rgba(140, 123, 107, 0.3);
+            border: 1px solid rgba(140, 123, 107, 0.6);
             text-transform: uppercase;
+            backdrop-filter: blur(6px);
         }
 
         .inhouse-note-tag {
             display: inline-block;
-            background: rgba(107, 155, 126, 0.2);
-            color: var(--success);
-            font-size: 0.68rem;
+            background: rgba(107, 155, 126, 0.4);
+            color: #E2F4EC;
+            font-size: 0.65rem;
             font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 8px;
             margin-left: 6px;
-            border: 1px solid rgba(107, 155, 126, 0.3);
+            border: 1px solid rgba(107, 155, 126, 0.6);
             text-transform: uppercase;
+            backdrop-filter: blur(6px);
         }
-
-        .btn-danger { color: var(--danger); background: transparent; border: none; font-weight: 600; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; padding: 4px 6px; flex-shrink: 0; }
-        .btn-danger:hover { opacity: 1; text-decoration: underline; }
 
         .log-header {
             display: flex;
@@ -555,7 +599,7 @@
         }
 
         .log-section-title { 
-            font-size: 0.95rem; 
+            font-size: 0.92rem; 
             font-weight: 700; 
             color: var(--text-main); 
             display: flex; 
@@ -566,49 +610,52 @@
         .log-controls {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .select-all-label {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             cursor: pointer;
         }
 
         button.btn-clear-selected {
-            background: rgba(217, 107, 107, 0.15);
-            color: var(--danger);
-            border: 1px solid rgba(217, 107, 107, 0.3);
+            background: rgba(217, 107, 107, 0.3);
+            color: #FFCCCC;
+            border: 1px solid rgba(217, 107, 107, 0.5);
             padding: 6px 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
+            backdrop-filter: blur(8px);
             transition: all 0.2s ease;
         }
-        button.btn-clear-selected:hover { background: rgba(217, 107, 107, 0.28); }
+        button.btn-clear-selected:hover { background: rgba(217, 107, 107, 0.5); transform: translateY(-1px); }
 
-        .log-list { list-style: none; display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto; padding-right: 4px; }
+        .log-list { list-style: none; display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; padding-right: 4px; }
         .log-item { 
-            background: rgba(255, 255, 255, 0.35); 
-            border: 1px solid var(--clear-border); 
+            background: rgba(0, 0, 0, 0.25); 
+            border: 1px solid var(--glass-border); 
             border-radius: 12px; 
             padding: 10px 14px; 
-            font-size: 0.78rem; 
+            font-size: 0.76rem; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            gap: 12px;
-            backdrop-filter: blur(10px);
+            gap: 10px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
         }
 
         .log-item-left { display: flex; align-items: center; gap: 10px; }
-        .log-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--brand-color); }
-        .log-date { font-weight: 600; color: var(--text-muted); font-size: 0.72rem; white-space: nowrap; }
+        .log-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--brand-color); border-radius: 4px; }
+        .log-date { font-weight: 600; color: var(--text-muted); font-size: 0.7rem; white-space: nowrap; }
     </style>
 </head>
 <body>
@@ -710,7 +757,7 @@
     </div>
 
     <!-- SEARCH BAR FOR DELIVERIES LIST -->
-    <div class="glass-card" style="padding: 16px 20px;">
+    <div class="glass-card" style="padding: 14px 18px;">
         <div class="search-bar-container">
             <div class="search-input-wrapper">
                 <span class="search-icon">🔍</span>
@@ -772,23 +819,8 @@
     <div id="delBatchBar" class="batch-action-bar" style="display: none;">
         <span class="batch-info" id="delBatchCount">0 item(s) selected</span>
         <div class="batch-controls">
-            <select id="delBatchTarget" class="select-move-to">
-                <option value="">Action Selected...</option>
-                <optgroup label="Move To">
-                    <option value="MOVE_Café">☕ Move to Café</option>
-                    <option value="MOVE_Community">🤝 Move to Community</option>
-                    <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
-                </optgroup>
-                <optgroup label="Copy To">
-                    <option value="COPY_Café">☕ Copy to Café</option>
-                    <option value="COPY_Community">🤝 Copy to Community</option>
-                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                </optgroup>
-                <optgroup label="Delete">
-                    <option value="DELETE">🗑️ Delete Selected</option>
-                </optgroup>
-            </select>
-            <button class="btn primary" onclick="executeBatchAction('DELIVERY')">Apply Action</button>
+            <select id="delBatchTarget" class="select-move-to" style="display: none;"></select>
+            <button class="btn primary" style="width: auto; margin-top: 0; padding: 8px 16px; background: rgba(217, 107, 107, 0.65); border-color: rgba(217, 107, 107, 0.6);" onclick="executeBatchAction('DELIVERY')">🗑️ Delete Selected</button>
         </div>
     </div>
 
@@ -796,13 +828,12 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 40px; text-align: center;"><input type="checkbox" id="delSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.del-row-cb')"></th>
+                    <th style="width: 36px; text-align: center;"><input type="checkbox" id="delSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.del-row-cb')"></th>
                     <th>Item Name</th>
                     <th>Category / Subcategory</th>
                     <th>Supplier</th>
                     <th>Quantity & Unit</th>
                     <th>Delivery Date</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="deliveriesTable"></tbody>
@@ -827,7 +858,7 @@
                 <span class="search-icon">🔍</span>
                 <input type="text" id="searchInput" placeholder="Search across all inventories..." oninput="renderMasterTables()">
             </div>
-            <select id="categoryFilter" onchange="renderMasterTables()" style="min-width: 160px;">
+            <select id="categoryFilter" onchange="renderMasterTables()" style="min-width: 150px; width: auto;">
                 <option value="ALL">All Categories</option>
                 <option value="Café">Café Only</option>
                 <option value="Community">Community Only</option>
@@ -852,7 +883,6 @@
                         <th>Quantity & Unit</th>
                         <th>Date Added</th>
                         <th>Last Change Date</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-Café"></tbody>
@@ -872,7 +902,6 @@
                         <th>Quantity & Unit</th>
                         <th>Date Added</th>
                         <th>Last Change Date</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-Community"></tbody>
@@ -892,7 +921,6 @@
                         <th>Quantity & Unit</th>
                         <th>Date Added</th>
                         <th>Last Change Date</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-Housekeeping"></tbody>
@@ -965,29 +993,8 @@
     <div id="invBatchBar" class="batch-action-bar" style="display: none;">
         <span class="batch-info" id="invBatchCount">0 item(s) selected</span>
         <div class="batch-controls">
-            <select id="invBatchTarget" class="select-move-to">
-                <option value="">Action Selected...</option>
-                <optgroup label="Move To">
-                    <option value="MOVE_Café">☕ Move to Café</option>
-                    <option value="MOVE_Community">🤝 Move to Community</option>
-                    <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
-                    <option value="MOVE_DELIVERIES">🚚 Move to Deliveries</option>
-                </optgroup>
-                <optgroup label="Copy To">
-                    <option value="COPY_Café">☕ Copy to Café</option>
-                    <option value="COPY_Community">🤝 Copy to Community</option>
-                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                    <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
-                </optgroup>
-                <optgroup label="Mark Source Note As">
-                    <option value="MARK_In-House">🟢 Mark as In-House</option>
-                    <option value="MARK_Delivery">📦 Mark as Delivery</option>
-                </optgroup>
-                <optgroup label="Delete">
-                    <option value="DELETE">🗑️ Delete Selected</option>
-                </optgroup>
-            </select>
-            <button class="btn primary" onclick="executeBatchAction('INVENTORY')">Apply Action</button>
+            <select id="invBatchTarget" class="select-move-to" style="display: none;"></select>
+            <button class="btn primary" style="width: auto; margin-top: 0; padding: 8px 16px; background: rgba(217, 107, 107, 0.65); border-color: rgba(217, 107, 107, 0.6);" onclick="executeBatchAction('INVENTORY')">🗑️ Delete Selected</button>
         </div>
     </div>
 
@@ -995,13 +1002,12 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 40px; text-align: center;"><input type="checkbox" id="invSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.inv-row-cb')"></th>
+                    <th style="width: 36px; text-align: center;"><input type="checkbox" id="invSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.inv-row-cb')"></th>
                     <th>Item Name</th>
                     <th>Category</th>
                     <th>Quantity & Unit</th>
                     <th>Date Added</th>
                     <th>Last Change Date</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="inventoryTable"></tbody>
@@ -1303,20 +1309,12 @@
     }
 
     function executeBatchAction(sourceType) {
-        let actionVal = '';
         let checkedBoxes = [];
 
         if (sourceType === 'INVENTORY') {
-            actionVal = document.getElementById('invBatchTarget').value;
             checkedBoxes = document.querySelectorAll('.inv-row-cb:checked');
         } else {
-            actionVal = document.getElementById('delBatchTarget').value;
             checkedBoxes = document.querySelectorAll('.del-row-cb:checked');
-        }
-
-        if (!actionVal) {
-            alert("Please select an action/destination from the dropdown.");
-            return;
         }
 
         if (checkedBoxes.length === 0) {
@@ -1326,175 +1324,21 @@
 
         const itemIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
 
-        if (actionVal === 'DELETE') {
-            if (confirm(`Are you sure you want to delete ${itemIds.length} selected item(s)?`)) {
-                if (sourceType === 'INVENTORY') {
-                    itemIds.forEach(id => {
-                        const item = appData.inventory.find(i => i.id === id);
-                        if (item) recordLog(`Deleted item "${item.name}"`);
-                    });
-                    appData.inventory = appData.inventory.filter(i => !itemIds.includes(i.id));
-                } else {
-                    itemIds.forEach(id => {
-                        const del = appData.deliveries.find(d => d.id === id);
-                        if (del) recordLog(`Deleted delivery record for "${del.name}"`);
-                    });
-                    appData.deliveries = appData.deliveries.filter(d => !itemIds.includes(d.id));
-                }
-                autoSaveData();
-            }
-            return;
-        }
-
-        if (actionVal.startsWith('MARK_')) {
-            const newNote = actionVal.replace('MARK_', '');
-            itemIds.forEach(id => {
-                const item = appData.inventory.find(i => i.id === id);
-                if (item) {
-                    item.sourceNote = newNote;
-                    item.lastChanged = getFormattedTimestamp();
-                    recordLog(`Marked item "${item.name}" as [${newNote}]`);
-                }
-            });
-            document.getElementById('invBatchTarget').value = '';
-            autoSaveData();
-            return;
-        }
-
-        let defaultSupplier = "";
-        if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
-            defaultSupplier = prompt(`Enter Supplier Name for copying/moving ${checkedBoxes.length} item(s) to Deliveries:`, "General Supplier") || "General Supplier";
-        }
-
-        itemIds.forEach(id => {
-            processItemAction(id, actionVal, sourceType, defaultSupplier);
-        });
-
-        if (sourceType === 'INVENTORY') document.getElementById('invBatchTarget').value = '';
-        else document.getElementById('delBatchTarget').value = '';
-
-        autoSaveData();
-    }
-
-    function handleRowDropdownAction(itemId, actionVal, sourceType) {
-        if (!actionVal) return;
-
-        if (actionVal === 'DELETE') {
+        if (confirm(`Are you sure you want to delete ${itemIds.length} selected item(s)?`)) {
             if (sourceType === 'INVENTORY') {
-                deleteItem(itemId);
-            } else {
-                deleteDelivery(itemId);
-            }
-            return;
-        }
-
-        if (actionVal.startsWith('MARK_')) {
-            const newNote = actionVal.replace('MARK_', '');
-            const item = appData.inventory.find(i => i.id === itemId);
-            if (item) {
-                item.sourceNote = newNote;
-                item.lastChanged = getFormattedTimestamp();
-                recordLog(`Marked item "${item.name}" as [${newNote}]`);
-                autoSaveData();
-            }
-            return;
-        }
-
-        let defaultSupplier = "";
-        if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
-            const item = appData.inventory.find(i => i.id === itemId);
-            defaultSupplier = prompt(`Enter Supplier Name for copying/moving "${item?.name || 'Item'}" to Deliveries:`, "General Supplier") || "General Supplier";
-        }
-        processItemAction(itemId, actionVal, sourceType, defaultSupplier);
-        autoSaveData();
-    }
-
-    function processItemAction(itemId, actionVal, currentSourceType, supplierName = "General Supplier") {
-        const isCopy = actionVal.startsWith('COPY_');
-        const targetName = actionVal.replace('MOVE_', '').replace('COPY_', '');
-        const nowStamp = getFormattedTimestamp();
-
-        if (currentSourceType === 'DELIVERY') {
-            const del = appData.deliveries.find(d => d.id === itemId);
-            if (!del) return;
-
-            if (targetName === 'DELIVERIES') return;
-
-            const targetSubcategory = (appData.categories[targetName] && appData.categories[targetName].length > 0) ? appData.categories[targetName][0] : 'General';
-
-            const existingItem = appData.inventory.find(i => i.category === targetName && i.name.toLowerCase().trim() === del.name.toLowerCase().trim());
-
-            if (existingItem) {
-                existingItem.qty += del.qty;
-                existingItem.unit = del.unit;
-                existingItem.lastChanged = nowStamp;
-                existingItem.sourceNote = "Delivery";
-            } else {
-                appData.inventory.push({
-                    id: Date.now() + Math.floor(Math.random() * 1000),
-                    name: del.name,
-                    category: targetName,
-                    subcategory: del.subcategory || targetSubcategory,
-                    qty: del.qty,
-                    unit: del.unit,
-                    addedDate: del.deliveryDate || new Date().toISOString().split('T')[0],
-                    lastChanged: nowStamp,
-                    sourceNote: "Delivery"
+                itemIds.forEach(id => {
+                    const item = appData.inventory.find(i => i.id === id);
+                    if (item) recordLog(`Deleted item "${item.name}"`);
                 });
-            }
-
-            if (!isCopy) {
-                appData.deliveries = appData.deliveries.filter(d => d.id !== itemId);
-                recordLog(`Moved delivery item "${del.name}" to ${targetName} inventory`);
+                appData.inventory = appData.inventory.filter(i => !itemIds.includes(i.id));
             } else {
-                recordLog(`Copied delivery item "${del.name}" to ${targetName} inventory`);
-            }
-        } else {
-            const item = appData.inventory.find(i => i.id === itemId);
-            if (!item) return;
-
-            if (targetName === 'DELIVERIES') {
-                appData.deliveries.unshift({
-                    id: Date.now() + Math.floor(Math.random() * 1000),
-                    name: item.name,
-                    category: item.category,
-                    subcategory: item.subcategory || 'General',
-                    supplier: supplierName,
-                    qty: item.qty,
-                    unit: item.unit || 'Pcs',
-                    deliveryDate: item.addedDate || new Date().toISOString().split('T')[0]
+                itemIds.forEach(id => {
+                    const del = appData.deliveries.find(d => d.id === id);
+                    if (del) recordLog(`Deleted delivery record for "${del.name}"`);
                 });
-
-                if (!isCopy) {
-                    appData.inventory = appData.inventory.filter(i => i.id !== itemId);
-                    recordLog(`Moved inventory item "${item.name}" from ${item.category} into Deliveries`);
-                } else {
-                    recordLog(`Copied inventory item "${item.name}" into Deliveries`);
-                }
-            } else {
-                const targetSubcategory = (appData.categories[targetName] && appData.categories[targetName].length > 0) ? appData.categories[targetName][0] : 'General';
-
-                if (isCopy) {
-                    appData.inventory.push({
-                        id: Date.now() + Math.floor(Math.random() * 1000),
-                        name: item.name,
-                        category: targetName,
-                        subcategory: targetSubcategory,
-                        qty: item.qty,
-                        unit: item.unit || 'Pcs',
-                        addedDate: new Date().toISOString().split('T')[0],
-                        lastChanged: nowStamp,
-                        sourceNote: item.sourceNote || "In-House"
-                    });
-                    recordLog(`Copied item "${item.name}" into ${targetName} inventory`);
-                } else {
-                    if (item.category === targetName) return;
-                    item.category = targetName;
-                    item.subcategory = targetSubcategory;
-                    item.lastChanged = nowStamp;
-                    recordLog(`Moved item "${item.name}" into ${targetName} inventory`);
-                }
+                appData.deliveries = appData.deliveries.filter(d => !itemIds.includes(d.id));
             }
+            autoSaveData();
         }
     }
 
@@ -1709,12 +1553,12 @@
 
         if (activePage) {
             activePage.style.opacity = '0';
-            activePage.style.transform = 'translateY(-12px) scale(0.98)';
+            activePage.style.transform = 'translateY(-10px) scale(0.98)';
             
             setTimeout(() => {
                 activePage.classList.remove('active');
                 openTargetPage(targetElement, category, targetPage);
-            }, 300);
+            }, 250);
         } else {
             openTargetPage(targetElement, category, targetPage);
         }
@@ -1887,7 +1731,7 @@
         }
 
         if (filteredDeliveries.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No matching delivery records found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">No matching delivery records found.</td></tr>`;
             return;
         }
 
@@ -1897,30 +1741,10 @@
             row.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" class="row-checkbox del-row-cb" value="${del.id}" onchange="updateBatchBarVisibility()"></td>
                 <td><strong>• ${del.name}</strong></td>
-                <td><span style="font-weight: 600;">${del.category}</span> <span style="font-size:0.75rem; color:var(--text-muted);">(${del.subcategory})</span></td>
+                <td><span style="font-weight: 600;">${del.category}</span> <span style="font-size:0.72rem; color:var(--text-muted);">(${del.subcategory})</span></td>
                 <td>${del.supplier}</td>
                 <td><strong>${del.qty}</strong> <span class="unit-label">${del.unit}</span></td>
                 <td>${del.deliveryDate || del.expectedDate || ''}</td>
-                <td>
-                    <div class="action-cell-wrapper">
-                        <select class="select-move-to" onchange="handleRowDropdownAction(${del.id}, this.value, 'DELIVERY')">
-                            <option value="">Action...</option>
-                            <optgroup label="Move To">
-                                <option value="MOVE_Café">☕ Move to Café</option>
-                                <option value="MOVE_Community">🤝 Move to Community</option>
-                                <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
-                            </optgroup>
-                            <optgroup label="Copy To">
-                                <option value="COPY_Café">☕ Copy to Café</option>
-                                <option value="COPY_Community">🤝 Copy to Community</option>
-                                <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                            </optgroup>
-                            <optgroup label="Delete">
-                                <option value="DELETE">🗑️ Delete</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </td>
             `;
             tbody.appendChild(row);
         });
@@ -1970,18 +1794,13 @@
                         <td>
                             <div class="qty-control">
                                 <button class="btn-qty" onclick="updateQty(${item.id}, -1)">-</button>
-                                <span style="font-weight: 600; min-width: 22px; text-align: center;">${item.qty}</span>
+                                <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.qty}</span>
                                 <button class="btn-qty" onclick="updateQty(${item.id}, 1)">+</button>
                                 <span class="unit-label">${item.unit || 'Pcs'}</span>
                             </div>
                         </td>
                         <td>${item.addedDate}</td>
-                        <td><span style="font-size: 0.78rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
-                        <td>
-                            <div class="action-cell-wrapper">
-                                <button class="btn-danger" onclick="deleteItem(${item.id})">Delete</button>
-                            </div>
-                        </td>
+                        <td><span style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
                     `;
                     tbody.appendChild(row);
                 });
@@ -2003,7 +1822,7 @@
         const filteredItems = appData.inventory.filter(item => item.category === currentCategory);
 
         if (filteredItems.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No items registered.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">No items registered.</td></tr>`;
             return;
         }
 
@@ -2017,7 +1836,7 @@
         Object.keys(grouped).forEach(subGroup => {
             const headerRow = document.createElement('tr');
             headerRow.className = 'group-header-row';
-            headerRow.innerHTML = `<td colspan="7">📂 Group: ${subGroup.toUpperCase()}</td>`;
+            headerRow.innerHTML = `<td colspan="6">📂 Group: ${subGroup.toUpperCase()}</td>`;
             tbody.appendChild(headerRow);
 
             grouped[subGroup].forEach(item => {
@@ -2039,33 +1858,7 @@
                         </div>
                     </td>
                     <td>${item.addedDate}</td>
-                    <td><span style="font-size: 0.78rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
-                    <td>
-                        <div class="action-cell-wrapper">
-                            <select class="select-move-to" onchange="handleRowDropdownAction(${item.id}, this.value, 'INVENTORY')">
-                                <option value="">Action...</option>
-                                <optgroup label="Move To">
-                                    ${item.category !== 'Café' ? '<option value="MOVE_Café">☕ Move to Café</option>' : ''}
-                                    ${item.category !== 'Community' ? '<option value="MOVE_Community">🤝 Move to Community</option>' : ''}
-                                    ${item.category !== 'Housekeeping' ? '<option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>' : ''}
-                                    <option value="MOVE_DELIVERIES">🚚 Move to Deliveries</option>
-                                </optgroup>
-                                <optgroup label="Copy To">
-                                    <option value="COPY_Café">☕ Copy to Café</option>
-                                    <option value="COPY_Community">🤝 Copy to Community</option>
-                                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
-                                    <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
-                                </optgroup>
-                                <optgroup label="Mark Source Note As">
-                                    <option value="MARK_In-House">🟢 Mark as In-House</option>
-                                    <option value="MARK_Delivery">📦 Mark as Delivery</option>
-                                </optgroup>
-                                <optgroup label="Delete">
-                                    <option value="DELETE">🗑️ Delete</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                    </td>
+                    <td><span style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
                 `;
                 tbody.appendChild(row);
             });
