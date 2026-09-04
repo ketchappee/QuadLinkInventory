@@ -64,6 +64,19 @@
             align-items: center;
             gap: 6px;
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .sync-badge.syncing {
+            background: rgba(217, 160, 107, 0.25);
+            color: #5C3D1E;
+            border-color: rgba(217, 160, 107, 0.4);
+        }
+
+        .sync-badge.error {
+            background: rgba(217, 107, 107, 0.25);
+            color: #5C1E1E;
+            border-color: rgba(217, 107, 107, 0.4);
         }
 
         .navbar {
@@ -289,7 +302,6 @@
             margin-bottom: 20px;
         }
 
-        /* SUBCATEGORY ACCORDION TABS WITH SLIDE ANIMATION */
         .sub-accordion-container {
             display: flex;
             flex-direction: column;
@@ -1264,39 +1276,61 @@
         autoSaveData();
     }
 
+    // AUTOMATIC LOCAL SAVE AND GITHUB REPOSITORY PUSH
     async function autoSaveData() {
         localStorage.setItem('cafe_inventory_data', JSON.stringify(appData));
-        document.getElementById('syncBadge').innerText = "● Auto-Saved & Synced";
         renderTable();
         renderMasterTables();
         renderDeliveriesTable();
         renderLogs();
         updateBatchBarVisibility();
 
-        // Automatic GitHub Cloud Sync
-        const token = localStorage.getItem('github_pat');
+        let token = localStorage.getItem('github_pat');
+        if (!token) {
+            token = prompt("Enter your GitHub Personal Access Token (PAT) with 'repo' scope to enable automated repository sync:");
+            if (token && token.trim() !== '') {
+                token = token.trim();
+                localStorage.setItem('github_pat', token);
+            }
+        }
+
         if (token) {
-            pushToGitHub(token, false);
+            await pushToGitHub(token, false);
+        } else {
+            const badge = document.getElementById('syncBadge');
+            badge.innerText = "● Saved Locally (No GitHub PAT)";
+            badge.className = "sync-badge error";
         }
     }
 
     async function triggerGitHubSync() {
         let token = localStorage.getItem('github_pat');
-        if (!token) {
-            token = prompt("Enter your GitHub Personal Access Token (PAT with 'repo' scope):");
-            if (!token) return;
-            localStorage.setItem('github_pat', token.trim());
-        }
-        await pushToGitHub(token, true);
+        token = prompt("Enter/Update your GitHub Personal Access Token (PAT with 'repo' scope):", token || '');
+        if (!token) return;
+        localStorage.setItem('github_pat', token.trim());
+        await pushToGitHub(token.trim(), true);
     }
 
     async function pushToGitHub(token, showAlert = true) {
+        const badge = document.getElementById('syncBadge');
+        badge.innerText = "⏳ Syncing to GitHub...";
+        badge.className = "sync-badge syncing";
+
         const owner = "ketchappee";
         const repo = "QuadLinkInventory";
         const path = "inventory_data.json";
-        const message = `Auto-update inventory data ${getFormattedTimestamp()}`;
-        const contentBytes = new TextEncoder().encode(JSON.stringify(appData, null, 2));
-        const contentBase64 = btoa(String.fromCharCode(...contentBytes));
+        const message = `Auto-sync repository updates: ${getFormattedTimestamp()}`;
+        
+        // Utf8 safe encoding for base64 string push
+        const jsonString = JSON.stringify(appData, null, 2);
+        const encoder = new TextEncoder();
+        const data = encoder.encode(jsonString);
+        let binary = '';
+        for (let i = 0; i < data.length; i++) {
+            binary += String.fromCharCode(data[i]);
+        }
+        const contentBase64 = btoa(binary);
+
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
         try {
@@ -1323,13 +1357,19 @@
             });
 
             if (putRes.ok) {
-                if (showAlert) alert("Successfully synced and pushed to ketchappee/QuadLinkInventory GitHub repository!");
+                badge.innerText = "● Auto-Saved & GitHub Synced";
+                badge.className = "sync-badge";
+                if (showAlert) alert("Successfully synced and pushed updates to ketchappee/QuadLinkInventory repository!");
             } else {
                 const err = await putRes.json();
+                badge.innerText = "✖ Sync Error";
+                badge.className = "sync-badge error";
                 if (showAlert) alert("GitHub Sync Error: " + err.message);
                 if (putRes.status === 401) localStorage.removeItem('github_pat');
             }
         } catch (e) {
+            badge.innerText = "✖ Network Error";
+            badge.className = "sync-badge error";
             if (showAlert) alert("Network error while trying to sync with GitHub.");
         }
     }
@@ -1351,7 +1391,7 @@
                     renderMasterTables();
                     renderDeliveriesTable();
                     renderLogs();
-                    alert("Successfully loaded the latest inventory from GitHub!");
+                    alert("Successfully synced and loaded latest repository data from GitHub!");
                 } else {
                     alert("The remote GitHub data file format is invalid.");
                 }
@@ -1558,9 +1598,6 @@
             }
             cancelDeliveryEdit();
         } else {
-            // AUTOMATIC IN-HOUSE CONVERSION & INVENTORY SYNC:
-            // When a new delivery item is input, prior items in that category automatically mark as "In-House"
-            // and the new delivery item immediately auto-syncs into the main Inventory page.
             appData.inventory.forEach(invItem => {
                 if (invItem.category === category) {
                     invItem.sourceNote = "In-House";
@@ -1728,7 +1765,6 @@
         if (noRes) noRes.style.display = (total === 0) ? 'block' : 'none';
     }
 
-    // Render Subcategory Accordion Tabs to maximize space with smooth slide up/down animation
     function renderTable() {
         const container = document.getElementById('subAccordionContainer');
         if (!container) return;
