@@ -534,6 +534,19 @@
 
         .unit-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; }
 
+        .delivery-note-tag {
+            display: inline-block;
+            background: rgba(140, 123, 107, 0.2);
+            color: var(--brand-color);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-left: 6px;
+            border: 1px solid rgba(140, 123, 107, 0.3);
+            text-transform: uppercase;
+        }
+
         .btn-danger { color: var(--danger); background: transparent; border: none; font-weight: 600; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; padding: 4px 6px; flex-shrink: 0; }
         .btn-danger:hover { opacity: 1; text-decoration: underline; }
 
@@ -654,8 +667,6 @@
 
 <nav class="navbar">
     <div class="nav-left" id="navLeftContainer">
-        <!-- Dynamically shown/hidden based on active page -->
-        <button class="menu-trigger-btn" onclick="toggleMenu()" id="hamburgerBtn">☰</button>
         <button class="back-nav-btn" onclick="navigateTo('menu')" id="backBtn" style="display: none;">← Back</button>
         <div class="logo-badge" onclick="navigateTo('home')">
             <img class="nav-brand-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
@@ -1185,7 +1196,6 @@
         customOpt.innerText = '+ Add Custom Subcategory...';
         select.appendChild(customOpt);
 
-        // If no subcategories remain, automatically prompt to add a new one so it doesn't get stuck empty
         if (subs.length === 0) {
             setTimeout(() => {
                 handleSubcategoryChange(select);
@@ -1223,7 +1233,7 @@
     }
 
     function handleSubcategoryChange(selectEl) {
-        if (selectEl.value === 'CUSTOM' || selectEl.options.length === 1 && selectEl.options[0].value === 'CUSTOM') {
+        if (selectEl.value === 'CUSTOM' || (selectEl.options.length === 1 && selectEl.options[0].value === 'CUSTOM')) {
             const customVal = prompt(`Enter new subcategory name for ${currentCategory}:`);
             if (customVal && customVal.trim() !== '') {
                 const subName = customVal.trim();
@@ -1247,7 +1257,7 @@
 
     function handleDeliverySubcategoryChange(selectEl) {
         const targetCat = document.getElementById('delCategory').value;
-        if (selectEl.value === 'CUSTOM' || selectEl.options.length === 1 && selectEl.options[0].value === 'CUSTOM') {
+        if (selectEl.value === 'CUSTOM' || (selectEl.options.length === 1 && selectEl.options[0].value === 'CUSTOM')) {
             const customVal = prompt(`Enter custom subcategory name for ${targetCat}:`);
             if (customVal && customVal.trim() !== '') {
                 const subName = customVal.trim();
@@ -1481,7 +1491,8 @@
                     qty: del.qty,
                     unit: del.unit,
                     addedDate: del.deliveryDate || new Date().toISOString().split('T')[0],
-                    lastChanged: nowStamp
+                    lastChanged: nowStamp,
+                    isDeliveryItem: true
                 });
             }
 
@@ -1525,7 +1536,8 @@
                         qty: item.qty,
                         unit: item.unit || 'Pcs',
                         addedDate: new Date().toISOString().split('T')[0],
-                        lastChanged: nowStamp
+                        lastChanged: nowStamp,
+                        isDeliveryItem: item.isDeliveryItem || false
                     });
                     recordLog(`Copied item "${item.name}" into ${targetName} inventory`);
                 } else {
@@ -1733,29 +1745,35 @@
         const backBtn = document.getElementById('backBtn');
 
         if (targetPage === 'inventory') {
-            hamburgerBtn.style.display = 'none';
-            backBtn.style.display = 'inline-flex';
-            backBtn.setAttribute('onclick', "navigateTo('menu')");
+            if (hamburgerBtn) hamburgerBtn.style.display = 'none';
+            if (backBtn) {
+                backBtn.style.display = 'inline-flex';
+                backBtn.setAttribute('onclick', "navigateTo('menu')");
+            }
         } else {
-            hamburgerBtn.style.display = 'none';
-            backBtn.style.display = 'none';
+            if (hamburgerBtn) hamburgerBtn.style.display = 'none';
+            if (backBtn) backBtn.style.display = 'none';
         }
 
         document.querySelectorAll('.menu-item-btn').forEach(btn => btn.classList.remove('active'));
         if (targetPage === 'home') {
-            document.getElementById('nav-home').classList.add('active');
+            const navHome = document.getElementById('nav-home');
+            if (navHome) navHome.classList.add('active');
         } else if (targetPage === 'menu') {
-            document.getElementById('nav-menu').classList.add('active');
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu) navMenu.classList.add('active');
         } else if (targetPage === 'deliveries') {
-            document.getElementById('nav-deliveries').classList.add('active');
+            const navDel = document.getElementById('nav-deliveries');
+            if (navDel) navDel.classList.add('active');
         } else if (targetPage === 'master') {
-            document.getElementById('nav-master').classList.add('active');
+            const navMaster = document.getElementById('nav-master');
+            if (navMaster) navMaster.classList.add('active');
         } else if (category && document.getElementById(`nav-${category}`)) {
             document.getElementById(`nav-${category}`).classList.add('active');
         }
 
         const overlay = document.getElementById('popupOverlay');
-        if (overlay.classList.contains('active')) overlay.classList.remove('active');
+        if (overlay && overlay.classList.contains('active')) overlay.classList.remove('active');
 
         if (activePage === targetElement) {
             if (category) switchCategory(category);
@@ -1788,7 +1806,10 @@
         }, 50);
     }
 
-    function toggleMenu() { document.getElementById('popupOverlay').classList.toggle('active'); }
+    function toggleMenu() { 
+        const overlay = document.getElementById('popupOverlay');
+        if (overlay) overlay.classList.toggle('active'); 
+    }
     function closeMenuOnOutsideClick(event) { if (event.target.id === 'popupOverlay') toggleMenu(); }
 
     function switchCategory(cat) {
@@ -1816,7 +1837,8 @@
             qty: qtyVal,
             unit: unitVal,
             addedDate: document.getElementById('itemAddedDate').value,
-            lastChanged: nowStamp
+            lastChanged: nowStamp,
+            isDeliveryItem: false
         };
 
         appData.inventory.push(newItem);
@@ -1852,6 +1874,7 @@
 
         appData.deliveries.unshift(newDelivery);
 
+        // Automatically add or update the item in the inventory for the specified category, marked as a delivery item
         const existingItem = appData.inventory.find(i => 
             i.category === category && 
             i.subcategory === subcategory && 
@@ -1862,17 +1885,25 @@
             existingItem.qty += qty;
             existingItem.unit = unit;
             existingItem.lastChanged = nowStamp;
+            existingItem.isDeliveryItem = true;
             recordLog(`Delivery input updated stock for "${itemName}" (+${qty} ${unit}) in ${category}`);
         } else {
+            // Ensure subcategory exists in target category list
+            if (!appData.categories[category]) appData.categories[category] = [];
+            if (!appData.categories[category].includes(subcategory)) {
+                appData.categories[category].push(subcategory);
+            }
+
             appData.inventory.push({
-                id: Date.now(),
+                id: Date.now() + Math.floor(Math.random() * 1000),
                 name: itemName,
                 category: category,
                 subcategory: subcategory,
                 qty: qty,
                 unit: unit,
                 addedDate: deliveryDate,
-                lastChanged: nowStamp
+                lastChanged: nowStamp,
+                isDeliveryItem: true
             });
             recordLog(`Delivery input automatically added "${itemName}" (${qty} ${unit}) into ${category}`);
         }
@@ -2010,9 +2041,10 @@
 
                 catItems.forEach(item => {
                     const row = document.createElement('tr');
+                    const deliveryNoteTag = item.isDeliveryItem ? `<span class="delivery-note-tag">Delivery</span>` : '';
 
                     row.innerHTML = `
-                        <td>• ${item.name}</td>
+                        <td>• ${item.name} ${deliveryNoteTag}</td>
                         <td>${item.subcategory || 'General'}</td>
                         <td>
                             <div class="qty-control">
@@ -2069,10 +2101,11 @@
 
             grouped[subGroup].forEach(item => {
                 const row = document.createElement('tr');
+                const deliveryNoteTag = item.isDeliveryItem ? `<span class="delivery-note-tag">Delivery</span>` : '';
 
                 row.innerHTML = `
                     <td style="text-align: center;"><input type="checkbox" class="row-checkbox inv-row-cb" value="${item.id}" onchange="updateBatchBarVisibility()"></td>
-                    <td style="padding-left: 12px;">• ${item.name}</td>
+                    <td style="padding-left: 12px;">• ${item.name} ${deliveryNoteTag}</td>
                     <td>${item.category}</td>
                     <td>
                         <div class="qty-control">
