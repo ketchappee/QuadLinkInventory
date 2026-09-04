@@ -445,9 +445,25 @@
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:19",
       "sourceNote": "Delivery"
+    },
+    {
+      "id": 1788512069884,
+      "name": "EMBORG",
+      "category": "Café",
+      "subcategory": "MILK",
+      "qty": 15,
+      "unit": "Pcs",
+      "addedDate": "2026-09-04",
+      "lastChanged": "2026-09-04 16:54",
+      "sourceNote": "In-House"
     }
   ],
   "logs": [
+    {
+      "id": "log_1788512069884",
+      "timestamp": "2026-09-04 16:54",
+      "details": "Added item \"EMBORG\" (15 Pcs)"
+    },
     {
       "id": "log_1788509346574",
       "timestamp": "2026-09-04 16:09",
@@ -692,11 +708,6 @@
       "id": "log_1785983664797_sc6yn",
       "timestamp": "2026-08-06 10:34",
       "details": "Delivery input automatically added \"EDEN CHEESE SLICED BY 10\" (10 Pcs) into Café"
-    },
-    {
-      "id": "log_1785983649687_aqbzs",
-      "timestamp": "2026-08-06 10:34",
-      "details": "Delivery input automatically added \"POTATO CHIPS ORIGINAL\" (30 Pcs) into Café"
     }
   ],
   "deliveries": [
