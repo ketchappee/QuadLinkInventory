@@ -447,17 +447,6 @@
       "sourceNote": "In-House"
     },
     {
-      "id": 1788512789511.8604,
-      "name": "OAT",
-      "category": "Café",
-      "subcategory": "MILK",
-      "qty": 0,
-      "unit": "Pcs",
-      "addedDate": "2026-09-04",
-      "lastChanged": "2026-09-04 17:14",
-      "sourceNote": "In-House"
-    },
-    {
       "id": 1788513034593.282,
       "name": "EMBORG",
       "category": "Café",
@@ -471,9 +460,9 @@
   ],
   "logs": [
     {
-      "id": "log_1788513283546",
-      "timestamp": "2026-09-04 17:14",
-      "details": "Updated qty for \"OAT\" to 0"
+      "id": "log_1788513300958",
+      "timestamp": "2026-09-04 17:15",
+      "details": "Deleted \"OAT\""
     },
     {
       "id": "log_1788513034592",
