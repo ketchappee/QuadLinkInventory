@@ -445,20 +445,14 @@
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:19",
       "sourceNote": "In-House"
-    },
-    {
-      "id": 1788513034593.282,
-      "name": "EMBORG",
-      "category": "Café",
-      "subcategory": "MILK",
-      "qty": 11,
-      "unit": "Box",
-      "addedDate": "2026-09-04",
-      "lastChanged": "2026-09-04 17:10",
-      "sourceNote": "Delivery"
     }
   ],
   "logs": [
+    {
+      "id": "log_1788525900925",
+      "timestamp": "2026-09-04 20:45",
+      "details": "Deleted \"EMBORG\""
+    },
     {
       "id": "log_1788513319708",
       "timestamp": "2026-09-04 17:15",
@@ -703,11 +697,6 @@
       "id": "log_1785984038488_0tde4",
       "timestamp": "2026-08-06 10:40",
       "details": "Deleted delivery record for \"JERSEY CONDENSED\""
-    },
-    {
-      "id": "log_1785984029086_jzz6t",
-      "timestamp": "2026-08-06 10:40",
-      "details": "Delivery input automatically added \"JERSEY CONDENSED\" (1 Case) into Café"
     }
   ],
   "deliveries": [
