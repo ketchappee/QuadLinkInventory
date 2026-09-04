@@ -1166,7 +1166,13 @@
     function updateSubcategoryDropdown(cat) {
         const select = document.getElementById('itemSubcategory');
         select.innerHTML = '';
-        const subs = appData.categories[cat] || ['General'];
+        
+        if (!appData.categories[cat]) {
+            appData.categories[cat] = [];
+        }
+        
+        const subs = appData.categories[cat];
+        
         subs.forEach(sub => {
             const opt = document.createElement('option');
             opt.value = sub;
@@ -1178,12 +1184,25 @@
         customOpt.value = 'CUSTOM';
         customOpt.innerText = '+ Add Custom Subcategory...';
         select.appendChild(customOpt);
+
+        // If no subcategories remain, automatically prompt to add a new one so it doesn't get stuck empty
+        if (subs.length === 0) {
+            setTimeout(() => {
+                handleSubcategoryChange(select);
+            }, 50);
+        }
     }
 
     function updateDeliverySubcategoryDropdown(cat) {
         const select = document.getElementById('delSubcategory');
         select.innerHTML = '';
-        const subs = appData.categories[cat] || ['General'];
+        
+        if (!appData.categories[cat]) {
+            appData.categories[cat] = [];
+        }
+
+        const subs = appData.categories[cat];
+
         subs.forEach(sub => {
             const opt = document.createElement('option');
             opt.value = sub;
@@ -1195,11 +1214,17 @@
         customOpt.value = 'CUSTOM';
         customOpt.innerText = '+ Add Custom Subcategory...';
         select.appendChild(customOpt);
+
+        if (subs.length === 0) {
+            setTimeout(() => {
+                handleDeliverySubcategoryChange(select);
+            }, 50);
+        }
     }
 
     function handleSubcategoryChange(selectEl) {
-        if (selectEl.value === 'CUSTOM') {
-            const customVal = prompt("Enter custom subcategory name:");
+        if (selectEl.value === 'CUSTOM' || selectEl.options.length === 1 && selectEl.options[0].value === 'CUSTOM') {
+            const customVal = prompt(`Enter new subcategory name for ${currentCategory}:`);
             if (customVal && customVal.trim() !== '') {
                 const subName = customVal.trim();
                 if (!appData.categories[currentCategory]) appData.categories[currentCategory] = [];
@@ -1210,14 +1235,19 @@
                 updateSubcategoryDropdown(currentCategory);
                 selectEl.value = subName;
             } else {
-                selectEl.value = selectEl.options[0].value;
+                if (appData.categories[currentCategory].length === 0) {
+                    appData.categories[currentCategory].push('General');
+                }
+                autoSaveData();
+                updateSubcategoryDropdown(currentCategory);
+                selectEl.value = appData.categories[currentCategory][0];
             }
         }
     }
 
     function handleDeliverySubcategoryChange(selectEl) {
-        if (selectEl.value === 'CUSTOM') {
-            const targetCat = document.getElementById('delCategory').value;
+        const targetCat = document.getElementById('delCategory').value;
+        if (selectEl.value === 'CUSTOM' || selectEl.options.length === 1 && selectEl.options[0].value === 'CUSTOM') {
             const customVal = prompt(`Enter custom subcategory name for ${targetCat}:`);
             if (customVal && customVal.trim() !== '') {
                 const subName = customVal.trim();
@@ -1229,7 +1259,12 @@
                 updateDeliverySubcategoryDropdown(targetCat);
                 selectEl.value = subName;
             } else {
-                selectEl.value = selectEl.options[0].value;
+                if (appData.categories[targetCat].length === 0) {
+                    appData.categories[targetCat].push('General');
+                }
+                autoSaveData();
+                updateDeliverySubcategoryDropdown(targetCat);
+                selectEl.value = appData.categories[targetCat][0];
             }
         }
     }
@@ -1694,9 +1729,6 @@
         const activePage = document.querySelector('.page-view.active');
         const targetElement = document.getElementById(`view-${targetPage}`);
 
-        // Update navigation header button display:
-        // - 'home', 'menu', 'deliveries', and 'master' have NO hamburger and NO back button (or use header buttons).
-        // - 'inventory' (Café, Community, Housekeeping categories) has the '← Back' button leading back to the menu selection page.
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const backBtn = document.getElementById('backBtn');
 
