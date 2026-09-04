@@ -36,7 +36,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 11:48",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993353,
@@ -47,7 +47,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993123,
@@ -58,7 +58,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993109,
@@ -69,7 +69,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993283,
@@ -80,7 +80,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993288,
@@ -91,7 +91,7 @@
       "unit": "Box",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993328,
@@ -102,7 +102,7 @@
       "unit": "Box",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993388,
@@ -113,7 +113,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993368,
@@ -124,7 +124,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993559,
@@ -135,7 +135,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981992820,
@@ -146,7 +146,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981992792,
@@ -157,7 +157,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993274,
@@ -168,7 +168,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785981993237,
@@ -179,7 +179,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785983542759,
@@ -190,7 +190,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785983583519,
@@ -201,7 +201,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785983628499,
@@ -212,7 +212,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785983649687,
@@ -223,7 +223,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785983664797,
@@ -234,7 +234,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785983691956,
@@ -245,7 +245,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:50",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785984055493,
@@ -257,7 +257,7 @@
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:40",
       "isDeliveryItem": true,
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785984979857,
@@ -268,7 +268,7 @@
       "unit": "Kg",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 10:56",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785988031417,
@@ -279,7 +279,7 @@
       "unit": "Pack",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 11:47",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785988041024,
@@ -290,7 +290,7 @@
       "unit": "Pack",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 11:47",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785988158956,
@@ -301,7 +301,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 11:49",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785988178751,
@@ -312,7 +312,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 11:49",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785988194053,
@@ -323,7 +323,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 11:49",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785988326693,
@@ -334,7 +334,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 11:52",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989237635,
@@ -345,7 +345,7 @@
       "unit": "Bottle",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:07",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989263242,
@@ -356,7 +356,7 @@
       "unit": "Bottle",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:07",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989270093,
@@ -367,7 +367,7 @@
       "unit": "Bottle",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:07",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989281414,
@@ -378,7 +378,7 @@
       "unit": "Bottle",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:08",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989294648,
@@ -389,7 +389,7 @@
       "unit": "Kg",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:08",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989820642,
@@ -400,7 +400,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:17",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989835264,
@@ -411,7 +411,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:17",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989930136,
@@ -422,7 +422,7 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:18",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989940424,
@@ -433,7 +433,7 @@
       "unit": "Case",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:19",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
       "id": 1785989952868,
@@ -444,25 +444,25 @@
       "unit": "Pcs",
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:19",
-      "sourceNote": "Delivery"
+      "sourceNote": "In-House"
     },
     {
-      "id": 1788512111992,
+      "id": 1788512789511.8604,
       "name": "OAT",
       "category": "Café",
       "subcategory": "MILK",
-      "qty": 15,
-      "unit": "Box",
+      "qty": 1,
+      "unit": "Pcs",
       "addedDate": "2026-09-04",
-      "lastChanged": "2026-09-04 16:55",
-      "sourceNote": "In-House"
+      "lastChanged": "2026-09-04 17:06",
+      "sourceNote": "Delivery"
     }
   ],
   "logs": [
     {
-      "id": "log_1788512111992",
-      "timestamp": "2026-09-04 16:55",
-      "details": "Added item \"OAT\" (15 Box)"
+      "id": "log_1788512789510",
+      "timestamp": "2026-09-04 17:06",
+      "details": "Scheduled delivery \"OAT\" & auto-synced to Café inventory (prior items marked In-House)"
     },
     {
       "id": "log_1788509346574",
@@ -711,6 +711,16 @@
     }
   ],
   "deliveries": [
+    {
+      "id": 1788512789510,
+      "name": "OAT",
+      "category": "Café",
+      "subcategory": "MILK",
+      "supplier": "JAMBI",
+      "qty": 1,
+      "unit": "Pcs",
+      "deliveryDate": "2026-09-04"
+    },
     {
       "id": 1785989951910,
       "name": "HEINZ YELLOW MUSTARD",
