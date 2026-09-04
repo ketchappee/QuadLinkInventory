@@ -445,9 +445,25 @@
       "addedDate": "2026-08-06",
       "lastChanged": "2026-08-06 12:19",
       "sourceNote": "Delivery"
+    },
+    {
+      "id": 1788509050702,
+      "name": "OATSIDE",
+      "category": "Café",
+      "subcategory": "MILK",
+      "qty": 2,
+      "unit": "Pcs",
+      "addedDate": "2026-09-04",
+      "lastChanged": "2026-09-04 16:04",
+      "sourceNote": "In-House"
     }
   ],
   "logs": [
+    {
+      "id": "log_1788509050702",
+      "timestamp": "2026-09-04 16:04",
+      "details": "Added item \"OATSIDE\" (2 Pcs)"
+    },
     {
       "id": "log_1785989951910_4orby",
       "timestamp": "2026-08-06 12:19",
@@ -692,11 +708,6 @@
       "id": "log_1785983628499_egsw7",
       "timestamp": "2026-08-06 10:33",
       "details": "Delivery input automatically added \"LEA & PERRINS WORCESTERSHIRE SAUCE\" (1 Pcs) into Café"
-    },
-    {
-      "id": "log_1785983583519_cooos",
-      "timestamp": "2026-08-06 10:33",
-      "details": "Delivery input automatically added \"RAM SWEET PICKELS\" (2 Pcs) into Café"
     }
   ],
   "deliveries": [
