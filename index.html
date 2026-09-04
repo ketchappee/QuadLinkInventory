@@ -671,6 +671,9 @@
                     <option value="COPY_Community">🤝 Copy to Community</option>
                     <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
                 </optgroup>
+                <optgroup label="Delete">
+                    <option value="DELETE">🗑️ Delete Selected</option>
+                </optgroup>
             </select>
             <button class="btn primary" onclick="executeBatchAction('DELIVERY')">Apply Action</button>
         </div>
@@ -853,6 +856,9 @@
                     <option value="COPY_Community">🤝 Copy to Community</option>
                     <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
                     <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
+                </optgroup>
+                <optgroup label="Delete">
+                    <option value="DELETE">🗑️ Delete Selected</option>
                 </optgroup>
             </select>
             <button class="btn primary" onclick="executeBatchAction('INVENTORY')">Apply Action</button>
@@ -1194,12 +1200,32 @@
             return;
         }
 
+        const itemIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+
+        if (actionVal === 'DELETE') {
+            if (confirm(`Are you sure you want to delete ${itemIds.length} selected item(s)?`)) {
+                if (sourceType === 'INVENTORY') {
+                    itemIds.forEach(id => {
+                        const item = appData.inventory.find(i => i.id === id);
+                        if (item) recordLog(`Deleted item "${item.name}"`);
+                    });
+                    appData.inventory = appData.inventory.filter(i => !itemIds.includes(i.id));
+                } else {
+                    itemIds.forEach(id => {
+                        const del = appData.deliveries.find(d => d.id === id);
+                        if (del) recordLog(`Deleted delivery record for "${del.name}"`);
+                    });
+                    appData.deliveries = appData.deliveries.filter(d => !itemIds.includes(d.id));
+                }
+                autoSaveData();
+            }
+            return;
+        }
+
         let defaultSupplier = "";
         if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
             defaultSupplier = prompt(`Enter Supplier Name for copying/moving ${checkedBoxes.length} item(s) to Deliveries:`, "General Supplier") || "General Supplier";
         }
-
-        const itemIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
 
         itemIds.forEach(id => {
             processItemAction(id, actionVal, sourceType, defaultSupplier);
@@ -1213,6 +1239,16 @@
 
     function handleRowDropdownAction(itemId, actionVal, sourceType) {
         if (!actionVal) return;
+
+        if (actionVal === 'DELETE') {
+            if (sourceType === 'INVENTORY') {
+                deleteItem(itemId);
+            } else {
+                deleteDelivery(itemId);
+            }
+            return;
+        }
+
         let defaultSupplier = "";
         if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
             const item = appData.inventory.find(i => i.id === itemId);
@@ -1720,8 +1756,10 @@
                                 <option value="COPY_Community">🤝 Copy to Community</option>
                                 <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
                             </optgroup>
+                            <optgroup label="Delete">
+                                <option value="DELETE">🗑️ Delete</option>
+                            </optgroup>
                         </select>
-                        <button class="btn-danger" onclick="deleteDelivery(${del.id})">Delete</button>
                     </div>
                 </td>
             `;
@@ -1777,7 +1815,11 @@
                         </td>
                         <td>${item.addedDate}</td>
                         <td><span style="font-size: 0.78rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
-                        <td><button class="btn-danger" onclick="deleteItem(${item.id})">Delete</button></td>
+                        <td>
+                            <div class="action-cell-wrapper">
+                                <button class="btn-danger" onclick="deleteItem(${item.id})">Delete</button>
+                            </div>
+                        </td>
                     `;
                     tbody.appendChild(row);
                 });
@@ -1849,8 +1891,10 @@
                                     <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
                                     <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
                                 </optgroup>
+                                <optgroup label="Delete">
+                                    <option value="DELETE">🗑️ Delete</option>
+                                </optgroup>
                             </select>
-                            <button class="btn-danger" onclick="deleteItem(${item.id})">Delete</button>
                         </div>
                     </td>
                 `;
