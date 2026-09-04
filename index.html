@@ -932,7 +932,7 @@
                     <input type="text" id="itemName" placeholder="e.g. Espresso Beans" required>
                 </div>
                 <div class="input-group">
-                    <label>Source Type (Note)</label>
+                    <label>Source Note</label>
                     <select id="itemSourceNote" required>
                         <option value="In-House">In-House</option>
                         <option value="Delivery">Delivery</option>
@@ -978,6 +978,10 @@
                     <option value="COPY_Community">🤝 Copy to Community</option>
                     <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
                     <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
+                </optgroup>
+                <optgroup label="Mark Source Note As">
+                    <option value="MARK_In-House">🟢 Mark as In-House</option>
+                    <option value="MARK_Delivery">📦 Mark as Delivery</option>
                 </optgroup>
                 <optgroup label="Delete">
                     <option value="DELETE">🗑️ Delete Selected</option>
@@ -1342,6 +1346,21 @@
             return;
         }
 
+        if (actionVal.startsWith('MARK_')) {
+            const newNote = actionVal.replace('MARK_', '');
+            itemIds.forEach(id => {
+                const item = appData.inventory.find(i => i.id === id);
+                if (item) {
+                    item.sourceNote = newNote;
+                    item.lastChanged = getFormattedTimestamp();
+                    recordLog(`Marked item "${item.name}" as [${newNote}]`);
+                }
+            });
+            document.getElementById('invBatchTarget').value = '';
+            autoSaveData();
+            return;
+        }
+
         let defaultSupplier = "";
         if (sourceType === 'INVENTORY' && actionVal.includes('DELIVERIES')) {
             defaultSupplier = prompt(`Enter Supplier Name for copying/moving ${checkedBoxes.length} item(s) to Deliveries:`, "General Supplier") || "General Supplier";
@@ -1365,6 +1384,18 @@
                 deleteItem(itemId);
             } else {
                 deleteDelivery(itemId);
+            }
+            return;
+        }
+
+        if (actionVal.startsWith('MARK_')) {
+            const newNote = actionVal.replace('MARK_', '');
+            const item = appData.inventory.find(i => i.id === itemId);
+            if (item) {
+                item.sourceNote = newNote;
+                item.lastChanged = getFormattedTimestamp();
+                recordLog(`Marked item "${item.name}" as [${newNote}]`);
+                autoSaveData();
             }
             return;
         }
@@ -1397,6 +1428,7 @@
                 existingItem.qty += del.qty;
                 existingItem.unit = del.unit;
                 existingItem.lastChanged = nowStamp;
+                existingItem.sourceNote = "Delivery";
             } else {
                 appData.inventory.push({
                     id: Date.now() + Math.floor(Math.random() * 1000),
@@ -1763,7 +1795,6 @@
 
         appData.deliveries.unshift(newDelivery);
 
-        // Automatically add or update the item in the inventory for the specified category, tagged as Delivery
         const existingItem = appData.inventory.find(i => 
             i.category === category && 
             i.subcategory === subcategory && 
@@ -2021,9 +2052,13 @@
                                 </optgroup>
                                 <optgroup label="Copy To">
                                     <option value="COPY_Café">☕ Copy to Café</option>
-                                    <option value="COPY_Community">☕ Copy to Community</option>
+                                    <option value="COPY_Community">🤝 Copy to Community</option>
                                     <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
                                     <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
+                                </optgroup>
+                                <optgroup label="Mark Source Note As">
+                                    <option value="MARK_In-House">🟢 Mark as In-House</option>
+                                    <option value="MARK_Delivery">📦 Mark as Delivery</option>
                                 </optgroup>
                                 <optgroup label="Delete">
                                     <option value="DELETE">🗑️ Delete</option>
