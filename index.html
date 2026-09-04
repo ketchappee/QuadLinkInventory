@@ -87,24 +87,6 @@
 
         .nav-left { display: flex; align-items: center; gap: 16px; }
 
-        .menu-trigger-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--clear-trans-medium);
-            border: 1px solid var(--clear-border);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-        }
-        .menu-trigger-btn:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
-
         .back-nav-btn {
             padding: 0 16px;
             height: 38px;
@@ -547,6 +529,19 @@
             text-transform: uppercase;
         }
 
+        .inhouse-note-tag {
+            display: inline-block;
+            background: rgba(107, 155, 126, 0.2);
+            color: var(--success);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-left: 6px;
+            border: 1px solid rgba(107, 155, 126, 0.3);
+            text-transform: uppercase;
+        }
+
         .btn-danger { color: var(--danger); background: transparent; border: none; font-weight: 600; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; padding: 4px 6px; flex-shrink: 0; }
         .btn-danger:hover { opacity: 1; text-decoration: underline; }
 
@@ -614,53 +609,6 @@
         .log-item-left { display: flex; align-items: center; gap: 10px; }
         .log-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--brand-color); }
         .log-date { font-weight: 600; color: var(--text-muted); font-size: 0.72rem; white-space: nowrap; }
-
-        .popup-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(12px);
-            z-index: 100;
-            display: flex;
-            align-items: flex-start;
-            padding: 82px 20px 20px 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .popup-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .popup-menu {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(24px);
-            width: 100%;
-            max-width: 320px;
-            border-radius: 24px;
-            padding: 18px;
-            border: 1px solid var(--clear-border);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            transform: scale(0.95) translateY(-10px);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .popup-overlay.active .popup-menu { transform: scale(1) translateY(0); }
-
-        .menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
-        .btn-close { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.6); border: 1px solid var(--clear-border); cursor: pointer; display: flex; align-items: center; justify-content: center; }
-
-        .menu-grid { display: flex; flex-direction: column; gap: 6px; }
-
-        .menu-item-btn {
-            display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px;
-            background: transparent; border: 1px solid transparent; border-radius: 14px; cursor: pointer; text-align: left;
-            transition: all 0.2s;
-        }
-        .menu-item-btn:hover { background: rgba(255, 255, 255, 0.4); }
-        .menu-item-btn.active { background: rgba(255, 255, 255, 0.65); border-color: var(--clear-border); }
-
-        .icon-box { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; font-size: 1rem; border: 1px solid var(--clear-border); }
-        .menu-item-btn.active .icon-box { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
     </style>
 </head>
 <body>
@@ -984,6 +932,13 @@
                     <input type="text" id="itemName" placeholder="e.g. Espresso Beans" required>
                 </div>
                 <div class="input-group">
+                    <label>Source Type (Note)</label>
+                    <select id="itemSourceNote" required>
+                        <option value="In-House">In-House</option>
+                        <option value="Delivery">Delivery</option>
+                    </select>
+                </div>
+                <div class="input-group">
                     <label>Quantity & Unit</label>
                     <div class="qty-input-wrapper">
                         <input type="number" id="itemQty" placeholder="0" min="0" required>
@@ -1065,47 +1020,6 @@
     </div>
 </section>
 
-<div class="popup-overlay" id="popupOverlay" onclick="closeMenuOnOutsideClick(event)">
-    <div class="popup-menu" id="popupMenu">
-        <div class="menu-header">
-            <div class="logo-badge" onclick="navigateTo('home'); toggleMenu();">
-                <img class="nav-brand-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
-            </div>
-            <button class="btn-close" onclick="toggleMenu()">✕</button>
-        </div>
-        <div class="menu-grid">
-            <button class="menu-item-btn active" id="nav-home" onclick="navigateTo('home')">
-                <div class="icon-box">🏠</div>
-                <div><strong>Home Page</strong></div>
-            </button>
-            <button class="menu-item-btn" id="nav-menu" onclick="navigateTo('menu')">
-                <div class="icon-box">📂</div>
-                <div><strong>Menu Inventory</strong></div>
-            </button>
-            <button class="menu-item-btn" id="nav-deliveries" onclick="navigateTo('deliveries')">
-                <div class="icon-box">🚚</div>
-                <div><strong>Deliveries Inventory</strong></div>
-            </button>
-            <button class="menu-item-btn" id="nav-master" onclick="navigateTo('master')">
-                <div class="icon-box">🔍</div>
-                <div><strong>Search & All Inventories</strong></div>
-            </button>
-            <button class="menu-item-btn" id="nav-Café" onclick="navigateTo('inventory', 'Café')">
-                <div class="icon-box">☕</div>
-                <div><strong>Café Inventory</strong></div>
-            </button>
-            <button class="menu-item-btn" id="nav-Community" onclick="navigateTo('inventory', 'Community')">
-                <div class="icon-box">🤝</div>
-                <div><strong>Community Hub</strong></div>
-            </button>
-            <button class="menu-item-btn" id="nav-Housekeeping" onclick="navigateTo('inventory', 'Housekeeping')">
-                <div class="icon-box">🧹</div>
-                <div><strong>Housekeeping</strong></div>
-            </button>
-        </div>
-    </div>
-</div>
-
 <script>
     let fileHandle = null;
     let currentDeliveryFilter = 'ALL';
@@ -1119,10 +1033,10 @@
     let appData = JSON.parse(localStorage.getItem('cafe_inventory_data')) || {
         categories: defaultSubcategories,
         inventory: [
-            { id: 1, name: "Espresso Beans", category: "Café", subcategory: "Beans", qty: 12, unit: "Kg", addedDate: "2026-09-01", lastChanged: "2026-09-03 10:00" },
-            { id: 2, name: "Oat Milk", category: "Café", subcategory: "Milk", qty: 2, unit: "Case", addedDate: "2026-08-25", lastChanged: "2026-09-02 14:15" },
-            { id: 3, name: "Board Games Set", category: "Community", subcategory: "Entertainment & Games", qty: 15, unit: "Pcs", addedDate: "2026-01-10", lastChanged: "2026-01-10 09:00" },
-            { id: 4, name: "Disinfectant Spray", category: "Housekeeping", subcategory: "Cleaning Supplies", qty: 8, unit: "Box", addedDate: "2026-08-01", lastChanged: "2026-08-15 11:30" }
+            { id: 1, name: "Espresso Beans", category: "Café", subcategory: "Beans", qty: 12, unit: "Kg", addedDate: "2026-09-01", lastChanged: "2026-09-03 10:00", sourceNote: "In-House" },
+            { id: 2, name: "Oat Milk", category: "Café", subcategory: "Milk", qty: 2, unit: "Case", addedDate: "2026-08-25", lastChanged: "2026-09-02 14:15", sourceNote: "Delivery" },
+            { id: 3, name: "Board Games Set", category: "Community", subcategory: "Entertainment & Games", qty: 15, unit: "Pcs", addedDate: "2026-01-10", lastChanged: "2026-01-10 09:00", sourceNote: "In-House" },
+            { id: 4, name: "Disinfectant Spray", category: "Housekeeping", subcategory: "Cleaning Supplies", qty: 8, unit: "Box", addedDate: "2026-08-01", lastChanged: "2026-08-15 11:30", sourceNote: "Delivery" }
         ],
         deliveries: [
             { id: 101, name: "Specialty Espresso Batch", category: "Café", subcategory: "Beans", supplier: "Roastery Co.", qty: 10, unit: "Kg", deliveryDate: "2026-09-10" },
@@ -1149,6 +1063,7 @@
     appData.inventory.forEach(item => {
         if (!item.subcategory) item.subcategory = "General";
         if (!item.unit) item.unit = "Pcs";
+        if (!item.sourceNote) item.sourceNote = item.isDeliveryItem ? "Delivery" : "In-House";
     });
 
     if (appData.logs && Array.isArray(appData.logs)) {
@@ -1492,7 +1407,7 @@
                     unit: del.unit,
                     addedDate: del.deliveryDate || new Date().toISOString().split('T')[0],
                     lastChanged: nowStamp,
-                    isDeliveryItem: true
+                    sourceNote: "Delivery"
                 });
             }
 
@@ -1537,7 +1452,7 @@
                         unit: item.unit || 'Pcs',
                         addedDate: new Date().toISOString().split('T')[0],
                         lastChanged: nowStamp,
-                        isDeliveryItem: item.isDeliveryItem || false
+                        sourceNote: item.sourceNote || "In-House"
                     });
                     recordLog(`Copied item "${item.name}" into ${targetName} inventory`);
                 } else {
@@ -1663,6 +1578,7 @@
                 appData.inventory.forEach(item => {
                     if (!item.subcategory) item.subcategory = "General";
                     if (!item.unit) item.unit = "Pcs";
+                    if (!item.sourceNote) item.sourceNote = "In-House";
                 });
 
                 if (appData.logs && Array.isArray(appData.logs)) {
@@ -1705,10 +1621,10 @@
 
         Object.keys(grouped).forEach(subGroup => {
             csvContent += `"SECTION: ${subGroup.toUpperCase()}"\n`;
-            csvContent += `"Item Name","Subcategory","Quantity","Unit","Date Added","Last Changed"\n`;
+            csvContent += `"Item Name","Subcategory","Source Note","Quantity","Unit","Date Added","Last Changed"\n`;
 
             grouped[subGroup].forEach(item => {
-                csvContent += `"${item.name}","${item.subcategory}",${item.qty},"${item.unit || 'Pcs'}","${item.addedDate}","${item.lastChanged}"\n`;
+                csvContent += `"${item.name}","${item.subcategory}","${item.sourceNote || 'In-House'}",${item.qty},"${item.unit || 'Pcs'}","${item.addedDate}","${item.lastChanged}"\n`;
             });
             csvContent += `\n`;
         });
@@ -1741,39 +1657,16 @@
         const activePage = document.querySelector('.page-view.active');
         const targetElement = document.getElementById(`view-${targetPage}`);
 
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
         const backBtn = document.getElementById('backBtn');
 
         if (targetPage === 'inventory') {
-            if (hamburgerBtn) hamburgerBtn.style.display = 'none';
             if (backBtn) {
                 backBtn.style.display = 'inline-flex';
                 backBtn.setAttribute('onclick', "navigateTo('menu')");
             }
         } else {
-            if (hamburgerBtn) hamburgerBtn.style.display = 'none';
             if (backBtn) backBtn.style.display = 'none';
         }
-
-        document.querySelectorAll('.menu-item-btn').forEach(btn => btn.classList.remove('active'));
-        if (targetPage === 'home') {
-            const navHome = document.getElementById('nav-home');
-            if (navHome) navHome.classList.add('active');
-        } else if (targetPage === 'menu') {
-            const navMenu = document.getElementById('nav-menu');
-            if (navMenu) navMenu.classList.add('active');
-        } else if (targetPage === 'deliveries') {
-            const navDel = document.getElementById('nav-deliveries');
-            if (navDel) navDel.classList.add('active');
-        } else if (targetPage === 'master') {
-            const navMaster = document.getElementById('nav-master');
-            if (navMaster) navMaster.classList.add('active');
-        } else if (category && document.getElementById(`nav-${category}`)) {
-            document.getElementById(`nav-${category}`).classList.add('active');
-        }
-
-        const overlay = document.getElementById('popupOverlay');
-        if (overlay && overlay.classList.contains('active')) overlay.classList.remove('active');
 
         if (activePage === targetElement) {
             if (category) switchCategory(category);
@@ -1806,12 +1699,6 @@
         }, 50);
     }
 
-    function toggleMenu() { 
-        const overlay = document.getElementById('popupOverlay');
-        if (overlay) overlay.classList.toggle('active'); 
-    }
-    function closeMenuOnOutsideClick(event) { if (event.target.id === 'popupOverlay') toggleMenu(); }
-
     function switchCategory(cat) {
         currentCategory = cat;
         const icons = { Café: '☕', Community: '🤝', Housekeeping: '🧹' };
@@ -1826,6 +1713,7 @@
         const nowStamp = getFormattedTimestamp();
         const itemName = document.getElementById('itemName').value;
         const subcategory = document.getElementById('itemSubcategory').value;
+        const sourceNote = document.getElementById('itemSourceNote').value;
         const qtyVal = parseInt(document.getElementById('itemQty').value);
         const unitVal = document.getElementById('itemUnit').value;
 
@@ -1838,15 +1726,16 @@
             unit: unitVal,
             addedDate: document.getElementById('itemAddedDate').value,
             lastChanged: nowStamp,
-            isDeliveryItem: false
+            sourceNote: sourceNote
         };
 
         appData.inventory.push(newItem);
-        recordLog(`Added "${itemName}" under [${subcategory}] with qty ${newItem.qty} ${newItem.unit}`);
+        recordLog(`Added "${itemName}" under [${subcategory}] as [${sourceNote}] with qty ${newItem.qty} ${newItem.unit}`);
         autoSaveData();
 
         document.getElementById('itemName').value = '';
         document.getElementById('itemQty').value = '';
+        document.getElementById('itemSourceNote').value = 'In-House';
         document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
     }
 
@@ -1874,7 +1763,7 @@
 
         appData.deliveries.unshift(newDelivery);
 
-        // Automatically add or update the item in the inventory for the specified category, marked as a delivery item
+        // Automatically add or update the item in the inventory for the specified category, tagged as Delivery
         const existingItem = appData.inventory.find(i => 
             i.category === category && 
             i.subcategory === subcategory && 
@@ -1885,10 +1774,9 @@
             existingItem.qty += qty;
             existingItem.unit = unit;
             existingItem.lastChanged = nowStamp;
-            existingItem.isDeliveryItem = true;
+            existingItem.sourceNote = "Delivery";
             recordLog(`Delivery input updated stock for "${itemName}" (+${qty} ${unit}) in ${category}`);
         } else {
-            // Ensure subcategory exists in target category list
             if (!appData.categories[category]) appData.categories[category] = [];
             if (!appData.categories[category].includes(subcategory)) {
                 appData.categories[category].push(subcategory);
@@ -1903,7 +1791,7 @@
                 unit: unit,
                 addedDate: deliveryDate,
                 lastChanged: nowStamp,
-                isDeliveryItem: true
+                sourceNote: "Delivery"
             });
             recordLog(`Delivery input automatically added "${itemName}" (${qty} ${unit}) into ${category}`);
         }
@@ -2041,10 +1929,12 @@
 
                 catItems.forEach(item => {
                     const row = document.createElement('tr');
-                    const deliveryNoteTag = item.isDeliveryItem ? `<span class="delivery-note-tag">Delivery</span>` : '';
+                    const noteTag = item.sourceNote === 'Delivery' 
+                        ? `<span class="delivery-note-tag">Delivery</span>` 
+                        : `<span class="inhouse-note-tag">In-House</span>`;
 
                     row.innerHTML = `
-                        <td>• ${item.name} ${deliveryNoteTag}</td>
+                        <td>• ${item.name} ${noteTag}</td>
                         <td>${item.subcategory || 'General'}</td>
                         <td>
                             <div class="qty-control">
@@ -2101,11 +1991,13 @@
 
             grouped[subGroup].forEach(item => {
                 const row = document.createElement('tr');
-                const deliveryNoteTag = item.isDeliveryItem ? `<span class="delivery-note-tag">Delivery</span>` : '';
+                const noteTag = item.sourceNote === 'Delivery' 
+                    ? `<span class="delivery-note-tag">Delivery</span>` 
+                    : `<span class="inhouse-note-tag">In-House</span>`;
 
                 row.innerHTML = `
                     <td style="text-align: center;"><input type="checkbox" class="row-checkbox inv-row-cb" value="${item.id}" onchange="updateBatchBarVisibility()"></td>
-                    <td style="padding-left: 12px;">• ${item.name} ${deliveryNoteTag}</td>
+                    <td style="padding-left: 12px;">• ${item.name} ${noteTag}</td>
                     <td>${item.category}</td>
                     <td>
                         <div class="qty-control">
@@ -2129,7 +2021,7 @@
                                 </optgroup>
                                 <optgroup label="Copy To">
                                     <option value="COPY_Café">☕ Copy to Café</option>
-                                    <option value="COPY_Community">🤝 Copy to Community</option>
+                                    <option value="COPY_Community">☕ Copy to Community</option>
                                     <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
                                     <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
                                 </optgroup>
