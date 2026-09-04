@@ -14,7 +14,6 @@
             --brand-color: #8C7B6B;
             --brand-hover: #756555;
             
-            --clear-trans-ultra: rgba(255, 255, 255, 0.15);
             --clear-trans-light: rgba(255, 255, 255, 0.45);
             --clear-trans-medium: rgba(255, 255, 255, 0.70);
             --clear-trans-hover: rgba(255, 255, 255, 0.88);
@@ -65,17 +64,14 @@
             align-items: center;
             gap: 6px;
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
         }
-
-        .sync-badge.linked { background: rgba(107, 133, 155, 0.25); color: #2C4254; border-color: rgba(107, 133, 155, 0.4); }
 
         .navbar {
             background: var(--clear-trans-light);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            height: 70px;
-            padding: 0 24px;
+            height: 64px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -85,50 +81,47 @@
             z-index: 90;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 16px; }
+        .nav-left { display: flex; align-items: center; gap: 12px; }
 
         .back-nav-btn {
-            padding: 0 16px;
-            height: 38px;
-            border-radius: 19px;
+            padding: 0 14px;
+            height: 34px;
+            border-radius: 17px;
             background: var(--clear-trans-medium);
             border: 1px solid var(--clear-border);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 700;
             color: var(--text-main);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             transition: all 0.2s ease;
         }
         .back-nav-btn:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
 
         .logo-badge {
             background: rgba(255, 255, 255, 0.9);
-            padding: 6px 12px;
-            border-radius: 12px;
+            padding: 5px 10px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.9);
             cursor: pointer;
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
         }
 
-        .nav-brand-logo { height: 22px; width: auto; object-fit: contain; display: block; }
+        .nav-brand-logo { height: 20px; width: auto; object-fit: contain; display: block; }
 
         .page-view {
             display: none;
             opacity: 0;
-            transform: translateY(15px) scale(0.99);
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 0 20px;
+            transform: translateY(10px) scale(0.99);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 1280px;
+            margin: 20px auto;
+            padding: 0 16px;
         }
 
         .page-view.active { display: block; opacity: 1; transform: translateY(0) scale(1); }
@@ -136,144 +129,101 @@
         .home-hero {
             background: var(--clear-trans-medium);
             backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--clear-border);
-            border-radius: 32px;
-            padding: 60px 30px;
+            border-radius: 28px;
+            padding: 50px 24px;
             text-align: center;
             box-shadow: var(--glass-shadow);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
+            max-width: 800px;
+            margin: 40px auto;
         }
 
-        .home-hero-logo { height: 64px; width: auto; background: rgba(255,255,255,0.9); padding: 12px 24px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid var(--clear-border); }
-        .home-hero h1 { font-size: 2rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px; }
-        .home-hero p { font-size: 0.95rem; color: var(--text-muted); max-width: 440px; line-height: 1.6; }
+        .home-hero-logo { height: 56px; width: auto; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 14px; border: 1px solid var(--clear-border); }
+        .home-hero h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-main); }
+        .home-hero p { font-size: 0.9rem; color: var(--text-muted); max-width: 400px; line-height: 1.5; }
 
-        .hero-action-group { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .hero-action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 
         .btn-proceed {
             background: var(--brand-color);
             color: #ffffff;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            letter-spacing: 0.3px;
-            padding: 14px 28px;
-            border-radius: 16px;
+            padding: 12px 24px;
+            border-radius: 14px;
             border: 1px solid var(--clear-border);
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(140, 123, 107, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(140, 123, 107, 0.3);
+            transition: all 0.25s ease;
         }
-        .btn-proceed:hover { background: var(--brand-hover); transform: translateY(-2px); }
+        .btn-proceed:hover { background: var(--brand-hover); transform: translateY(-1px); }
+        .btn-proceed.secondary { background: var(--clear-trans-medium); color: var(--text-main); }
 
-        .btn-proceed.secondary {
-            background: var(--clear-trans-medium);
-            color: var(--text-main);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        /* NETFLIX-STYLE SELECTION CAROUSEL / ROW */
         .netflix-container {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
             padding: 10px 0;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .netflix-row-title {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: -0.3px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.4);
         }
 
         .netflix-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
         }
 
         .netflix-card {
             background: var(--clear-trans-medium);
             backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--clear-border);
-            border-radius: 24px;
-            padding: 30px 24px;
+            border-radius: 20px;
+            padding: 24px 20px;
             cursor: pointer;
             box-shadow: var(--glass-shadow);
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 16px;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            gap: 12px;
+            transition: all 0.3s ease;
         }
 
         .netflix-card:hover {
-            transform: scale(1.04) translateY(-4px);
+            transform: scale(1.03) translateY(-3px);
             background: var(--clear-trans-hover);
             border-color: var(--brand-color);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
         .netflix-card-icon {
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             background: rgba(255, 255, 255, 0.7);
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid var(--clear-border);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
         }
 
-        .netflix-card:hover .netflix-card-icon {
-            background: var(--brand-color);
-            color: #fff;
-            border-color: var(--brand-color);
-        }
+        .netflix-card h3 { font-size: 1.1rem; font-weight: 700; }
+        .netflix-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 
-        .netflix-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: -0.3px;
-        }
-
-        .netflix-card p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .netflix-badge-tag {
-            font-size: 0.68rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: rgba(140, 123, 107, 0.15);
-            color: var(--brand-color);
-            border: 1px solid rgba(140, 123, 107, 0.3);
-        }
-
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; }
-        header h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px; text-shadow: 0 1px 2px rgba(255,255,255,0.4); }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        header h2 { font-size: 1.35rem; font-weight: 700; color: var(--text-main); }
 
         .action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
         
@@ -282,155 +232,136 @@
             backdrop-filter: blur(12px);
             color: var(--text-main);
             border: 1px solid var(--clear-border);
-            padding: 9px 16px;
-            border-radius: 12px;
+            padding: 8px 14px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            transition: all 0.25s ease;
+            gap: 5px;
+            transition: all 0.2s ease;
         }
 
-        button.btn:hover, label.btn-label:hover { background: var(--clear-trans-hover); transform: translateY(-1px); }
-        button.primary { background: var(--brand-color); color: #fff; border-color: var(--clear-border); }
+        button.btn:hover, label.btn-label:hover { background: var(--clear-trans-hover); }
+        button.primary { background: var(--brand-color); color: #fff; }
         button.primary:hover { background: var(--brand-hover); }
         
         button.json-btn { color: #2C4254; }
         button.gsheets-btn { color: #264A35; }
         button.edit-btn { color: var(--warning); background: rgba(217, 160, 107, 0.15); border-color: rgba(217, 160, 107, 0.3); }
-        button.edit-btn:hover { background: rgba(217, 160, 107, 0.3); }
 
-        /* DASHBOARD MENU STYLING */
         .dashboard-nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 8px;
+            margin-bottom: 16px;
         }
 
         .dash-card-btn {
             background: var(--clear-trans-medium);
             backdrop-filter: blur(16px);
             border: 1px solid var(--clear-border);
-            border-radius: 16px;
-            padding: 14px 12px;
+            border-radius: 14px;
+            padding: 12px 10px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
-
-        .dash-card-btn:hover { background: var(--clear-trans-hover); transform: translateY(-2px); }
+        .dash-card-btn:hover { background: var(--clear-trans-hover); }
         .dash-card-btn.active {
             background: var(--brand-color);
             color: #fff;
             border-color: var(--brand-color);
-            box-shadow: 0 6px 16px rgba(140, 123, 107, 0.3);
         }
-
-        .dash-card-icon { font-size: 1.2rem; }
-        .dash-card-title { font-size: 0.82rem; font-weight: 700; }
+        .dash-card-icon { font-size: 1.1rem; }
+        .dash-card-title { font-size: 0.78rem; font-weight: 700; }
 
         .glass-card {
             background: var(--clear-trans-medium);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
+            border-radius: 20px;
             border: 1px solid var(--clear-border);
             box-shadow: var(--glass-shadow);
-            padding: 24px;
-            margin-bottom: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
-        .search-bar-container {
+        /* BATCH SELECTION & TRANSFER BAR */
+        .batch-action-bar {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--clear-border);
+            border-radius: 14px;
+            padding: 10px 16px;
+            margin-bottom: 14px;
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
             align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        .search-input-wrapper {
-            position: relative;
-            flex: 1;
-            min-width: 240px;
-        }
+        .batch-info { font-size: 0.78rem; font-weight: 700; color: var(--text-main); }
+        .batch-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-        .search-input-wrapper input {
-            width: 100%;
-            padding-left: 38px;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            pointer-events: none;
-        }
+        .search-bar-container { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .search-input-wrapper { position: relative; flex: 1; min-width: 220px; }
+        .search-input-wrapper input { width: 100%; padding-left: 36px; }
+        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: var(--text-muted); pointer-events: none; }
 
         .category-section-header {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--text-main);
-            margin: 28px 0 12px 6px;
+            margin: 24px 0 10px 4px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
-        .input-group { display: flex; flex-direction: column; gap: 6px; }
-        .input-group label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        .input-group label { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; }
 
-        .subcategory-input-wrapper, .qty-input-wrapper {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
+        .subcategory-input-wrapper, .qty-input-wrapper { display: flex; gap: 5px; align-items: center; }
         .subcategory-input-wrapper select { flex: 1; min-width: 0; }
-        .qty-input-wrapper input { flex: 1; min-width: 0; width: 60%; }
-        .qty-input-wrapper select { width: 40%; min-width: 75px; flex-shrink: 0; }
+        .qty-input-wrapper input { flex: 1; min-width: 0; width: 55%; }
+        .qty-input-wrapper select { width: 45%; min-width: 70px; flex-shrink: 0; }
 
         .btn-del-sub {
             background: rgba(217, 107, 107, 0.15);
             color: var(--danger);
             border: 1px solid rgba(217, 107, 107, 0.3);
-            border-radius: 12px;
-            width: 42px;
-            height: 42px;
+            border-radius: 10px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
+            font-size: 0.85rem;
             flex-shrink: 0;
         }
         .btn-del-sub:hover { background: rgba(217, 107, 107, 0.3); }
 
         input, select {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.65);
             border: 1px solid var(--clear-border);
             color: var(--text-main);
-            padding: 11px 14px;
-            border-radius: 12px;
-            font-size: 0.85rem;
+            padding: 9px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
             outline: none;
             backdrop-filter: blur(10px);
             transition: all 0.2s ease;
         }
-        input:focus, select:focus { border-color: var(--brand-color); background: rgba(255, 255, 255, 0.9); box-shadow: 0 0 0 3px rgba(140, 123, 107, 0.15); }
-        
+        input:focus, select:focus { border-color: var(--brand-color); background: rgba(255, 255, 255, 0.95); }
         select option { background: #fff; color: #111; }
 
         .action-cell-wrapper {
@@ -440,45 +371,57 @@
             flex-wrap: nowrap;
         }
 
+        .select-transfer {
+            padding: 6px 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid var(--clear-border);
+            color: var(--text-main);
+            cursor: pointer;
+            max-width: 130px;
+        }
+
+        .row-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--brand-color); }
+
         .table-container { 
             background: var(--clear-trans-medium);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px; 
+            border-radius: 20px; 
             border: 1px solid var(--clear-border);
             box-shadow: var(--glass-shadow);
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 760px; }
-        th, td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.35); font-size: 0.85rem; white-space: nowrap; }
-        th { background: rgba(255, 255, 255, 0.3); color: var(--text-muted); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 820px; }
+        th, td { padding: 12px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.35); font-size: 0.8rem; white-space: nowrap; }
+        th { background: rgba(255, 255, 255, 0.3); color: var(--text-muted); font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.6px; }
         
         .group-header-row {
-            background: rgba(255, 255, 255, 0.5) !important;
+            background: rgba(255, 255, 255, 0.55) !important;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: 0.5px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
-        .qty-control { display: flex; align-items: center; gap: 6px; }
-        .btn-qty { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--clear-border); background: rgba(255, 255, 255, 0.5); cursor: pointer; font-weight: 600; color: var(--text-main); transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .qty-control { display: flex; align-items: center; gap: 5px; }
+        .btn-qty { width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--clear-border); background: rgba(255, 255, 255, 0.6); cursor: pointer; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .btn-qty:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
 
-        .unit-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; }
+        .unit-label { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; }
 
         .delivery-note-tag {
             display: inline-block;
             background: rgba(140, 123, 107, 0.2);
             color: var(--brand-color);
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 6px;
-            margin-left: 6px;
+            padding: 2px 6px;
+            border-radius: 5px;
+            margin-left: 4px;
             border: 1px solid rgba(140, 123, 107, 0.3);
             text-transform: uppercase;
         }
@@ -487,82 +430,72 @@
             display: inline-block;
             background: rgba(107, 155, 126, 0.2);
             color: var(--success);
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 6px;
-            margin-left: 6px;
+            padding: 2px 6px;
+            border-radius: 5px;
+            margin-left: 4px;
             border: 1px solid rgba(107, 155, 126, 0.3);
             text-transform: uppercase;
         }
 
-        .btn-danger { color: var(--danger); background: transparent; border: none; font-weight: 600; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; padding: 4px 6px; flex-shrink: 0; }
-        .btn-danger:hover { opacity: 1; text-decoration: underline; }
+        .btn-delete-x {
+            background: rgba(217, 107, 107, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(217, 107, 107, 0.3);
+            border-radius: 7px;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .btn-delete-x:hover { background: rgba(217, 107, 107, 0.3); }
 
         .log-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .log-section-title { 
-            font-size: 0.95rem; 
-            font-weight: 700; 
-            color: var(--text-main); 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-        }
-
-        .log-controls {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .select-all-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
+        .log-section-title { font-size: 0.9rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
+        .log-controls { display: flex; align-items: center; gap: 10px; }
+        .select-all-label { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 5px; cursor: pointer; }
 
         button.btn-clear-selected {
             background: rgba(217, 107, 107, 0.15);
             color: var(--danger);
             border: 1px solid rgba(217, 107, 107, 0.3);
-            padding: 6px 12px;
-            border-radius: 8px;
+            padding: 5px 10px;
+            border-radius: 7px;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
-            transition: all 0.2s ease;
         }
-        button.btn-clear-selected:hover { background: rgba(217, 107, 107, 0.28); }
+        button.btn-clear-selected:hover { background: rgba(217, 107, 107, 0.25); }
 
-        .log-list { list-style: none; display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto; padding-right: 4px; }
+        .log-list { list-style: none; display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto; padding-right: 4px; }
         .log-item { 
             background: rgba(255, 255, 255, 0.35); 
             border: 1px solid var(--clear-border); 
-            border-radius: 12px; 
-            padding: 10px 14px; 
-            font-size: 0.78rem; 
+            border-radius: 10px; 
+            padding: 8px 12px; 
+            font-size: 0.75rem; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            gap: 12px;
-            backdrop-filter: blur(10px);
+            gap: 10px;
         }
-
-        .log-item-left { display: flex; align-items: center; gap: 10px; }
-        .log-checkbox { width: 15px; height: 15px; cursor: pointer; accent-color: var(--brand-color); }
-        .log-date { font-weight: 600; color: var(--text-muted); font-size: 0.72rem; white-space: nowrap; }
+        .log-item-left { display: flex; align-items: center; gap: 8px; }
+        .log-checkbox { width: 14px; height: 14px; cursor: pointer; accent-color: var(--brand-color); }
+        .log-date { font-weight: 600; color: var(--text-muted); font-size: 0.68rem; white-space: nowrap; }
     </style>
 </head>
 <body>
@@ -577,26 +510,21 @@
     <div id="syncBadge" class="sync-badge">● Auto-Saved</div>
 </nav>
 
+<!-- HOME PAGE -->
 <section id="view-home" class="page-view active">
     <div class="home-hero">
         <img class="home-hero-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         <h1>QuadLink Inventory</h1>
-        <p>Aesthetic minimalist stock management with automated subcategory sorting and intelligent update tracking.</p>
+        <p>Aesthetic minimalist stock management with rapid copying, moving, and re-editing capabilities.</p>
         <div class="hero-action-group">
-            <button class="btn-proceed" onclick="navigateTo('menu')">
-                📂 Proceed to Menu Inventory
-            </button>
-            <button class="btn-proceed secondary" onclick="navigateTo('deliveries')">
-                🚚 Deliveries Inventory
-            </button>
-            <button class="btn-proceed secondary" onclick="navigateTo('master')">
-                🔍 Master Search List
-            </button>
+            <button class="btn-proceed" onclick="navigateTo('menu')">📂 Menu Inventory</button>
+            <button class="btn-proceed secondary" onclick="navigateTo('deliveries')">🚚 Deliveries Inventory</button>
+            <button class="btn-proceed secondary" onclick="navigateTo('master')">🔍 Master Search List</button>
         </div>
     </div>
 </section>
 
-<!-- NETFLIX SELECTION PAGE FOR MENU INVENTORY -->
+<!-- MENU SELECTION PAGE -->
 <section id="view-menu" class="page-view">
     <header>
         <h2>📂 Menu Inventory</h2>
@@ -607,31 +535,31 @@
     </header>
 
     <div class="netflix-container">
-        <div class="netflix-row-title">✨ Select Category</div>
+        <div class="netflix-row-title">✨ Select Category Hub</div>
         <div class="netflix-cards-grid">
             <div class="netflix-card" onclick="navigateTo('inventory', 'Café')">
                 <div class="netflix-card-icon">☕</div>
-                <div class="netflix-badge-tag">Inventory Hub</div>
+                <div class="netflix-badge-tag">Inventory</div>
                 <h3>Café</h3>
-                <p>Manage espresso beans, milks, syrups, cups, and daily consumables.</p>
+                <p>Espresso beans, milks, syrups, and daily consumables.</p>
             </div>
             <div class="netflix-card" onclick="navigateTo('inventory', 'Community')">
                 <div class="netflix-card-icon">🤝</div>
-                <div class="netflix-badge-tag">Inventory Hub</div>
+                <div class="netflix-badge-tag">Inventory</div>
                 <h3>Community</h3>
-                <p>Track entertainment sets, furniture, seating, and electronics.</p>
+                <p>Entertainment sets, furniture, seating, and electronics.</p>
             </div>
             <div class="netflix-card" onclick="navigateTo('inventory', 'Housekeeping')">
                 <div class="netflix-card-icon">🧹</div>
-                <div class="netflix-badge-tag">Inventory Hub</div>
+                <div class="netflix-badge-tag">Inventory</div>
                 <h3>Housekeeping</h3>
-                <p>Monitor cleaning chemicals, linens, equipment, and supplies.</p>
+                <p>Cleaning chemicals, linens, equipment, and supplies.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- DELIVERIES INVENTORY PAGE WITH DASHBOARD MENU -->
+<!-- DELIVERIES PAGE -->
 <section id="view-deliveries" class="page-view">
     <header>
         <h2>🚚 Deliveries Dashboard</h2>
@@ -639,14 +567,13 @@
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
             <label class="btn-label json-btn">
-                📂 Load File
+                📂 Load
                 <input type="file" id="deliveriesJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
             </label>
-            <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
+            <button onclick="saveJSONFileManually()" class="btn">💾 Save</button>
         </div>
     </header>
 
-    <!-- CATEGORY DASHBOARD SELECTOR -->
     <div class="dashboard-nav-grid">
         <div class="dash-card-btn active" id="dashNav-ALL" onclick="filterDeliveryDashboard('ALL')">
             <div class="dash-card-icon">📦</div>
@@ -666,8 +593,7 @@
         </div>
     </div>
 
-    <!-- SEARCH BAR FOR DELIVERIES LIST -->
-    <div class="glass-card" style="padding: 16px 20px;">
+    <div class="glass-card" style="padding: 14px 18px;">
         <div class="search-bar-container">
             <div class="search-input-wrapper">
                 <span class="search-icon">🔍</span>
@@ -692,29 +618,27 @@
                     <label>Subcategory</label>
                     <div class="subcategory-input-wrapper">
                         <select id="delSubcategory" required onchange="handleDeliverySubcategoryChange(this)"></select>
-                        <button type="button" class="btn-del-sub" onclick="deleteDeliverySubcategory()" title="Delete selected subcategory">✕</button>
+                        <button type="button" class="btn-del-sub" onclick="deleteDeliverySubcategory()" title="Delete subcategory">✕</button>
                     </div>
                 </div>
                 <div class="input-group">
                     <label>Item Name</label>
-                    <input type="text" id="delItemName" placeholder="e.g. Arabica Roast Batch" required>
+                    <input type="text" id="delItemName" placeholder="e.g. Beans Batch" required>
                 </div>
                 <div class="input-group">
-                    <label>Supplier / Vendor</label>
+                    <label>Supplier</label>
                     <div class="subcategory-input-wrapper">
                         <select id="delSupplier" required onchange="handleSupplierChange(this)">
                             <option value="JAMBI">JAMBI</option>
                             <option value="YARDSTICK">YARDSTICK</option>
                             <option value="NIMO">NIMO</option>
                             <option value="KUKIDO">KUKIDO</option>
-                            <option value="MMB">MMB</option>
-                            <option value="LALAMOVE">LALAMOVE</option>
-                            <option value="CUSTOM">+ Add Custom Supplier...</option>
+                            <option value="CUSTOM">+ Add Custom...</option>
                         </select>
                     </div>
                 </div>
                 <div class="input-group">
-                    <label>Quantity & Unit</label>
+                    <label>Qty & Unit</label>
                     <div class="qty-input-wrapper">
                         <input type="number" id="delQty" placeholder="0" min="1" required>
                         <select id="delUnit" required>
@@ -724,7 +648,6 @@
                             <option value="Kg">Kg</option>
                             <option value="L">L</option>
                             <option value="Pack">Pack</option>
-                            <option value="Bottle">Bottle</option>
                         </select>
                     </div>
                 </div>
@@ -733,21 +656,44 @@
                     <input type="date" id="delDate" required>
                 </div>
             </div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <button type="submit" id="delSubmitBtn" class="btn primary">+ Schedule / Add Delivery</button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="submit" id="delSubmitBtn" class="btn primary">+ Schedule Delivery</button>
                 <button type="button" id="delCancelEditBtn" class="btn" style="display: none;" onclick="cancelDeliveryEdit()">Cancel Edit</button>
             </div>
         </form>
+    </div>
+
+    <!-- BATCH ACTION BAR FOR DELIVERIES -->
+    <div id="delBatchBar" class="batch-action-bar" style="display: none;">
+        <span class="batch-info" id="delBatchCount">0 selected</span>
+        <div class="batch-controls">
+            <select id="delBatchTarget" class="select-transfer" style="max-width: 170px;">
+                <option value="">Transfer / Copy...</option>
+                <optgroup label="Move To">
+                    <option value="MOVE_Café">☕ Move to Café</option>
+                    <option value="MOVE_Community">🤝 Move to Community</option>
+                    <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
+                </optgroup>
+                <optgroup label="Copy To">
+                    <option value="COPY_Café">☕ Copy to Café</option>
+                    <option value="COPY_Community">🤝 Copy to Community</option>
+                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
+                </optgroup>
+            </select>
+            <button class="btn primary" onclick="executeBatchAction('DELIVERY')" style="padding: 6px 12px; font-size: 0.75rem;">Apply</button>
+            <button class="btn-clear-selected" onclick="deleteSelectedDeliveries()">🗑️ Delete Selected</button>
+        </div>
     </div>
 
     <div class="table-container">
         <table>
             <thead>
                 <tr>
+                    <th style="width: 36px; text-align: center;"><input type="checkbox" id="delSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.del-row-cb')"></th>
                     <th>Item Name</th>
                     <th>Category / Subcategory</th>
                     <th>Supplier</th>
-                    <th>Quantity & Unit</th>
+                    <th>Qty & Unit</th>
                     <th>Delivery Date</th>
                     <th>Action</th>
                 </tr>
@@ -757,17 +703,17 @@
     </div>
 </section>
 
-<!-- MASTER SEARCH & SEPARATE LISTS PAGE -->
+<!-- MASTER SEARCH PAGE -->
 <section id="view-master" class="page-view">
     <header>
         <h2>🔍 Search & Overview</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <label class="btn-label json-btn">
-                📂 Load File
+                📂 Load
                 <input type="file" id="masterJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
             </label>
-            <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
+            <button onclick="saveJSONFileManually()" class="btn">💾 Save</button>
         </div>
     </header>
 
@@ -777,11 +723,11 @@
                 <span class="search-icon">🔍</span>
                 <input type="text" id="searchInput" placeholder="Search across all inventories..." oninput="renderMasterTables()">
             </div>
-            <select id="categoryFilter" onchange="renderMasterTables()" style="min-width: 160px;">
+            <select id="categoryFilter" onchange="renderMasterTables()" style="min-width: 140px;">
                 <option value="ALL">All Categories</option>
-                <option value="Café">Café Only</option>
-                <option value="Community">Community Only</option>
-                <option value="Housekeeping">Housekeeping Only</option>
+                <option value="Café">Café</option>
+                <option value="Community">Community</option>
+                <option value="Housekeeping">Housekeeping</option>
             </select>
         </div>
     </div>
@@ -790,7 +736,6 @@
         <p style="text-align: center; color: var(--text-muted); font-weight: 500;">No matching inventory items found.</p>
     </div>
 
-    <!-- 1. CAFE INVENTORY ONLY -->
     <div id="sec-Café">
         <div class="category-section-header">☕ Café Inventory</div>
         <div class="table-container">
@@ -799,9 +744,9 @@
                     <tr>
                         <th>Item Name</th>
                         <th>Subcategory</th>
-                        <th>Quantity & Unit</th>
+                        <th>Qty & Unit</th>
                         <th>Date Added</th>
-                        <th>Last Change Date</th>
+                        <th>Last Changed</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -810,18 +755,17 @@
         </div>
     </div>
 
-    <!-- 2. COMMUNITY INVENTORY ONLY -->
     <div id="sec-Community">
-        <div class="category-section-header">🤝 Community Hub Inventory</div>
+        <div class="category-section-header">🤝 Community Inventory</div>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
                         <th>Subcategory</th>
-                        <th>Quantity & Unit</th>
+                        <th>Qty & Unit</th>
                         <th>Date Added</th>
-                        <th>Last Change Date</th>
+                        <th>Last Changed</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -830,7 +774,6 @@
         </div>
     </div>
 
-    <!-- 3. HOUSEKEEPING INVENTORY ONLY -->
     <div id="sec-Housekeeping">
         <div class="category-section-header">🧹 Housekeeping Inventory</div>
         <div class="table-container">
@@ -839,9 +782,9 @@
                     <tr>
                         <th>Item Name</th>
                         <th>Subcategory</th>
-                        <th>Quantity & Unit</th>
+                        <th>Qty & Unit</th>
                         <th>Date Added</th>
-                        <th>Last Change Date</th>
+                        <th>Last Changed</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -858,11 +801,11 @@
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <label class="btn-label json-btn">
-                📂 Load File
+                📂 Load
                 <input type="file" id="inventoryJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
             </label>
-            <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
-            <button onclick="exportToGoogleSheets()" class="btn gsheets-btn">📊 Export Sheets Template</button>
+            <button onclick="saveJSONFileManually()" class="btn">💾 Save</button>
+            <button onclick="exportToGoogleSheets()" class="btn gsheets-btn">📊 Sheets Template</button>
         </div>
     </header>
 
@@ -874,7 +817,7 @@
                     <label>Subcategory</label>
                     <div class="subcategory-input-wrapper">
                         <select id="itemSubcategory" required onchange="handleSubcategoryChange(this)"></select>
-                        <button type="button" class="btn-del-sub" onclick="deleteCurrentSubcategory()" title="Delete selected subcategory">✕</button>
+                        <button type="button" class="btn-del-sub" onclick="deleteCurrentSubcategory()" title="Delete subcategory">✕</button>
                     </div>
                 </div>
                 <div class="input-group">
@@ -889,7 +832,7 @@
                     </select>
                 </div>
                 <div class="input-group">
-                    <label>Quantity & Unit</label>
+                    <label>Qty & Unit</label>
                     <div class="qty-input-wrapper">
                         <input type="number" id="itemQty" placeholder="0" min="0" required>
                         <select id="itemUnit" required>
@@ -899,7 +842,6 @@
                             <option value="Kg">Kg</option>
                             <option value="L">L</option>
                             <option value="Pack">Pack</option>
-                            <option value="Bottle">Bottle</option>
                         </select>
                     </div>
                 </div>
@@ -908,22 +850,47 @@
                     <input type="date" id="itemAddedDate" required>
                 </div>
             </div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <button type="submit" id="itemSubmitBtn" class="btn primary">+ Add Item to Inventory</button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="submit" id="itemSubmitBtn" class="btn primary">+ Add Item</button>
                 <button type="button" id="itemCancelEditBtn" class="btn" style="display: none;" onclick="cancelItemEdit()">Cancel Edit</button>
             </div>
         </form>
+    </div>
+
+    <!-- BATCH ACTION BAR FOR INVENTORY -->
+    <div id="invBatchBar" class="batch-action-bar" style="display: none;">
+        <span class="batch-info" id="invBatchCount">0 selected</span>
+        <div class="batch-controls">
+            <select id="invBatchTarget" class="select-transfer" style="max-width: 170px;">
+                <option value="">Transfer / Copy...</option>
+                <optgroup label="Move To">
+                    <option value="MOVE_Café">☕ Move to Café</option>
+                    <option value="MOVE_Community">🤝 Move to Community</option>
+                    <option value="MOVE_Housekeeping">🧹 Move to Housekeeping</option>
+                    <option value="MOVE_DELIVERIES">🚚 Move to Deliveries</option>
+                </optgroup>
+                <optgroup label="Copy To">
+                    <option value="COPY_Café">☕ Copy to Café</option>
+                    <option value="COPY_Community">🤝 Copy to Community</option>
+                    <option value="COPY_Housekeeping">🧹 Copy to Housekeeping</option>
+                    <option value="COPY_DELIVERIES">🚚 Copy to Deliveries</option>
+                </optgroup>
+            </select>
+            <button class="btn primary" onclick="executeBatchAction('INVENTORY')" style="padding: 6px 12px; font-size: 0.75rem;">Apply</button>
+            <button class="btn-clear-selected" onclick="deleteSelectedInventoryItems()">🗑️ Delete Selected</button>
+        </div>
     </div>
 
     <div class="table-container">
         <table>
             <thead>
                 <tr>
+                    <th style="width: 36px; text-align: center;"><input type="checkbox" id="invSelectAll" class="row-checkbox" onchange="toggleSelectAllPage(this, '.inv-row-cb')"></th>
                     <th>Item Name</th>
                     <th>Category</th>
-                    <th>Quantity & Unit</th>
+                    <th>Qty & Unit</th>
                     <th>Date Added</th>
-                    <th>Last Change Date</th>
+                    <th>Last Changed</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -938,7 +905,7 @@
                 <label class="select-all-label">
                     <input type="checkbox" id="selectAllLogs" onchange="toggleSelectAllLogs(this)"> Select All
                 </label>
-                <button class="btn-clear-selected" onclick="deleteSelectedLogs()">🗑️ Delete Selected</button>
+                <button class="btn-clear-selected" onclick="deleteSelectedLogs()">🗑️ Delete</button>
             </div>
         </div>
         <ul class="log-list" id="auditLogList">
@@ -972,17 +939,9 @@
         logs: []
     };
 
-    if (!appData.categories) {
-        appData.categories = JSON.parse(JSON.stringify(defaultSubcategories));
-    }
-
-    if (!appData.suppliers) {
-        appData.suppliers = ['JAMBI', 'YARDSTICK', 'NIMO', 'KUKIDO', 'MMB', 'LALAMOVE'];
-    }
-
-    if (!appData.deliveries) {
-        appData.deliveries = [];
-    }
+    if (!appData.categories) appData.categories = JSON.parse(JSON.stringify(defaultSubcategories));
+    if (!appData.suppliers) appData.suppliers = ['JAMBI', 'YARDSTICK', 'NIMO', 'KUKIDO', 'MMB', 'LALAMOVE'];
+    if (!appData.deliveries) appData.deliveries = [];
 
     appData.deliveries.forEach(del => {
         if (!del.deliveryDate && del.expectedDate) {
@@ -994,7 +953,7 @@
     appData.inventory.forEach(item => {
         if (!item.subcategory) item.subcategory = "General";
         if (!item.unit) item.unit = "Pcs";
-        if (!item.sourceNote) item.sourceNote = item.isDeliveryItem ? "Delivery" : "In-House";
+        if (!item.sourceNote) item.sourceNote = "In-House";
     });
 
     if (appData.logs && Array.isArray(appData.logs)) {
@@ -1012,26 +971,17 @@
         if (!select) return;
         const currentVal = select.value;
         select.innerHTML = '';
-
-        if (!appData.suppliers) {
-            appData.suppliers = ['JAMBI', 'YARDSTICK', 'NIMO', 'KUKIDO', 'MMB', 'LALAMOVE'];
-        }
-
         appData.suppliers.forEach(supp => {
             const opt = document.createElement('option');
             opt.value = supp;
             opt.innerText = supp;
             select.appendChild(opt);
         });
-
         const customOpt = document.createElement('option');
         customOpt.value = 'CUSTOM';
-        customOpt.innerText = '+ Add Custom Supplier...';
+        customOpt.innerText = '+ Add Custom...';
         select.appendChild(customOpt);
-
-        if (currentVal && (appData.suppliers.includes(currentVal) || currentVal === 'CUSTOM')) {
-            select.value = currentVal;
-        }
+        if (currentVal) select.value = currentVal;
     }
 
     function handleSupplierChange(selectEl) {
@@ -1039,9 +989,7 @@
             const customVal = prompt("Enter custom supplier name:");
             if (customVal && customVal.trim() !== '') {
                 const suppName = customVal.trim().toUpperCase();
-                if (!appData.suppliers.includes(suppName)) {
-                    appData.suppliers.push(suppName);
-                }
+                if (!appData.suppliers.includes(suppName)) appData.suppliers.push(suppName);
                 autoSaveData();
                 updateSupplierDropdown();
                 selectEl.value = suppName;
@@ -1056,12 +1004,10 @@
         currentDeliveryFilter = cat;
         document.querySelectorAll('.dash-card-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById(`dashNav-${cat}`).classList.add('active');
-
         if (cat !== 'ALL') {
             document.getElementById('delCategory').value = cat;
             updateDeliverySubcategoryDropdown(cat);
         }
-
         renderDeliveriesTable();
     }
 
@@ -1070,35 +1016,22 @@
         if (!select) return;
         const currentVal = select.value;
         select.innerHTML = '';
-        
-        if (!appData.categories[cat]) {
-            appData.categories[cat] = [];
-        }
-        
+        if (!appData.categories[cat]) appData.categories[cat] = [];
         const subs = appData.categories[cat];
-        
         subs.forEach(sub => {
             const opt = document.createElement('option');
             opt.value = sub;
             opt.innerText = sub;
             select.appendChild(opt);
         });
-        
         const customOpt = document.createElement('option');
         customOpt.value = 'CUSTOM';
-        customOpt.innerText = '+ Add Custom Subcategory...';
+        customOpt.innerText = '+ Add Custom...';
         select.appendChild(customOpt);
-
         if (currentVal && (subs.includes(currentVal) || currentVal === 'CUSTOM')) {
             select.value = currentVal;
         } else if (subs.length > 0) {
             select.value = subs[0];
-        }
-
-        if (subs.length === 0) {
-            setTimeout(() => {
-                handleSubcategoryChange(select);
-            }, 50);
         }
     }
 
@@ -1107,81 +1040,52 @@
         if (!select) return;
         const currentVal = select.value;
         select.innerHTML = '';
-        
-        if (!appData.categories[cat]) {
-            appData.categories[cat] = [];
-        }
-
+        if (!appData.categories[cat]) appData.categories[cat] = [];
         const subs = appData.categories[cat];
-
         subs.forEach(sub => {
             const opt = document.createElement('option');
             opt.value = sub;
             opt.innerText = sub;
             select.appendChild(opt);
         });
-
         const customOpt = document.createElement('option');
         customOpt.value = 'CUSTOM';
-        customOpt.innerText = '+ Add Custom Subcategory...';
+        customOpt.innerText = '+ Add Custom...';
         select.appendChild(customOpt);
-
         if (currentVal && (subs.includes(currentVal) || currentVal === 'CUSTOM')) {
             select.value = currentVal;
         } else if (subs.length > 0) {
             select.value = subs[0];
         }
-
-        if (subs.length === 0) {
-            setTimeout(() => {
-                handleDeliverySubcategoryChange(select);
-            }, 50);
-        }
     }
 
     function handleSubcategoryChange(selectEl) {
-        if (selectEl.value === 'CUSTOM' || (selectEl.options.length === 1 && selectEl.options[0].value === 'CUSTOM')) {
-            const customVal = prompt(`Enter new subcategory name for ${currentCategory}:`);
+        if (selectEl.value === 'CUSTOM') {
+            const customVal = prompt(`Enter new subcategory for ${currentCategory}:`);
             if (customVal && customVal.trim() !== '') {
                 const subName = customVal.trim();
-                if (!appData.categories[currentCategory]) appData.categories[currentCategory] = [];
-                if (!appData.categories[currentCategory].includes(subName)) {
-                    appData.categories[currentCategory].push(subName);
-                }
+                if (!appData.categories[currentCategory].includes(subName)) appData.categories[currentCategory].push(subName);
                 autoSaveData();
                 updateSubcategoryDropdown(currentCategory);
                 selectEl.value = subName;
             } else {
-                if (appData.categories[currentCategory].length === 0) {
-                    appData.categories[currentCategory].push('General');
-                }
-                autoSaveData();
                 updateSubcategoryDropdown(currentCategory);
-                selectEl.value = appData.categories[currentCategory][0];
             }
         }
     }
 
     function handleDeliverySubcategoryChange(selectEl) {
         const targetCat = document.getElementById('delCategory').value;
-        if (selectEl.value === 'CUSTOM' || (selectEl.options.length === 1 && selectEl.options[0].value === 'CUSTOM')) {
-            const customVal = prompt(`Enter custom subcategory name for ${targetCat}:`);
+        if (selectEl.value === 'CUSTOM') {
+            const customVal = prompt(`Enter new subcategory for ${targetCat}:`);
             if (customVal && customVal.trim() !== '') {
                 const subName = customVal.trim();
-                if (!appData.categories[targetCat]) appData.categories[targetCat] = [];
-                if (!appData.categories[targetCat].includes(subName)) {
-                    appData.categories[targetCat].push(subName);
-                }
+                if (!appData.categories[targetCat].includes(subName)) appData.categories[targetCat].push(subName);
                 autoSaveData();
                 updateDeliverySubcategoryDropdown(targetCat);
                 selectEl.value = subName;
             } else {
-                if (appData.categories[targetCat].length === 0) {
-                    appData.categories[targetCat].push('General');
-                }
-                autoSaveData();
                 updateDeliverySubcategoryDropdown(targetCat);
-                selectEl.value = appData.categories[targetCat][0];
             }
         }
     }
@@ -1189,33 +1093,10 @@
     function deleteCurrentSubcategory() {
         const selectEl = document.getElementById('itemSubcategory');
         const selectedSub = selectEl.value;
-
-        if (!selectedSub || selectedSub === 'CUSTOM') {
-            alert("Please select a valid subcategory to delete.");
-            return;
-        }
-
-        const itemsWithSub = appData.inventory.filter(i => i.category === currentCategory && i.subcategory === selectedSub);
-
-        let deleteItemsToo = false;
-        if (itemsWithSub.length > 0) {
-            deleteItemsToo = confirm(`Subcategory "${selectedSub}" contains ${itemsWithSub.length} item(s).\n\nDo you also want to delete all items in this subcategory?\n- Click OK to delete the subcategory AND its items.\n- Click Cancel to abort.`);
-            if (!deleteItemsToo) return;
-        } else {
-            if (!confirm(`Are you sure you want to delete the subcategory "${selectedSub}"?`)) return;
-        }
-
-        if (appData.categories[currentCategory]) {
-            appData.categories[currentCategory] = appData.categories[currentCategory].filter(s => s !== selectedSub);
-        }
-
-        if (deleteItemsToo) {
-            appData.inventory = appData.inventory.filter(i => !(i.category === currentCategory && i.subcategory === selectedSub));
-            recordLog(`Deleted subcategory [${selectedSub}] and its associated items from ${currentCategory}`);
-        } else {
-            recordLog(`Deleted subcategory [${selectedSub}] from ${currentCategory}`);
-        }
-
+        if (!selectedSub || selectedSub === 'CUSTOM') return;
+        if (!confirm(`Delete subcategory "${selectedSub}"?`)) return;
+        appData.categories[currentCategory] = appData.categories[currentCategory].filter(s => s !== selectedSub);
+        recordLog(`Deleted subcategory [${selectedSub}] from ${currentCategory}`);
         autoSaveData();
         updateSubcategoryDropdown(currentCategory);
     }
@@ -1225,268 +1106,289 @@
         const subSelect = document.getElementById('delSubcategory');
         const selectedCat = catSelect.value;
         const selectedSub = subSelect.value;
-
-        if (!selectedSub || selectedSub === 'CUSTOM') {
-            alert("Please select a valid subcategory to delete.");
-            return;
-        }
-
-        const deliveriesWithSub = appData.deliveries.filter(d => d.category === selectedCat && d.subcategory === selectedSub);
-
-        let deleteDeliveriesToo = false;
-        if (deliveriesWithSub.length > 0) {
-            deleteDeliveriesToo = confirm(`Subcategory "${selectedSub}" contains ${deliveriesWithSub.length} scheduled delivery record(s).\n\nDo you also want to delete all deliveries in this subcategory?\n- Click OK to delete the subcategory AND its delivery records.\n- Click Cancel to abort.`);
-            if (!deleteDeliveriesToo) return;
-        } else {
-            if (!confirm(`Are you sure you want to delete the subcategory "${selectedSub}" from ${selectedCat}?`)) return;
-        }
-
-        if (appData.categories[selectedCat]) {
-            appData.categories[selectedCat] = appData.categories[selectedCat].filter(s => s !== selectedSub);
-        }
-
-        if (deleteDeliveriesToo) {
-            appData.deliveries = appData.deliveries.filter(d => !(d.category === selectedCat && d.subcategory === selectedSub));
-            recordLog(`Deleted delivery subcategory [${selectedSub}] and its associated delivery records from ${selectedCat}`);
-        } else {
-            recordLog(`Deleted delivery subcategory [${selectedSub}] from ${selectedCat}`);
-        }
-
+        if (!selectedSub || selectedSub === 'CUSTOM') return;
+        if (!confirm(`Delete subcategory "${selectedSub}" from ${selectedCat}?`)) return;
+        appData.categories[selectedCat] = appData.categories[selectedCat].filter(s => s !== selectedSub);
+        recordLog(`Deleted subcategory [${selectedSub}] from ${selectedCat}`);
         autoSaveData();
         updateDeliverySubcategoryDropdown(selectedCat);
     }
 
-    function getFormattedTimestamp() {
-        const now = new Date();
-        const dateStr = now.toISOString().split('T')[0];
-        const timeStr = now.toTimeString().split(' ')[0].substring(0, 5);
-        return `${dateStr} ${timeStr}`;
+    function toggleSelectAllPage(masterCb, childSelector) {
+        document.querySelectorAll(childSelector).forEach(cb => cb.checked = masterCb.checked);
+        updateBatchBarVisibility();
     }
 
-    function recordLog(actionDetails) {
-        const id = 'log_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
-        const timestamp = getFormattedTimestamp();
-        appData.logs.unshift({ id, timestamp, details: actionDetails });
-        if (appData.logs.length > 50) appData.logs.pop();
+    function updateBatchBarVisibility() {
+        const invCbs = document.querySelectorAll('.inv-row-cb:checked');
+        const invBar = document.getElementById('invBatchBar');
+        const invCount = document.getElementById('invBatchCount');
+        if (invBar) {
+            if (invCbs.length > 0) {
+                invBar.style.display = 'flex';
+                invCount.innerText = `${invCbs.length} selected`;
+            } else {
+                invBar.style.display = 'none';
+                const sa = document.getElementById('invSelectAll');
+                if (sa) sa.checked = false;
+            }
+        }
+
+        const delCbs = document.querySelectorAll('.del-row-cb:checked');
+        const delBar = document.getElementById('delBatchBar');
+        const delCount = document.getElementById('delBatchCount');
+        if (delBar) {
+            if (delCbs.length > 0) {
+                delBar.style.display = 'flex';
+                delCount.innerText = `${delCbs.length} selected`;
+            } else {
+                delBar.style.display = 'none';
+                const sa = document.getElementById('delSelectAll');
+                if (sa) sa.checked = false;
+            }
+        }
     }
 
-    function toggleSelectAllLogs(mainCheckbox) {
-        const checkboxes = document.querySelectorAll('.log-checkbox');
-        checkboxes.forEach(cb => cb.checked = mainCheckbox.checked);
-    }
+    function executeBatchAction(sourceType) {
+        let actionVal = sourceType === 'INVENTORY' ? document.getElementById('invBatchTarget').value : document.getElementById('delBatchTarget').value;
+        let checkedBoxes = document.querySelectorAll(sourceType === 'INVENTORY' ? '.inv-row-cb:checked' : '.del-row-cb:checked');
 
-    function deleteSelectedLogs() {
-        const selectedCheckboxes = document.querySelectorAll('.log-checkbox:checked');
-        if (selectedCheckboxes.length === 0) {
-            alert("Please select at least one history item to delete.");
+        if (!actionVal || checkedBoxes.length === 0) {
+            alert("Please select a transfer destination and at least one item.");
             return;
         }
 
-        if (confirm(`Delete ${selectedCheckboxes.length} selected history record(s)?`)) {
-            const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.value);
-            appData.logs = appData.logs.filter(log => !selectedIds.includes(String(log.id)));
-            
-            const selectAllBox = document.getElementById('selectAllLogs');
-            if (selectAllBox) selectAllBox.checked = false;
+        const itemIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+        itemIds.forEach(id => processItemAction(id, actionVal, sourceType));
+        autoSaveData();
+    }
 
-            autoSaveData();
+    function handleRowDropdownAction(itemId, actionVal, sourceType) {
+        if (!actionVal) return;
+        processItemAction(itemId, actionVal, sourceType);
+        autoSaveData();
+    }
+
+    function processItemAction(itemId, actionVal, currentSourceType) {
+        const isCopy = actionVal.startsWith('COPY_');
+        const targetName = actionVal.replace('MOVE_', '').replace('COPY_', '');
+        const nowStamp = getFormattedTimestamp();
+
+        if (currentSourceType === 'DELIVERY') {
+            const del = appData.deliveries.find(d => d.id === itemId);
+            if (!del) return;
+            if (targetName === 'DELIVERIES') return;
+
+            const targetSubcategory = (appData.categories[targetName] && appData.categories[targetName].length > 0) ? appData.categories[targetName][0] : 'General';
+            const existingItem = appData.inventory.find(i => i.category === targetName && i.name.toLowerCase().trim() === del.name.toLowerCase().trim());
+
+            if (existingItem) {
+                existingItem.qty += del.qty;
+                existingItem.lastChanged = nowStamp;
+            } else {
+                appData.inventory.push({
+                    id: Date.now() + Math.random(),
+                    name: del.name,
+                    category: targetName,
+                    subcategory: del.subcategory || targetSubcategory,
+                    qty: del.qty,
+                    unit: del.unit,
+                    addedDate: del.deliveryDate || new Date().toISOString().split('T')[0],
+                    lastChanged: nowStamp,
+                    sourceNote: "Delivery"
+                });
+            }
+
+            if (!isCopy) {
+                appData.deliveries = appData.deliveries.filter(d => d.id !== itemId);
+                recordLog(`Moved delivery "${del.name}" to ${targetName}`);
+            } else {
+                recordLog(`Copied delivery "${del.name}" to ${targetName}`);
+            }
+        } else {
+            const item = appData.inventory.find(i => i.id === itemId);
+            if (!item) return;
+
+            if (targetName === 'DELIVERIES') {
+                appData.deliveries.unshift({
+                    id: Date.now() + Math.random(),
+                    name: item.name,
+                    category: item.category,
+                    subcategory: item.subcategory || 'General',
+                    supplier: 'JAMBI',
+                    qty: item.qty,
+                    unit: item.unit || 'Pcs',
+                    deliveryDate: item.addedDate || new Date().toISOString().split('T')[0]
+                });
+                if (!isCopy) {
+                    appData.inventory = appData.inventory.filter(i => i.id !== itemId);
+                    recordLog(`Moved "${item.name}" to Deliveries`);
+                } else {
+                    recordLog(`Copied "${item.name}" to Deliveries`);
+                }
+            } else {
+                const targetSubcategory = (appData.categories[targetName] && appData.categories[targetName].length > 0) ? appData.categories[targetName][0] : 'General';
+                if (isCopy) {
+                    appData.inventory.push({
+                        id: Date.now() + Math.random(),
+                        name: item.name,
+                        category: targetName,
+                        subcategory: targetSubcategory,
+                        qty: item.qty,
+                        unit: item.unit || 'Pcs',
+                        addedDate: new Date().toISOString().split('T')[0],
+                        lastChanged: nowStamp,
+                        sourceNote: item.sourceNote
+                    });
+                    recordLog(`Copied "${item.name}" to ${targetName}`);
+                } else {
+                    if (item.category === targetName) return;
+                    item.category = targetName;
+                    item.subcategory = targetSubcategory;
+                    item.lastChanged = nowStamp;
+                    recordLog(`Moved "${item.name}" to ${targetName}`);
+                }
+            }
         }
+    }
+
+    function deleteSelectedInventoryItems() {
+        const checked = document.querySelectorAll('.inv-row-cb:checked');
+        if (checked.length === 0) return;
+        if (!confirm(`Delete ${checked.length} selected item(s)?`)) return;
+        const ids = Array.from(checked).map(cb => parseInt(cb.value));
+        appData.inventory = appData.inventory.filter(i => !ids.includes(i.id));
+        recordLog(`Deleted ${ids.length} inventory item(s)`);
+        autoSaveData();
+    }
+
+    function deleteSelectedDeliveries() {
+        const checked = document.querySelectorAll('.del-row-cb:checked');
+        if (checked.length === 0) return;
+        if (!confirm(`Delete ${checked.length} delivery record(s)?`)) return;
+        const ids = Array.from(checked).map(cb => parseInt(cb.value));
+        appData.deliveries = appData.deliveries.filter(d => !ids.includes(d.id));
+        recordLog(`Deleted ${ids.length} delivery record(s)`);
+        autoSaveData();
+    }
+
+    function getFormattedTimestamp() {
+        const now = new Date();
+        return `${now.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0].substring(0, 5)}`;
+    }
+
+    function recordLog(details) {
+        appData.logs.unshift({ id: 'log_' + Date.now(), timestamp: getFormattedTimestamp(), details });
+        if (appData.logs.length > 40) appData.logs.pop();
+    }
+
+    function toggleSelectAllLogs(mainCb) {
+        document.querySelectorAll('.log-checkbox').forEach(cb => cb.checked = mainCb.checked);
+    }
+
+    function deleteSelectedLogs() {
+        const checked = document.querySelectorAll('.log-checkbox:checked');
+        if (checked.length === 0) return;
+        const ids = Array.from(checked).map(cb => cb.value);
+        appData.logs = appData.logs.filter(l => !ids.includes(String(l.id)));
+        autoSaveData();
     }
 
     async function autoSaveData() {
         localStorage.setItem('cafe_inventory_data', JSON.stringify(appData));
-        updateSyncBadge("● Auto-Saved", false);
-
+        document.getElementById('syncBadge').innerText = "● Auto-Saved";
         renderTable();
         renderMasterTables();
         renderDeliveriesTable();
         renderLogs();
+        updateBatchBarVisibility();
     }
 
     function saveJSONFileManually() {
-        const jsonString = JSON.stringify(appData, null, 2);
-        const blob = new Blob([jsonString], { type: "application/json" });
+        const blob = new Blob([JSON.stringify(appData, null, 2)], { type: "application/json" });
         const url = URL.createObjectURL(blob);
-        
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.href = url;
-        downloadAnchor.download = `inventory_${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-        URL.revokeObjectURL(url);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `inventory_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        a.remove();
     }
 
     function loadFromJSONFile(event) {
         const reader = new FileReader();
         reader.onload = function(e) {
             try {
-                const loadedData = JSON.parse(e.target.result);
-                if (loadedData.inventory && Array.isArray(loadedData.inventory)) {
-                    appData = loadedData;
-                } else if (Array.isArray(loadedData)) {
-                    appData.inventory = loadedData;
-                }
-                
-                if (!appData.categories) {
-                    appData.categories = JSON.parse(JSON.stringify(defaultSubcategories));
-                }
-                if (!appData.suppliers) {
-                    appData.suppliers = ['JAMBI', 'YARDSTICK', 'NIMO', 'KUKIDO', 'MMB', 'LALAMOVE'];
-                }
-                if (!appData.deliveries) {
-                    appData.deliveries = [];
-                }
-
-                appData.inventory.forEach(item => {
-                    if (!item.subcategory) item.subcategory = "General";
-                    if (!item.unit) item.unit = "Pcs";
-                    if (!item.sourceNote) item.sourceNote = "In-House";
-                });
-
-                if (appData.logs && Array.isArray(appData.logs)) {
-                    appData.logs.forEach((log, index) => {
-                        if (!log.id) log.id = 'log_' + Date.now() + '_' + index;
-                    });
-                }
-
+                const loaded = JSON.parse(e.target.result);
+                if (loaded.inventory) appData = loaded;
                 autoSaveData();
-                updateSubcategoryDropdown(currentCategory);
-                updateDeliverySubcategoryDropdown(document.getElementById('delCategory').value);
-                updateSupplierDropdown();
-                alert('Current save file loaded and synced successfully!');
-            } catch (err) {
-                alert('Error reading the JSON file.');
-            }
+                alert('File loaded successfully!');
+            } catch (err) { alert('Invalid JSON file.'); }
         };
-        if (event.target.files[0]) {
-            reader.readAsText(event.target.files[0]);
-        }
+        if (event.target.files[0]) reader.readAsText(event.target.files[0]);
     }
 
     function exportToGoogleSheets() {
-        let csvContent = "";
-        csvContent += `"${currentCategory.toUpperCase()} INVENTORY MANAGEMENT TEMPLATE"\n`;
-        csvContent += `"Export Date:","${new Date().toISOString().split('T')[0]}"\n\n`;
-
-        const filteredItems = appData.inventory.filter(item => item.category === currentCategory);
-
-        if (filteredItems.length === 0) {
-            alert("No items found in this category to export.");
-            return;
-        }
-
-        const grouped = {};
-        filteredItems.forEach(item => {
-            const sub = item.subcategory || 'General';
-            if (!grouped[sub]) grouped[sub] = [];
-            grouped[sub].push(item);
-        });
-
-        Object.keys(grouped).forEach(subGroup => {
-            csvContent += `"SECTION: ${subGroup.toUpperCase()}"\n`;
-            csvContent += `"Item Name","Subcategory","Source Note","Quantity","Unit","Date Added","Last Changed"\n`;
-
-            grouped[subGroup].forEach(item => {
-                csvContent += `"${item.name}","${item.subcategory}","${item.sourceNote || 'In-House'}",${item.qty},"${item.unit || 'Pcs'}","${item.addedDate}","${item.lastChanged}"\n`;
-            });
-            csvContent += `\n`;
-        });
-
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        let csv = `"${currentCategory.toUpperCase()} INVENTORY"\n`;
+        const items = appData.inventory.filter(i => i.category === currentCategory);
+        items.forEach(i => csv += `"${i.name}","${i.subcategory}",${i.qty},"${i.unit}","${i.addedDate}"\n`);
+        const blob = new Blob([csv], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.setAttribute("href", url);
-        link.setAttribute("download", `${currentCategory}_inventory_template_${new Date().toISOString().split('T')[0]}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        setTimeout(() => {
-            window.open('https://sheets.new', '_blank');
-        }, 500);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${currentCategory}_inventory.csv`;
+        a.click();
+        setTimeout(() => window.open('https://sheets.new', '_blank'), 400);
     }
 
-    function updateSyncBadge(text, isLinked) {
-        const badge = document.getElementById('syncBadge');
-        if (!badge) return;
-        badge.innerText = text;
-        if (isLinked) {
-            badge.classList.add('linked');
-        } else {
-            badge.classList.remove('linked');
-        }
-    }
-
-    function navigateTo(targetPage, category = null) {
-        const activePage = document.querySelector('.page-view.active');
-        const targetElement = document.getElementById(`view-${targetPage}`);
-
+    function navigateTo(page, category = null) {
+        const active = document.querySelector('.page-view.active');
+        const target = document.getElementById(`view-${page}`);
         const backBtn = document.getElementById('backBtn');
 
-        if (targetPage === 'inventory') {
-            if (backBtn) {
-                backBtn.style.display = 'inline-flex';
-                backBtn.setAttribute('onclick', "navigateTo('menu')");
-            }
+        if (page === 'inventory') {
+            if (backBtn) { backBtn.style.display = 'inline-flex'; backBtn.setAttribute('onclick', "navigateTo('menu')"); }
         } else {
             if (backBtn) backBtn.style.display = 'none';
         }
 
-        if (activePage === targetElement) {
+        if (active === target) {
             if (category) switchCategory(category);
-            if (targetPage === 'master') renderMasterTables();
-            if (targetPage === 'deliveries') {
-                updateSupplierDropdown();
-                renderDeliveriesTable();
-            }
+            if (page === 'master') renderMasterTables();
+            if (page === 'deliveries') { updateSupplierDropdown(); renderDeliveriesTable(); }
             return;
         }
 
-        if (activePage) {
-            activePage.style.opacity = '0';
-            activePage.style.transform = 'translateY(-12px) scale(0.98)';
-            
+        if (active) {
+            active.style.opacity = '0';
             setTimeout(() => {
-                activePage.classList.remove('active');
-                openTargetPage(targetElement, category, targetPage);
-            }, 300);
+                active.classList.remove('active');
+                openTarget(target, category, page);
+            }, 200);
         } else {
-            openTargetPage(targetElement, category, targetPage);
+            openTarget(target, category, page);
         }
     }
 
-    function openTargetPage(targetElement, category, targetPage) {
+    function openTarget(target, category, page) {
         if (category) switchCategory(category);
-        if (targetPage === 'master') renderMasterTables();
-        if (targetPage === 'deliveries') {
-            updateSupplierDropdown();
-            renderDeliveriesTable();
-        }
-        targetElement.classList.add('active');
-        setTimeout(() => {
-            targetElement.style.opacity = '1';
-            targetElement.style.transform = 'translateY(0) scale(1)';
-        }, 50);
+        if (page === 'master') renderMasterTables();
+        if (page === 'deliveries') { updateSupplierDropdown(); renderDeliveriesTable(); }
+        target.classList.add('active');
+        target.style.opacity = '1';
     }
 
     function switchCategory(cat) {
         currentCategory = cat;
         const icons = { Café: '☕', Community: '🤝', Housekeeping: '🧹' };
         document.getElementById('currentTitle').innerText = `${icons[cat]} ${cat} Inventory`;
-
         updateSubcategoryDropdown(cat);
         renderTable();
     }
 
-    // EDIT INVENTORY ITEM FUNCTIONS
     function editInventoryItem(id) {
         const item = appData.inventory.find(i => i.id === id);
         if (!item) return;
-
-        if (item.category !== currentCategory) {
-            switchCategory(item.category);
-        }
+        if (item.category !== currentCategory) switchCategory(item.category);
 
         document.getElementById('editingItemId').value = item.id;
         document.getElementById('itemName').value = item.name;
@@ -1494,11 +1396,10 @@
         document.getElementById('itemSourceNote').value = item.sourceNote || 'In-House';
         document.getElementById('itemQty').value = item.qty;
         document.getElementById('itemUnit').value = item.unit || 'Pcs';
-        document.getElementById('itemAddedDate').value = item.addedDate || new Date().toISOString().split('T')[0];
+        document.getElementById('itemAddedDate').value = item.addedDate;
 
         document.getElementById('itemSubmitBtn').innerText = '💾 Save Changes';
         document.getElementById('itemCancelEditBtn').style.display = 'inline-flex';
-        
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1506,21 +1407,14 @@
         document.getElementById('editingItemId').value = '';
         document.getElementById('itemName').value = '';
         document.getElementById('itemQty').value = '';
-        document.getElementById('itemSourceNote').value = 'In-House';
-        document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
-        document.getElementById('itemSubmitBtn').innerText = '+ Add Item to Inventory';
+        document.getElementById('itemSubmitBtn').innerText = '+ Add Item';
         document.getElementById('itemCancelEditBtn').style.display = 'none';
-        updateSubcategoryDropdown(currentCategory);
     }
 
-    // EDIT DELIVERY RECORD FUNCTIONS
     function editDeliveryRecord(id) {
         const del = appData.deliveries.find(d => d.id === id);
         if (!del) return;
-
-        if (currentDeliveryFilter !== 'ALL' && currentDeliveryFilter !== del.category) {
-            filterDeliveryDashboard('ALL');
-        }
+        if (currentDeliveryFilter !== 'ALL' && currentDeliveryFilter !== del.category) filterDeliveryDashboard('ALL');
 
         document.getElementById('editingDeliveryId').value = del.id;
         document.getElementById('delCategory').value = del.category;
@@ -1530,11 +1424,10 @@
         document.getElementById('delSupplier').value = del.supplier || 'JAMBI';
         document.getElementById('delQty').value = del.qty;
         document.getElementById('delUnit').value = del.unit || 'Pcs';
-        document.getElementById('delDate').value = del.deliveryDate || new Date().toISOString().split('T')[0];
+        document.getElementById('delDate').value = del.deliveryDate;
 
-        document.getElementById('delSubmitBtn').innerText = '💾 Save Delivery Changes';
+        document.getElementById('delSubmitBtn').innerText = '💾 Save Changes';
         document.getElementById('delCancelEditBtn').style.display = 'inline-flex';
-
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1542,58 +1435,41 @@
         document.getElementById('editingDeliveryId').value = '';
         document.getElementById('delItemName').value = '';
         document.getElementById('delQty').value = '';
-        document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
-        document.getElementById('delSubmitBtn').innerText = '+ Schedule / Add Delivery';
+        document.getElementById('delSubmitBtn').innerText = '+ Schedule Delivery';
         document.getElementById('delCancelEditBtn').style.display = 'none';
-        updateDeliverySubcategoryDropdown(document.getElementById('delCategory').value);
     }
 
     function addItem(e) {
         e.preventDefault();
-        const nowStamp = getFormattedTimestamp();
         const editingId = document.getElementById('editingItemId').value;
-        const itemName = document.getElementById('itemName').value;
+        const name = document.getElementById('itemName').value;
         const subcategory = document.getElementById('itemSubcategory').value;
         const sourceNote = document.getElementById('itemSourceNote').value;
-        const qtyVal = parseInt(document.getElementById('itemQty').value);
-        const unitVal = document.getElementById('itemUnit').value;
-        const addedDateVal = document.getElementById('itemAddedDate').value;
+        const qty = parseInt(document.getElementById('itemQty').value);
+        const unit = document.getElementById('itemUnit').value;
+        const addedDate = document.getElementById('itemAddedDate').value;
+        const stamp = getFormattedTimestamp();
 
         if (editingId) {
             const item = appData.inventory.find(i => i.id === parseInt(editingId));
             if (item) {
-                item.name = itemName;
+                item.name = name;
                 item.category = currentCategory;
                 item.subcategory = subcategory;
-                item.qty = qtyVal;
-                item.unit = unitVal;
-                item.addedDate = addedDateVal;
+                item.qty = qty;
+                item.unit = unit;
+                item.addedDate = addedDate;
                 item.sourceNote = sourceNote;
-                item.lastChanged = nowStamp;
-                recordLog(`Re-edited / updated item "${itemName}" in ${currentCategory}`);
+                item.lastChanged = stamp;
+                recordLog(`Re-edited item "${name}"`);
             }
             cancelItemEdit();
         } else {
-            const newItem = {
-                id: Date.now(),
-                name: itemName,
-                category: currentCategory,
-                subcategory: subcategory,
-                qty: qtyVal,
-                unit: unitVal,
-                addedDate: addedDateVal,
-                lastChanged: nowStamp,
-                sourceNote: sourceNote
-            };
-            appData.inventory.push(newItem);
-            recordLog(`Added "${itemName}" under [${subcategory}] as [${sourceNote}] with qty ${newItem.qty} ${newItem.unit}`);
-            
+            appData.inventory.push({ id: Date.now(), name, category: currentCategory, subcategory, qty, unit, addedDate, lastChanged: stamp, sourceNote });
+            recordLog(`Added item "${name}" (${qty} ${unit})`);
             document.getElementById('itemName').value = '';
             document.getElementById('itemQty').value = '';
-            document.getElementById('itemSourceNote').value = 'In-House';
-            document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
         }
-
         autoSaveData();
     }
 
@@ -1602,87 +1478,49 @@
         const editingId = document.getElementById('editingDeliveryId').value;
         const category = document.getElementById('delCategory').value;
         const subcategory = document.getElementById('delSubcategory').value;
-        const itemName = document.getElementById('delItemName').value;
+        const name = document.getElementById('delItemName').value;
         const supplier = document.getElementById('delSupplier').value;
         const qty = parseInt(document.getElementById('delQty').value);
         const unit = document.getElementById('delUnit').value;
         const deliveryDate = document.getElementById('delDate').value;
-        const nowStamp = getFormattedTimestamp();
+        const stamp = getFormattedTimestamp();
 
         if (editingId) {
             const del = appData.deliveries.find(d => d.id === parseInt(editingId));
             if (del) {
-                del.name = itemName;
+                del.name = name;
                 del.category = category;
                 del.subcategory = subcategory;
                 del.supplier = supplier;
                 del.qty = qty;
                 del.unit = unit;
                 del.deliveryDate = deliveryDate;
-                recordLog(`Re-edited / updated delivery record for "${itemName}" from [${supplier}]`);
+                recordLog(`Re-edited delivery "${name}"`);
             }
             cancelDeliveryEdit();
-            autoSaveData();
         } else {
-            const newDelivery = {
-                id: Date.now(),
-                name: itemName,
-                category: category,
-                subcategory: subcategory,
-                supplier: supplier,
-                qty: qty,
-                unit: unit,
-                deliveryDate: deliveryDate
-            };
-
-            appData.deliveries.unshift(newDelivery);
-
-            const existingItem = appData.inventory.find(i => 
-                i.category === category && 
-                i.subcategory === subcategory && 
-                i.name.toLowerCase().trim() === itemName.toLowerCase().trim()
-            );
-
-            if (existingItem) {
-                existingItem.qty += qty;
-                existingItem.unit = unit;
-                existingItem.lastChanged = nowStamp;
-                existingItem.sourceNote = "Delivery";
-                recordLog(`Delivery input updated stock for "${itemName}" (+${qty} ${unit}) from [${supplier}] in ${category}`);
-            } else {
-                if (!appData.categories[category]) appData.categories[category] = [];
-                if (!appData.categories[category].includes(subcategory)) {
-                    appData.categories[category].push(subcategory);
-                }
-
-                appData.inventory.push({
-                    id: Date.now() + Math.floor(Math.random() * 1000),
-                    name: itemName,
-                    category: category,
-                    subcategory: subcategory,
-                    qty: qty,
-                    unit: unit,
-                    addedDate: deliveryDate,
-                    lastChanged: nowStamp,
-                    sourceNote: "Delivery"
-                });
-                recordLog(`Delivery input automatically added "${itemName}" (${qty} ${unit}) from [${supplier}] into ${category}`);
-            }
-
-            autoSaveData();
-
+            appData.deliveries.unshift({ id: Date.now(), name, category, subcategory, supplier, qty, unit, deliveryDate });
+            recordLog(`Scheduled delivery "${name}" (${qty} ${unit}) from ${supplier}`);
             document.getElementById('delItemName').value = '';
             document.getElementById('delQty').value = '';
-            document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
-            updateSupplierDropdown();
         }
+        autoSaveData();
     }
 
     function deleteItem(id) {
         const item = appData.inventory.find(i => i.id === id);
-        if (item) {
-            recordLog(`Deleted item "${item.name}"`);
+        if (item && confirm(`Delete "${item.name}"?`)) {
             appData.inventory = appData.inventory.filter(i => i.id !== id);
+            recordLog(`Deleted "${item.name}"`);
+            autoSaveData();
+        }
+    }
+
+    function deleteDeliveryItem(id) {
+        const del = appData.deliveries.find(d => d.id === id);
+        if (del && confirm(`Delete delivery "${del.name}"?`)) {
+            appData.deliveries = appData.deliveries.filter(d => d.id !== id);
+            recordLog(`Deleted delivery "${del.name}"`);
             autoSaveData();
         }
     }
@@ -1690,10 +1528,9 @@
     function updateQty(id, delta) {
         const item = appData.inventory.find(i => i.id === id);
         if (item) {
-            const oldQty = item.qty;
             item.qty = Math.max(0, item.qty + delta);
             item.lastChanged = getFormattedTimestamp();
-            recordLog(`Updated "${item.name}" qty from ${oldQty} to ${item.qty} ${item.unit || 'Pcs'}`);
+            recordLog(`Updated qty for "${item.name}" to ${item.qty}`);
             autoSaveData();
         }
     }
@@ -1702,118 +1539,105 @@
         const tbody = document.getElementById('deliveriesTable');
         if (!tbody) return;
         tbody.innerHTML = '';
+        const query = (document.getElementById('deliverySearchInput')?.value || '').toLowerCase().trim();
 
-        const searchQuery = (document.getElementById('deliverySearchInput')?.value || '').toLowerCase().trim();
+        let list = appData.deliveries || [];
+        if (currentDeliveryFilter !== 'ALL') list = list.filter(d => d.category === currentDeliveryFilter);
+        if (query) list = list.filter(d => d.name.toLowerCase().includes(query) || d.supplier.toLowerCase().includes(query));
 
-        let filteredDeliveries = appData.deliveries || [];
-
-        if (currentDeliveryFilter !== 'ALL') {
-            filteredDeliveries = filteredDeliveries.filter(d => d.category === currentDeliveryFilter);
-        }
-
-        if (searchQuery !== '') {
-            filteredDeliveries = filteredDeliveries.filter(d => 
-                d.name.toLowerCase().includes(searchQuery) ||
-                d.supplier.toLowerCase().includes(searchQuery) ||
-                (d.subcategory && d.subcategory.toLowerCase().includes(searchQuery))
-            );
-        }
-
-        if (filteredDeliveries.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">No matching delivery records found.</td></tr>`;
+        if (list.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 20px;">No delivery records found.</td></tr>`;
             return;
         }
 
-        filteredDeliveries.forEach(del => {
-            const row = document.createElement('tr');
-
-            row.innerHTML = `
+        list.forEach(del => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="text-align: center;"><input type="checkbox" class="row-checkbox del-row-cb" value="${del.id}" onchange="updateBatchBarVisibility()"></td>
                 <td><strong>• ${del.name}</strong></td>
-                <td><span style="font-weight: 600;">${del.category}</span> <span style="font-size:0.75rem; color:var(--text-muted);">(${del.subcategory})</span></td>
+                <td>${del.category} <span style="font-size:0.7rem; color:var(--text-muted);">(${del.subcategory})</span></td>
                 <td><span class="delivery-note-tag">${del.supplier}</span></td>
                 <td><strong>${del.qty}</strong> <span class="unit-label">${del.unit}</span></td>
-                <td>${del.deliveryDate || del.expectedDate || ''}</td>
+                <td>${del.deliveryDate}</td>
                 <td>
                     <div class="action-cell-wrapper">
-                        <button class="btn edit-btn" onclick="editDeliveryRecord(${del.id})" style="padding: 6px 12px; font-size: 0.78rem;">✏️ Re-Edit</button>
+                        <button class="btn edit-btn" onclick="editDeliveryRecord(${del.id})" style="padding: 5px 8px; font-size: 0.72rem;">✏️ Re-Edit</button>
+                        <select class="select-transfer" onchange="handleRowDropdownAction(${del.id}, this.value, 'DELIVERY')">
+                            <option value="">Move/Copy...</option>
+                            <optgroup label="Move To">
+                                <option value="MOVE_Café">☕ Café</option>
+                                <option value="MOVE_Community">🤝 Community</option>
+                                <option value="MOVE_Housekeeping">🧹 Housekeeping</option>
+                            </optgroup>
+                            <optgroup label="Copy To">
+                                <option value="COPY_Café">☕ Café</option>
+                                <option value="COPY_Community">🤝 Community</option>
+                                <option value="COPY_Housekeeping">🧹 Housekeeping</option>
+                            </optgroup>
+                        </select>
+                        <button class="btn-delete-x" onclick="deleteDeliveryItem(${del.id})" title="Delete">✕</button>
                     </div>
                 </td>
             `;
-            tbody.appendChild(row);
+            tbody.appendChild(tr);
         });
     }
 
     function renderMasterTables() {
-        const searchQuery = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
-        const categoryFilter = document.getElementById('categoryFilter')?.value || 'ALL';
-
+        const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+        const catFilter = document.getElementById('categoryFilter')?.value || 'ALL';
         const categories = ['Café', 'Community', 'Housekeeping'];
-        let totalVisibleItems = 0;
+        let total = 0;
 
         categories.forEach(cat => {
-            const secElem = document.getElementById(`sec-${cat}`);
+            const sec = document.getElementById(`sec-${cat}`);
             const tbody = document.getElementById(`tbody-${cat}`);
-            if (!secElem || !tbody) return;
+            if (!sec || !tbody) return;
             tbody.innerHTML = '';
 
-            if (categoryFilter !== 'ALL' && categoryFilter !== cat) {
-                secElem.style.display = 'none';
+            if (catFilter !== 'ALL' && catFilter !== cat) {
+                sec.style.display = 'none';
                 return;
             }
 
-            let catItems = appData.inventory.filter(item => item.category === cat);
+            let items = appData.inventory.filter(i => i.category === cat);
+            if (query) items = items.filter(i => i.name.toLowerCase().includes(query) || i.subcategory.toLowerCase().includes(query));
 
-            if (searchQuery !== '') {
-                catItems = catItems.filter(item => 
-                    item.name.toLowerCase().includes(searchQuery) ||
-                    (item.subcategory && item.subcategory.toLowerCase().includes(searchQuery))
-                );
-            }
-
-            if (catItems.length === 0) {
-                secElem.style.display = 'none';
+            if (items.length === 0) {
+                sec.style.display = 'none';
             } else {
-                secElem.style.display = 'block';
-                totalVisibleItems += catItems.length;
-
-                catItems.forEach(item => {
-                    const row = document.createElement('tr');
-                    const noteTag = item.sourceNote === 'Delivery' 
-                        ? `<span class="delivery-note-tag">Delivery</span>` 
-                        : `<span class="inhouse-note-tag">In-House</span>`;
-
-                    row.innerHTML = `
+                sec.style.display = 'block';
+                total += items.length;
+                items.forEach(item => {
+                    const tr = document.createElement('tr');
+                    const noteTag = item.sourceNote === 'Delivery' ? `<span class="delivery-note-tag">Del</span>` : `<span class="inhouse-note-tag">In</span>`;
+                    tr.innerHTML = `
                         <td>• ${item.name} ${noteTag}</td>
-                        <td>${item.subcategory || 'General'}</td>
+                        <td>${item.subcategory}</td>
                         <td>
                             <div class="qty-control">
                                 <button class="btn-qty" onclick="updateQty(${item.id}, -1)">-</button>
-                                <span style="font-weight: 600; min-width: 22px; text-align: center;">${item.qty}</span>
+                                <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.qty}</span>
                                 <button class="btn-qty" onclick="updateQty(${item.id}, 1)">+</button>
-                                <span class="unit-label">${item.unit || 'Pcs'}</span>
+                                <span class="unit-label">${item.unit}</span>
                             </div>
                         </td>
                         <td>${item.addedDate}</td>
-                        <td><span style="font-size: 0.78rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
+                        <td><span style="font-size: 0.72rem; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
                         <td>
                             <div class="action-cell-wrapper">
-                                <button class="btn edit-btn" onclick="navigateTo('inventory', '${item.category}'); setTimeout(() => editInventoryItem(${item.id}), 100);" style="padding: 6px 12px; font-size: 0.78rem;">✏️ Re-Edit</button>
+                                <button class="btn edit-btn" onclick="navigateTo('inventory', '${item.category}'); setTimeout(() => editInventoryItem(${item.id}), 80);" style="padding: 5px 8px; font-size: 0.72rem;">✏️ Re-Edit</button>
+                                <button class="btn-delete-x" onclick="deleteItem(${item.id})" title="Delete">✕</button>
                             </div>
                         </td>
                     `;
-                    tbody.appendChild(row);
+                    tbody.appendChild(tr);
                 });
             }
         });
 
-        const noResultsMsg = document.getElementById('noResultsMsg');
-        if (noResultsMsg) {
-            if (totalVisibleItems === 0) {
-                noResultsMsg.style.display = 'block';
-            } else {
-                noResultsMsg.style.display = 'none';
-            }
-        }
+        const noRes = document.getElementById('noResultsMsg');
+        if (noRes) noRes.style.display = (total === 0) ? 'block' : 'none';
     }
 
     function renderTable() {
@@ -1821,52 +1645,65 @@
         if (!tbody) return;
         tbody.innerHTML = '';
 
-        const filteredItems = appData.inventory.filter(item => item.category === currentCategory);
-
-        if (filteredItems.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">No items registered.</td></tr>`;
+        const items = appData.inventory.filter(i => i.category === currentCategory);
+        if (items.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 20px;">No items registered.</td></tr>`;
             return;
         }
 
         const grouped = {};
-        filteredItems.forEach(item => {
-            const sub = item.subcategory || 'General';
+        items.forEach(i => {
+            const sub = i.subcategory || 'General';
             if (!grouped[sub]) grouped[sub] = [];
-            grouped[sub].push(item);
+            grouped[sub].push(i);
         });
 
         Object.keys(grouped).forEach(subGroup => {
-            const headerRow = document.createElement('tr');
-            headerRow.className = 'group-header-row';
-            headerRow.innerHTML = `<td colspan="6">📂 Group: ${subGroup.toUpperCase()}</td>`;
-            tbody.appendChild(headerRow);
+            const hr = document.createElement('tr');
+            hr.className = 'group-header-row';
+            hr.innerHTML = `<td colspan="7">📂 Subcategory: ${subGroup.toUpperCase()}</td>`;
+            tbody.appendChild(hr);
 
             grouped[subGroup].forEach(item => {
-                const row = document.createElement('tr');
-                const noteTag = item.sourceNote === 'Delivery' 
-                    ? `<span class="delivery-note-tag">Delivery</span>` 
-                    : `<span class="inhouse-note-tag">In-House</span>`;
-
-                row.innerHTML = `
-                    <td style="padding-left: 12px;">• ${item.name} ${noteTag}</td>
+                const tr = document.createElement('tr');
+                const noteTag = item.sourceNote === 'Delivery' ? `<span class="delivery-note-tag">Del</span>` : `<span class="inhouse-note-tag">In</span>`;
+                tr.innerHTML = `
+                    <td style="text-align: center;"><input type="checkbox" class="row-checkbox inv-row-cb" value="${item.id}" onchange="updateBatchBarVisibility()"></td>
+                    <td>• ${item.name} ${noteTag}</td>
                     <td>${item.category}</td>
                     <td>
                         <div class="qty-control">
                             <button class="btn-qty" onclick="updateQty(${item.id}, -1)">-</button>
-                            <span style="font-weight: 600; min-width: 22px; text-align: center;">${item.qty}</span>
+                            <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.qty}</span>
                             <button class="btn-qty" onclick="updateQty(${item.id}, 1)">+</button>
-                            <span class="unit-label">${item.unit || 'Pcs'}</span>
+                            <span class="unit-label">${item.unit}</span>
                         </div>
                     </td>
                     <td>${item.addedDate}</td>
-                    <td><span style="font-size: 0.78rem; font-weight: 500; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
+                    <td><span style="font-size: 0.72rem; color: var(--text-muted);">${item.lastChanged || item.addedDate}</span></td>
                     <td>
                         <div class="action-cell-wrapper">
-                            <button class="btn edit-btn" onclick="editInventoryItem(${item.id})" style="padding: 6px 12px; font-size: 0.78rem;">✏️ Re-Edit</button>
+                            <button class="btn edit-btn" onclick="editInventoryItem(${item.id})" style="padding: 5px 8px; font-size: 0.72rem;">✏️ Re-Edit</button>
+                            <select class="select-transfer" onchange="handleRowDropdownAction(${item.id}, this.value, 'INVENTORY')">
+                                <option value="">Move/Copy...</option>
+                                <optgroup label="Move To">
+                                    ${currentCategory !== 'Café' ? '<option value="MOVE_Café">☕ Café</option>' : ''}
+                                    ${currentCategory !== 'Community' ? '<option value="MOVE_Community">🤝 Community</option>' : ''}
+                                    ${currentCategory !== 'Housekeeping' ? '<option value="MOVE_Housekeeping">🧹 Housekeeping</option>' : ''}
+                                    <option value="MOVE_DELIVERIES">🚚 Deliveries</option>
+                                </optgroup>
+                                <optgroup label="Copy To">
+                                    <option value="COPY_Café">☕ Café</option>
+                                    <option value="COPY_Community">🤝 Community</option>
+                                    <option value="COPY_Housekeeping">🧹 Housekeeping</option>
+                                    <option value="COPY_DELIVERIES">🚚 Deliveries</option>
+                                </optgroup>
+                            </select>
+                            <button class="btn-delete-x" onclick="deleteItem(${item.id})" title="Delete">✕</button>
                         </div>
                     </td>
                 `;
-                tbody.appendChild(row);
+                tbody.appendChild(tr);
             });
         });
     }
@@ -1875,27 +1712,25 @@
         const logList = document.getElementById('auditLogList');
         if (!logList) return;
         logList.innerHTML = '';
-
         if (!appData.logs || appData.logs.length === 0) {
             logList.innerHTML = `<li class="log-item"><span>No modifications recorded yet.</span></li>`;
             return;
         }
-
         appData.logs.forEach(log => {
-            const item = document.createElement('li');
-            item.className = 'log-item';
-            item.innerHTML = `
+            const li = document.createElement('li');
+            li.className = 'log-item';
+            li.innerHTML = `
                 <div class="log-item-left">
                     <input type="checkbox" class="log-checkbox" value="${log.id}">
                     <span>${log.details}</span>
                 </div>
                 <span class="log-date">${log.timestamp}</span>
             `;
-            logList.appendChild(item);
+            logList.appendChild(li);
         });
     }
 
-    // Initial load state setup
+    // Initialize layout state
     navigateTo('home');
     switchCategory('Café');
     updateDeliverySubcategoryDropdown('Café');
