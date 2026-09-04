@@ -173,11 +173,7 @@
             margin: 0 auto;
         }
 
-        .netflix-row-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
+        .netflix-row-title { font-size: 1.15rem; font-weight: 700; color: var(--text-main); }
 
         .netflix-cards-grid {
             display: grid;
@@ -249,6 +245,7 @@
         
         button.json-btn { color: #2C4254; }
         button.gsheets-btn { color: #264A35; }
+        button.github-btn { color: #24292e; background: rgba(255, 255, 255, 0.85); font-weight: 700; }
         button.edit-btn { color: var(--warning); background: rgba(217, 160, 107, 0.15); border-color: rgba(217, 160, 107, 0.3); }
 
         .dashboard-nav-grid {
@@ -291,7 +288,6 @@
             margin-bottom: 20px;
         }
 
-        /* BATCH SELECTION & TRANSFER BAR */
         .batch-action-bar {
             background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(15px);
@@ -515,7 +511,7 @@
     <div class="home-hero">
         <img class="home-hero-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         <h1>QuadLink Inventory</h1>
-        <p>Aesthetic minimalist stock management with rapid copying, moving, and re-editing capabilities.</p>
+        <p>Aesthetic minimalist stock management with GitHub auto-syncing, rapid copying, moving, and re-editing capabilities.</p>
         <div class="hero-action-group">
             <button class="btn-proceed" onclick="navigateTo('menu')">📂 Menu Inventory</button>
             <button class="btn-proceed secondary" onclick="navigateTo('deliveries')">🚚 Deliveries Inventory</button>
@@ -531,6 +527,7 @@
         <div class="action-btns">
             <button onclick="navigateTo('home')" class="btn">🏠 Home</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
+            <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
         </div>
     </header>
 
@@ -566,11 +563,9 @@
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
-            <label class="btn-label json-btn">
-                📂 Load
-                <input type="file" id="deliveriesJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
-            </label>
-            <button onclick="saveJSONFileManually()" class="btn">💾 Save</button>
+            <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
+            <label class="btn-label json-btn">📂 Load<input type="file" id="deliveriesJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
+            <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
     </header>
 
@@ -709,11 +704,9 @@
         <h2>🔍 Search & Overview</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
-            <label class="btn-label json-btn">
-                📂 Load
-                <input type="file" id="masterJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
-            </label>
-            <button onclick="saveJSONFileManually()" class="btn">💾 Save</button>
+            <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
+            <label class="btn-label json-btn">📂 Load<input type="file" id="masterJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
+            <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
         </div>
     </header>
 
@@ -800,11 +793,9 @@
         <h2 id="currentTitle">☕ Café Inventory</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
-            <label class="btn-label json-btn">
-                📂 Load
-                <input type="file" id="inventoryJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;">
-            </label>
-            <button onclick="saveJSONFileManually()" class="btn">💾 Save</button>
+            <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
+            <label class="btn-label json-btn">📂 Load<input type="file" id="inventoryJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
+            <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
             <button onclick="exportToGoogleSheets()" class="btn gsheets-btn">📊 Sheets Template</button>
         </div>
     </header>
@@ -1302,6 +1293,69 @@
         renderDeliveriesTable();
         renderLogs();
         updateBatchBarVisibility();
+
+        // Background GitHub Sync if token exists
+        const token = localStorage.getItem('github_pat');
+        if (token) {
+            pushToGitHub(token, false);
+        }
+    }
+
+    async function triggerGitHubSync() {
+        let token = localStorage.getItem('github_pat');
+        if (!token) {
+            token = prompt("Enter your GitHub Personal Access Token (PAT with 'repo' scope):");
+            if (!token) return;
+            localStorage.setItem('github_pat', token.trim());
+        }
+        await pushToGitHub(token, true);
+    }
+
+    async function pushToGitHub(token, showAlert = true) {
+        const owner = "ketchappee";
+        const repo = "QuadLinkInventory";
+        const path = "inventory_data.json"; // File path in your repo
+        const message = `Auto-update inventory data ${getFormattedTimestamp()}`;
+        const contentBytes = new TextEncoder().encode(JSON.stringify(appData, null, 2));
+        const contentBase64 = btoa(String.fromCharCode(...contentBytes));
+
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+        try {
+            // Check existing file SHA if it exists
+            let sha = null;
+            const getRes = await fetch(apiUrl, {
+                headers: { "Authorization": `token ${token}` }
+            });
+            if (getRes.ok) {
+                const fileData = await getRes.json();
+                sha = fileData.sha;
+            }
+
+            // PUT request to create or update file
+            const putRes = await fetch(apiUrl, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: message,
+                    content: contentBase64,
+                    sha: sha
+                })
+            });
+
+            if (putRes.ok) {
+                if (showAlert) alert("Successfully synced and pushed to ketchappee/QuadLinkInventory!");
+            } else {
+                const err = await putRes.json();
+                if (showAlert) alert("GitHub Sync Error: " + err.message);
+                if (putRes.status === 401) localStorage.removeItem('github_pat'); // Reset invalid token
+            }
+        } catch (e) {
+            if (showAlert) alert("Network error while trying to sync with GitHub.");
+        }
     }
 
     function saveJSONFileManually() {
