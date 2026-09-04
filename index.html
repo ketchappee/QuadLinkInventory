@@ -325,9 +325,9 @@
             align-items: center;
         }
 
-        .subcategory-input-wrapper select { flex: 1; }
-        .qty-input-wrapper input { flex: 1; width: 60%; }
-        .qty-input-wrapper select { width: 40%; min-width: 75px; }
+        .subcategory-input-wrapper select { flex: 1; min-width: 0; }
+        .qty-input-wrapper input { flex: 1; min-width: 0; width: 60%; }
+        .qty-input-wrapper select { width: 40%; min-width: 75px; flex-shrink: 0; }
 
         .btn-del-sub {
             background: rgba(217, 107, 107, 0.15);
@@ -364,12 +364,12 @@
         .action-cell-wrapper {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: nowrap;
         }
 
         .select-move-to {
-            padding: 6px 10px;
+            padding: 8px 10px;
             font-size: 0.75rem;
             font-weight: 600;
             border-radius: 10px;
@@ -377,6 +377,8 @@
             border: 1px solid var(--clear-border);
             color: var(--text-main);
             cursor: pointer;
+            max-width: 140px;
+            text-overflow: ellipsis;
         }
 
         .row-checkbox {
@@ -398,8 +400,8 @@
             margin-bottom: 24px;
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 720px; }
-        th, td { padding: 14px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.35); font-size: 0.85rem; }
+        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 760px; }
+        th, td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.35); font-size: 0.85rem; white-space: nowrap; }
         th { background: rgba(255, 255, 255, 0.3); color: var(--text-muted); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px; }
         
         .group-header-row {
@@ -410,13 +412,13 @@
             font-size: 0.8rem;
         }
 
-        .qty-control { display: flex; align-items: center; gap: 8px; }
-        .btn-qty { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--clear-border); background: rgba(255, 255, 255, 0.5); cursor: pointer; font-weight: 600; color: var(--text-main); transition: all 0.2s; }
+        .qty-control { display: flex; align-items: center; gap: 6px; }
+        .btn-qty { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--clear-border); background: rgba(255, 255, 255, 0.5); cursor: pointer; font-weight: 600; color: var(--text-main); transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .btn-qty:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
 
         .unit-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; }
 
-        .btn-danger { color: var(--danger); background: transparent; border: none; font-weight: 600; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; }
+        .btn-danger { color: var(--danger); background: transparent; border: none; font-weight: 600; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; padding: 4px 6px; flex-shrink: 0; }
         .btn-danger:hover { opacity: 1; text-decoration: underline; }
 
         .log-header {
