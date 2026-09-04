@@ -637,8 +637,8 @@
                     </div>
                 </div>
                 <div class="input-group">
-                    <label>Expected Delivery Date</label>
-                    <input type="date" id="delExpectedDate" required>
+                    <label>Delivery Date</label>
+                    <input type="date" id="delDate" required>
                 </div>
             </div>
             <button type="submit" class="btn primary">+ Schedule / Add Delivery</button>
@@ -668,7 +668,7 @@
                     <th>Category / Subcategory</th>
                     <th>Supplier</th>
                     <th>Quantity & Unit</th>
-                    <th>Expected Date</th>
+                    <th>Delivery Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -923,8 +923,8 @@
             { id: 4, name: "Disinfectant Spray", category: "Housekeeping", subcategory: "Cleaning Supplies", qty: 8, unit: "Box", addedDate: "2026-08-01", lastChanged: "2026-08-15 11:30" }
         ],
         deliveries: [
-            { id: 101, name: "Specialty Espresso Batch", category: "Café", subcategory: "Beans", supplier: "Roastery Co.", qty: 10, unit: "Kg", expectedDate: "2026-09-10" },
-            { id: 102, name: "Microfiber Towels Pack", category: "Housekeeping", subcategory: "Linens & Towels", supplier: "CleanDirect", qty: 5, unit: "Box", expectedDate: "2026-09-12" }
+            { id: 101, name: "Specialty Espresso Batch", category: "Café", subcategory: "Beans", supplier: "Roastery Co.", qty: 10, unit: "Kg", deliveryDate: "2026-09-10" },
+            { id: 102, name: "Microfiber Towels Pack", category: "Housekeeping", subcategory: "Linens & Towels", supplier: "CleanDirect", qty: 5, unit: "Box", deliveryDate: "2026-09-12" }
         ],
         logs: []
     };
@@ -936,6 +936,13 @@
     if (!appData.deliveries) {
         appData.deliveries = [];
     }
+
+    appData.deliveries.forEach(del => {
+        if (!del.deliveryDate && del.expectedDate) {
+            del.deliveryDate = del.expectedDate;
+            delete del.expectedDate;
+        }
+    });
 
     appData.inventory.forEach(item => {
         if (!item.subcategory) item.subcategory = "General";
@@ -950,7 +957,7 @@
 
     let currentCategory = 'Café';
     document.getElementById('itemAddedDate').value = new Date().toISOString().split('T')[0];
-    document.getElementById('delExpectedDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
 
     function filterDeliveryDashboard(cat) {
         currentDeliveryFilter = cat;
@@ -1181,7 +1188,7 @@
                     subcategory: del.subcategory || targetSubcategory,
                     qty: del.qty,
                     unit: del.unit,
-                    addedDate: del.expectedDate || new Date().toISOString().split('T')[0],
+                    addedDate: del.deliveryDate || new Date().toISOString().split('T')[0],
                     lastChanged: nowStamp
                 });
             }
@@ -1203,7 +1210,7 @@
                     supplier: supplierName,
                     qty: item.qty,
                     unit: item.unit || 'Pcs',
-                    expectedDate: item.addedDate || new Date().toISOString().split('T')[0]
+                    deliveryDate: item.addedDate || new Date().toISOString().split('T')[0]
                 });
                 appData.inventory.splice(itemIndex, 1);
                 recordLog(`Moved inventory item "${item.name}" from ${item.category} into Deliveries`);
@@ -1503,7 +1510,7 @@
         const supplier = document.getElementById('delSupplier').value;
         const qty = parseInt(document.getElementById('delQty').value);
         const unit = document.getElementById('delUnit').value;
-        const expectedDate = document.getElementById('delExpectedDate').value;
+        const deliveryDate = document.getElementById('delDate').value;
         const nowStamp = getFormattedTimestamp();
 
         const newDelivery = {
@@ -1514,7 +1521,7 @@
             supplier: supplier,
             qty: qty,
             unit: unit,
-            expectedDate: expectedDate
+            deliveryDate: deliveryDate
         };
 
         appData.deliveries.unshift(newDelivery);
@@ -1538,7 +1545,7 @@
                 subcategory: subcategory,
                 qty: qty,
                 unit: unit,
-                addedDate: expectedDate,
+                addedDate: deliveryDate,
                 lastChanged: nowStamp
             });
             recordLog(`Delivery input automatically added "${itemName}" (${qty} ${unit}) into ${category}`);
@@ -1549,7 +1556,7 @@
         document.getElementById('delItemName').value = '';
         document.getElementById('delSupplier').value = '';
         document.getElementById('delQty').value = '';
-        document.getElementById('delExpectedDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('delDate').value = new Date().toISOString().split('T')[0];
     }
 
     function deleteDelivery(id) {
@@ -1617,7 +1624,7 @@
                 <td><span style="font-weight: 600;">${del.category}</span> <span style="font-size:0.75rem; color:var(--text-muted);">(${del.subcategory})</span></td>
                 <td>${del.supplier}</td>
                 <td><strong>${del.qty}</strong> <span class="unit-label">${del.unit}</span></td>
-                <td>${del.expectedDate}</td>
+                <td>${del.deliveryDate || del.expectedDate || ''}</td>
                 <td><button class="btn-danger" onclick="deleteDelivery(${del.id})">Delete</button></td>
             `;
             tbody.appendChild(row);
