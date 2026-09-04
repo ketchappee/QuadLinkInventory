@@ -246,6 +246,7 @@
         button.json-btn { color: #2C4254; }
         button.gsheets-btn { color: #264A35; }
         button.github-btn { color: #24292e; background: rgba(255, 255, 255, 0.85); font-weight: 700; }
+        button.load-github-btn { color: #1b4d3e; background: rgba(107, 155, 126, 0.25); font-weight: 700; border-color: rgba(107, 155, 126, 0.4); }
         button.edit-btn { color: var(--warning); background: rgba(217, 160, 107, 0.15); border-color: rgba(217, 160, 107, 0.3); }
 
         .dashboard-nav-grid {
@@ -511,7 +512,7 @@
     <div class="home-hero">
         <img class="home-hero-logo" src="viber_image_2026-09-02_16-28-15-350.png" alt="Quad Logo">
         <h1>QuadLink Inventory</h1>
-        <p>Aesthetic minimalist stock management with GitHub auto-syncing, rapid copying, moving, and re-editing capabilities.</p>
+        <p>Aesthetic minimalist stock management with shared GitHub syncing for all users.</p>
         <div class="hero-action-group">
             <button class="btn-proceed" onclick="navigateTo('menu')">📂 Menu Inventory</button>
             <button class="btn-proceed secondary" onclick="navigateTo('deliveries')">🚚 Deliveries Inventory</button>
@@ -527,6 +528,7 @@
         <div class="action-btns">
             <button onclick="navigateTo('home')" class="btn">🏠 Home</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
+            <button onclick="loadFromGitHub()" class="btn load-github-btn">🌐 Load from GitHub</button>
             <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
         </div>
     </header>
@@ -563,6 +565,7 @@
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
             <button onclick="navigateTo('master')" class="btn">🔍 Master Search</button>
+            <button onclick="loadFromGitHub()" class="btn load-github-btn">🌐 Load from GitHub</button>
             <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
             <label class="btn-label json-btn">📂 Load<input type="file" id="deliveriesJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
@@ -704,6 +707,7 @@
         <h2>🔍 Search & Overview</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
+            <button onclick="loadFromGitHub()" class="btn load-github-btn">🌐 Load from GitHub</button>
             <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
             <label class="btn-label json-btn">📂 Load<input type="file" id="masterJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
@@ -793,6 +797,7 @@
         <h2 id="currentTitle">☕ Café Inventory</h2>
         <div class="action-btns">
             <button onclick="navigateTo('menu')" class="btn">📂 Menu Selection</button>
+            <button onclick="loadFromGitHub()" class="btn load-github-btn">🌐 Load from GitHub</button>
             <button onclick="triggerGitHubSync()" class="btn github-btn">☁️ Sync to GitHub</button>
             <label class="btn-label json-btn">📂 Load<input type="file" id="inventoryJsonFileInput" accept=".json" onchange="loadFromJSONFile(event)" style="display:none;"></label>
             <button onclick="saveJSONFileManually()" class="btn">💾 Save JSON</button>
@@ -1314,15 +1319,13 @@
     async function pushToGitHub(token, showAlert = true) {
         const owner = "ketchappee";
         const repo = "QuadLinkInventory";
-        const path = "inventory_data.json"; // File path in your repo
+        const path = "inventory_data.json";
         const message = `Auto-update inventory data ${getFormattedTimestamp()}`;
         const contentBytes = new TextEncoder().encode(JSON.stringify(appData, null, 2));
         const contentBase64 = btoa(String.fromCharCode(...contentBytes));
-
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
         try {
-            // Check existing file SHA if it exists
             let sha = null;
             const getRes = await fetch(apiUrl, {
                 headers: { "Authorization": `token ${token}` }
@@ -1332,7 +1335,6 @@
                 sha = fileData.sha;
             }
 
-            // PUT request to create or update file
             const putRes = await fetch(apiUrl, {
                 method: "PUT",
                 headers: {
@@ -1351,10 +1353,40 @@
             } else {
                 const err = await putRes.json();
                 if (showAlert) alert("GitHub Sync Error: " + err.message);
-                if (putRes.status === 401) localStorage.removeItem('github_pat'); // Reset invalid token
+                if (putRes.status === 401) localStorage.removeItem('github_pat');
             }
         } catch (e) {
             if (showAlert) alert("Network error while trying to sync with GitHub.");
+        }
+    }
+
+    // NEW FUNCTION: Allows any user to fetch and load the latest shared data from GitHub
+    async function loadFromGitHub() {
+        const owner = "ketchappee";
+        const repo = "QuadLinkInventory";
+        const path = "inventory_data.json";
+        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}?t=` + new Date().getTime();
+
+        try {
+            const res = await fetch(rawUrl);
+            if (res.ok) {
+                const remoteData = await res.json();
+                if (remoteData && remoteData.inventory) {
+                    appData = remoteData;
+                    localStorage.setItem('cafe_inventory_data', JSON.stringify(appData));
+                    renderTable();
+                    renderMasterTables();
+                    renderDeliveriesTable();
+                    renderLogs();
+                    alert("Successfully loaded the latest inventory from GitHub!");
+                } else {
+                    alert("The remote GitHub data file format is invalid.");
+                }
+            } else {
+                alert("Could not find a saved inventory file on GitHub yet. Make sure someone has synced data first.");
+            }
+        } catch (e) {
+            alert("Network error while trying to fetch data from GitHub.");
         }
     }
 
